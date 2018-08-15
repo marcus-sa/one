@@ -1,0 +1,21 @@
+{
+  "name": "@nuclei/core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "prepare": "tsc -p tsconfig.build.json"
+  },
+  "keywords": [],
+  "author": "Marcus S. Abildskov",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^8.0.28",
+    "inversify": "^4.13.0",
+    "reflect-metadata": "^0.1.12"
+  },
+  "devDependencies": {
+    "typescript": "^2.5.2"
+  }
+}
