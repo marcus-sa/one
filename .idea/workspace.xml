@@ -5,51 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49448681-9f06-43d1-84e9-1317bf6c903b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/esetm.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/electron/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/electron/src/app.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/electron/src/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/electron/src/windows/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/electron/src/windows/main.window.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/electron/src/windows/windows.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/electron/tsconfig.build.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/electron/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/dynamic-module.interface.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/on-module-init.interface.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/core/src/registry.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/src/app.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/src/decorators/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/src/decorators/window.decorator.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/src/electron-core.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/src/electron.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/src/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/src/interfaces/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/src/interfaces/on-ready.interface.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/src/storage.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/src/symbols.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/tsconfig.build.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/electron/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/core/src/app.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/core/src/nest/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/core/src/nest/more-nest/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/core/src/nest/more-nest/more-nest.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/core/src/nest/more-nest/more-nest.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/core/src/nest/nest.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/core/src/nest/nest.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/app2.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/app2.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/app3.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/app3.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/test.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/test.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/test2.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/test2.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/test3.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/test3.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/decorators/module/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/decorators/module/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/factory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/factory.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/interfaces/module/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/interfaces/module/module-metadata.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/module-metadata.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/interfaces/module/on-destroy.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/on-module-destroy.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/interfaces/module/on-init.interface.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/core/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/core/src/app2.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/core/src/app3.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/core/src/test.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/core/src/test2.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/core/src/test3.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/nest/more-nest/more-nest.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/core/src/module/module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/module/module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/module/provider-factory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/module/provider-factory.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -63,57 +34,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="module.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/packages/core/src/module/module.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="114" column="52" lean-forward="true" selection-start-line="114" selection-start-column="52" selection-end-line="114" selection-end-column="52" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test2.service.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/core/src/test2.service.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#42#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.service.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/core/src/test.service.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="9" column="3" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
-              <folding>
-                <element signature="e#0#42#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test3.service.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/core/src/test3.service.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="app.module.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/examples/core/src/app.module.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="467">
-              <caret line="27" column="18" lean-forward="true" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+            <state relative-caret-position="276">
+              <caret line="12" column="25" lean-forward="true" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
               <folding>
-                <element signature="e#0#63#0" expanded="true" />
+                <element signature="e#0#55#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/nest/more-nest/index.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="23">
+              <caret line="1" column="36" lean-forward="true" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="provider-factory.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packages/core/src/module/provider-factory.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="575">
+              <caret line="106" column="27" lean-forward="true" selection-start-line="106" selection-start-column="27" selection-end-line="106" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="more-nest.service.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/nest/more-nest/more-nest.service.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="92">
+              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="module.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packages/core/src/module/module.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="113">
+              <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -122,8 +91,8 @@
       <file leaf-file-name="registry.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/packages/core/src/registry.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+            <state relative-caret-position="299">
+              <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
               </folding>
@@ -131,23 +100,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app3.module.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/core/src/app3.module.ts">
+      <file leaf-file-name="app.service.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/app.service.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="9" column="39" lean-forward="true" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nest.module.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/nest/nest.module.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="322">
-              <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-              <folding>
-                <element signature="e#0#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app2.module.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/core/src/app2.module.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="8" column="27" lean-forward="true" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -155,24 +124,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="factory.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/packages/core/src/factory.ts">
+      <file leaf-file-name="index.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/nest/index.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="26" column="22" lean-forward="true" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="23">
+              <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bootstrap.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/packages/core/src/bootstrap.ts">
+      <file leaf-file-name="nest.service.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/nest/nest.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="322">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
               <folding>
-                <element signature="e#0#36#0" expanded="true" />
+                <element signature="e#0#42#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -192,9 +159,11 @@
       <find>modulesRef</find>
       <find>this.container</find>
       <find>this.module</find>
-      <find>getProvider</find>
       <find>console.log</find>
       <find>conso</find>
+      <find>modulesContainer</find>
+      <find>getProvider</find>
+      <find>getModule</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -206,19 +175,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/packages/testing/package.json" />
-        <option value="$PROJECT_DIR$/packages/core/src/decorators/module/transient-scope.decorator.ts" />
-        <option value="$PROJECT_DIR$/packages/core/__tests__/decorators/module/transient-scope.decorator.spec.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/constants.ts" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/packages/core/src/interfaces/index.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module/module-with-providers.interface.ts" />
         <option value="$PROJECT_DIR$/packages/core/src/decorators/module/module.decorator.ts" />
         <option value="$PROJECT_DIR$/example/package.json" />
         <option value="$PROJECT_DIR$/example/src/test3.service.ts" />
         <option value="$PROJECT_DIR$/example/src/test.service.ts" />
         <option value="$PROJECT_DIR$/example/src/app.module.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/module/provider-factory.ts" />
         <option value="$PROJECT_DIR$/example/src/app2.module.ts" />
         <option value="$PROJECT_DIR$/example/src/app3.module.ts" />
         <option value="$PROJECT_DIR$/examples/core/tsconfig.json" />
@@ -254,8 +215,16 @@
         <option value="$PROJECT_DIR$/packages/core/src/factory.ts" />
         <option value="$PROJECT_DIR$/packages/core/src/index.ts" />
         <option value="$PROJECT_DIR$/examples/core/src/app3.module.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/module/module.ts" />
         <option value="$PROJECT_DIR$/packages/core/src/registry.ts" />
+        <option value="$PROJECT_DIR$/examples/core/src/nest/index.ts" />
+        <option value="$PROJECT_DIR$/examples/core/src/nest/more-nest/index.ts" />
+        <option value="$PROJECT_DIR$/examples/core/src/nest/more-nest/nest.module.ts" />
+        <option value="$PROJECT_DIR$/examples/core/src/nest/more-nest/more-nest.module.ts" />
+        <option value="$PROJECT_DIR$/examples/core/src/app.service.ts" />
+        <option value="$PROJECT_DIR$/examples/core/src/nest/nest.module.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/module/module.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/module/provider-factory.ts" />
+        <option value="$PROJECT_DIR$/examples/core/src/nest/nest.service.ts" />
         <option value="$PROJECT_DIR$/examples/core/src/app.module.ts" />
       </list>
     </option>
@@ -327,20 +296,10 @@
             <path>
               <item name="nuclei" type="b2602c69:ProjectViewProjectNode" />
               <item name="nuclei" type="462c0819:PsiDirectoryNode" />
-              <item name="packages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nuclei" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nuclei" type="462c0819:PsiDirectoryNode" />
-              <item name="packages" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nuclei" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nuclei" type="462c0819:PsiDirectoryNode" />
-              <item name="packages" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="nest" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -366,6 +325,8 @@
       <recent name="C:\Users\esetm\WebstormProjects\nuclei\packages\core\src\decorators\module" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Git\nuclei\examples\core\src\nest\more-nest" />
+      <recent name="E:\Git\nuclei\examples\core\src" />
       <recent name="E:\Git\nuclei\examples\electron" />
       <recent name="E:\Git\nuclei\packages\electron" />
       <recent name="C:\Users\esetm\WebstormProjects\nuclei\packages\testing" />
@@ -394,19 +355,19 @@
       <option name="presentableId" value="Default" />
       <updated>1534318793150</updated>
       <workItem from="1534318794370" duration="25128000" />
-      <workItem from="1534351426631" duration="17509000" />
+      <workItem from="1534351426631" duration="20254000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42637000" />
+    <option name="totallyTimeSpent" value="45382000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TypeScript" order="11" weight="0.32897604" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24940899" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24940899" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
@@ -414,7 +375,7 @@
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32858273" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.48693585" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.4125099" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -446,72 +407,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/inversify/dts/container/container.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="26" column="7" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/constants.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="15" column="26" lean-forward="true" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/electron/src/storage.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#67#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/electron/src/symbols.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="58" lean-forward="true" selection-start-line="1" selection-start-column="58" selection-end-line="1" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/electron/src/decorators/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="35" selection-start-column="35" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/electron/src/interfaces/on-ready.interface.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/electron/src/interfaces/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="37" selection-start-column="37" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/electron/src/windows/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="23" selection-start-column="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/electron/src/windows/windows.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/electron/src/windows/main.window.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -586,7 +481,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/core/src/index.ts">
+    <entry file="file://$PROJECT_DIR$/examples/core/#src/index.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
           <caret line="6" lean-forward="true" selection-end-line="6" />
@@ -733,16 +628,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/module/provider-factory.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="93" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packages/core/src/index.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
@@ -759,49 +644,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/core/src/test3.service.ts">
+    <entry file="file://$PROJECT_DIR$/examples/core/#src/test3.service.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
           <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/core/src/test2.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/core/src/test.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" column="3" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/core/src/app3.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/core/src/app2.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="27" lean-forward="true" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -815,10 +661,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/module/module.ts">
+    <entry file="file://$PROJECT_DIR$/examples/core/#src/test2.service.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="114" column="52" lean-forward="true" selection-start-line="114" selection-start-column="52" selection-end-line="114" selection-end-column="52" />
+        <state>
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/#src/test.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" column="3" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/#src/app3.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/#src/app2.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="27" lean-forward="true" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/#src/app.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/nest/more-nest/more-nest.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/nest/more-nest/more-nest.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/nest/more-nest/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="36" lean-forward="true" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/nest/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/nest/nest.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
@@ -827,20 +763,60 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/packages/core/src/registry.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        <state relative-caret-position="299">
+          <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/packages/core/src/module/module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/core/src/module/provider-factory.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="106" column="27" lean-forward="true" selection-start-line="106" selection-start-column="27" selection-end-line="106" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/nest/nest.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/app.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" column="39" lean-forward="true" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/examples/core/src/app.module.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="27" column="18" lean-forward="true" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+        <state relative-caret-position="276">
+          <caret line="12" column="25" lean-forward="true" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
           <folding>
-            <element signature="e#0#63#0" expanded="true" />
+            <element signature="e#0#55#0" expanded="true" />
           </folding>
         </state>
       </provider>

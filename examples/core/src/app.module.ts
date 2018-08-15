@@ -1,32 +1,25 @@
-import { Registry, OnModuleInit, Module, APP_INITIALIZER } from '@nuclei/core';
+import { APP_INITIALIZER, Module } from '@nuclei/core';
 
-import { Test2Service } from './test2.service';
-import { TestService } from './test.service';
-import { App2Module } from './app2.module';
+import { NestModule, NestService } from './nest';
+import { AppService } from './app.service';
 
 @Module({
-	imports: [App2Module],
+	imports: [NestModule],
 	providers: [
-		Test2Service,
-		// @TODO: No matching bindings found for serviceIdentifier: TestService when injecting dependency in useFactory
+		AppService,
 		{
 			provide: APP_INITIALIZER,
-			useFactory: () => new Promise(resolve => setTimeout(resolve, 1000)),
+			useFactory: (app: AppService) => app.start(),
+			deps: [AppService],
 			multi: true,
 		},
+		// @TODO: Fix useFactory dependency injection
 		{
 			provide: APP_INITIALIZER,
-			useFactory: async () => console.log('wtf'),
+			useFactory: (nest: NestService) => nest.start(),
+			deps: [NestService],
 			multi: true,
 		},
 	],
 })
-export class AppModule implements OnModuleInit {
-
-	constructor(private readonly registry: Registry) {}
-
-	onModuleInit() {
-		console.log(this.registry.getModule(AppModule));
-	}
-
-}
+export class AppModule {}

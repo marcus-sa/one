@@ -8,6 +8,7 @@ import {
 	ValueProvider,
 	// Provider,
 	Type,
+	ModuleMetadata,
 } from '../interfaces';
 
 export class ProviderFactory {
@@ -86,13 +87,20 @@ export class ProviderFactory {
 
 		// @TODO: Need to bind all providers in nested exports hierarchy
 		modules.forEach(module => {
-			module.exports.forEach(ref => {
-				const providerRef = this.module.getProvider(module.target, ref);
+			const bind = (module: Module) => {
+				module.exports.forEach(ref => {
+					const providerRef = this.module.getProvider(module.target, <any>ref);
 
-				this.module.providers.bind(ref)
-					.toConstantValue(providerRef)
-					.whenInjectedInto(provider.provide || provider);
-			});
+					this.module.providers.bind(<any>ref)
+						.toConstantValue(providerRef)
+						.whenInjectedInto(provider.provide || provider);
+
+					const moduleRef = this.module.getModule(ref);
+					if (moduleRef.exports) return bind(moduleRef);
+				});
+			};
+
+			return bind(module);
 		});
 	}
 

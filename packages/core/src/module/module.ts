@@ -48,7 +48,7 @@ export class Module {
 		}, {});
 	};
 
-	public getModule(module: any) {
+	public getModule(module: any): Module {
 		return this.modulesContainer.get<Module>(module.module || module);
 	}
 
