@@ -1,4 +1,5 @@
-export { OnInit, OnDestroy, ModuleWithProviders } from './interfaces';
-export * from './constants';
+export * from './interfaces';
 export * from './decorators';
 export * from './bootstrap';
+export * from './constants';
+export * from './registry';

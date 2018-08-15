@@ -1,0 +1,1 @@
+{"version":3,"file":"windows.module.js","sourceRoot":"","sources":["../../src/windows/windows.module.ts"],"names":[],"mappings":";;;;;;;;AAAA,uCAAsC;AACtC,+CAAkD;AAElD,+CAA2C;AAS3C,IAAa,aAAa,GAA1B,MAAa,aAAa;CAAG,CAAA;AAAhB,aAAa;IAPzB,aAAM,CAAC;QACP,OAAO,EAAE;YACR,yBAAc,CAAC,UAAU,CAAC;gBACzB,wBAAU;aACV,CAAC;SACF;KACD,CAAC;GACW,aAAa,CAAG;AAAhB,sCAAa"}

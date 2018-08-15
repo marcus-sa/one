@@ -5,28 +5,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49448681-9f06-43d1-84e9-1317bf6c903b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/src/app3.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/src/test3.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/esetm.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/electron/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/electron/src/app.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/electron/src/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/electron/src/windows/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/electron/src/windows/main.window.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/electron/src/windows/windows.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/electron/tsconfig.build.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/electron/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/dynamic-module.interface.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/on-module-init.interface.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/core/src/registry.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/src/app.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/src/decorators/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/src/decorators/window.decorator.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/src/electron-core.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/src/electron.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/src/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/src/interfaces/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/src/interfaces/on-ready.interface.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/src/storage.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/src/symbols.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/tsconfig.build.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/electron/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/app2.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/app2.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/test.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/test.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/decorators/module/module.decorator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/decorators/module/module.decorator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/decorators/module/on-destroy.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/on-destroy.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/decorators/module/on-init.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/on-init.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/app2.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/app2.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/app3.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/app3.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/test.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/test.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/test2.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/test2.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/test3.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/src/test3.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/examples/core/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/decorators/module/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/decorators/module/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/factory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/factory.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/core/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/interfaces/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/interfaces/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/interfaces/module-metadata.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/module-metadata.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/interfaces/module-with-providers.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/module-with-providers.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/interfaces/module/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/interfaces/module/module-metadata.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/module-metadata.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/interfaces/module/on-destroy.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/interfaces/module/on-module-destroy.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/interfaces/module/on-init.interface.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/core/src/module/module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/module/module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/module/provider-factory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/module/provider-factory.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -40,56 +63,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/src/index.ts">
+      <file leaf-file-name="module.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packages/core/src/module/module.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test2.service.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/src/test2.service.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
-              <folding>
-                <element signature="e#0#42#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="provider-factory.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/packages/core/src/module/provider-factory.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1219">
-              <caret line="53" column="3" lean-forward="true" selection-start-line="53" selection-start-column="3" selection-end-line="53" selection-end-column="3" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="interfaces.d.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/inversify/dts/interfaces/interfaces.d.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="214" column="22" selection-start-line="214" selection-start-column="8" selection-end-line="214" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app3.module.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/src/app3.module.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+            <state relative-caret-position="122">
+              <caret line="114" column="52" lean-forward="true" selection-start-line="114" selection-start-column="52" selection-end-line="114" selection-end-column="52" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -97,20 +75,79 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test3.service.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/src/test3.service.ts">
+      <file leaf-file-name="test2.service.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/test2.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="3" column="13" lean-forward="true" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+            <state>
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="module.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/packages/core/src/module/module.ts">
+      <file leaf-file-name="test.service.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/test.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="30" column="30" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="30" />
+            <state relative-caret-position="207">
+              <caret line="9" column="3" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test3.service.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/test3.service.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="69">
+              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.module.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/app.module.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="467">
+              <caret line="27" column="18" lean-forward="true" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#63#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="registry.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packages/core/src/registry.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app3.module.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/app3.module.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#59#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app2.module.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/core/src/app2.module.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="8" column="27" lean-forward="true" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -121,8 +158,8 @@
       <file leaf-file-name="factory.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/packages/core/src/factory.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="297">
+              <caret line="26" column="22" lean-forward="true" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -130,25 +167,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app2.module.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/src/app2.module.ts">
+      <file leaf-file-name="bootstrap.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packages/core/src/bootstrap.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            <state>
               <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.module.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/src/app.module.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="11" column="5" lean-forward="true" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-              <folding>
-                <element signature="e#0#63#0" expanded="true" />
+                <element signature="e#0#36#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -168,8 +192,13 @@
       <find>modulesRef</find>
       <find>this.container</find>
       <find>this.module</find>
+      <find>getProvider</find>
       <find>console.log</find>
+      <find>conso</find>
     </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -177,48 +206,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/packages/core/tsconfig.json" />
-        <option value="$PROJECT_DIR$/packages/core/tsconfig.build.json" />
-        <option value="$PROJECT_DIR$/packages/core/src/interfaces/target.interface.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module.interface.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/decorators/inject.decorator.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/decorators/injectable.decorator.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/decorators/module.decorator.ts" />
-        <option value="$PROJECT_DIR$/example/tsconfig.json" />
-        <option value="$PROJECT_DIR$/packages/core/src/decorators/index.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/module/container.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/bootstrap.ts" />
-        <option value="$PROJECT_DIR$/example/src/index.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/interfaces/type.interface.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/decorators/module/on-init.interface.ts" />
-        <option value="$PROJECT_DIR$/example/src/test2.service.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/reflector.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/interfaces/provider.interface.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/injection-token.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/module/module-factory.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/module/registry.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/module/module-with-providers.interface.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module-with-providers.interface.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/module/modules-container.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/module/modules-container.2.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module-metadata.interface.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/module/index.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/factory.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/decorators/module/on-destroy.interface.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/decorators/module/index.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/decorators/module/request-scope.decorator.ts" />
-        <option value="$PROJECT_DIR$/tsconfig.base.json" />
-        <option value="$PROJECT_DIR$/packages/core/package.json" />
         <option value="$PROJECT_DIR$/packages/testing/package.json" />
         <option value="$PROJECT_DIR$/packages/core/src/decorators/module/transient-scope.decorator.ts" />
         <option value="$PROJECT_DIR$/packages/core/__tests__/decorators/module/transient-scope.decorator.spec.ts" />
         <option value="$PROJECT_DIR$/packages/core/src/constants.ts" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module/index.ts" />
         <option value="$PROJECT_DIR$/packages/core/src/interfaces/index.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module/module-metadata.interface.ts" />
         <option value="$PROJECT_DIR$/packages/core/src/interfaces/module/module-with-providers.interface.ts" />
-        <option value="$PROJECT_DIR$/packages/core/src/index.ts" />
         <option value="$PROJECT_DIR$/packages/core/src/decorators/module/module.decorator.ts" />
         <option value="$PROJECT_DIR$/example/package.json" />
         <option value="$PROJECT_DIR$/example/src/test3.service.ts" />
@@ -227,7 +221,42 @@
         <option value="$PROJECT_DIR$/packages/core/src/module/provider-factory.ts" />
         <option value="$PROJECT_DIR$/example/src/app2.module.ts" />
         <option value="$PROJECT_DIR$/example/src/app3.module.ts" />
+        <option value="$PROJECT_DIR$/examples/core/tsconfig.json" />
+        <option value="$PROJECT_DIR$/examples/electron/src/windows/index.ts" />
+        <option value="$PROJECT_DIR$/examples/electron/src/windows/window.module.ts" />
+        <option value="$PROJECT_DIR$/packages/electron/src/tokens.ts" />
+        <option value="$PROJECT_DIR$/packages/electron/src/storage.ts" />
+        <option value="$PROJECT_DIR$/packages/electron/src/decorators/window.decorator.ts" />
+        <option value="$PROJECT_DIR$/packages/electron/src/symbols.ts" />
+        <option value="$PROJECT_DIR$/examples/electron/src/index.ts" />
+        <option value="$PROJECT_DIR$/packages/electron/src/decorators/index.ts" />
+        <option value="$PROJECT_DIR$/packages/electron/src/interfaces/on-ready.interface.ts" />
+        <option value="$PROJECT_DIR$/packages/electron/src/interfaces/index.ts" />
+        <option value="$PROJECT_DIR$/packages/electron/src/index.ts" />
+        <option value="$PROJECT_DIR$/examples/electron/src/windows/main.window.ts" />
+        <option value="$PROJECT_DIR$/packages/electron/src/app.service.ts" />
+        <option value="$PROJECT_DIR$/examples/electron/src/windows/windows.module.ts" />
+        <option value="$PROJECT_DIR$/examples/electron/src/app.module.ts" />
+        <option value="$PROJECT_DIR$/examples/electron/tsconfig.json" />
+        <option value="$PROJECT_DIR$/packages/core/src/decorators/module/index.ts" />
+        <option value="$PROJECT_DIR$/examples/core/package.json" />
+        <option value="$PROJECT_DIR$/examples/electron/tsconfig.build.json" />
+        <option value="$PROJECT_DIR$/packages/electron/package.json" />
+        <option value="$PROJECT_DIR$/examples/electron/package.json" />
+        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module/dynamic-module.interface.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module/index.ts" />
+        <option value="$PROJECT_DIR$/packages/electron/src/electron-core.module.ts" />
+        <option value="$PROJECT_DIR$/packages/electron/src/electron.module.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module/module-metadata.interface.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module/on-init.interface.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module/on-module-destroy.interface.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/interfaces/module/on-module-init.interface.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/factory.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/index.ts" />
+        <option value="$PROJECT_DIR$/examples/core/src/app3.module.ts" />
         <option value="$PROJECT_DIR$/packages/core/src/module/module.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/registry.ts" />
+        <option value="$PROJECT_DIR$/examples/core/src/app.module.ts" />
       </list>
     </option>
   </component>
@@ -238,16 +267,20 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="NodeModulesDirectoryManager">
-    <handled-path value="$PROJECT_DIR$/example/node_modules" />
+    <handled-path value="$PROJECT_DIR$/examples/core/node_modules" />
+    <handled-path value="$PROJECT_DIR$/examples/electron/node_modules" />
     <handled-path value="$PROJECT_DIR$/node_modules" />
     <handled-path value="$PROJECT_DIR$/packages/core/node_modules" />
+    <handled-path value="$PROJECT_DIR$/packages/electron/node_modules" />
     <handled-path value="$PROJECT_DIR$/packages/testing/node_modules" />
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
-      <path value="$PROJECT_DIR$/example/package.json" />
+      <path value="$PROJECT_DIR$/examples/core/package.json" />
+      <path value="$PROJECT_DIR$/examples/electron/package.json" />
       <path value="$PROJECT_DIR$/package.json" />
       <path value="$PROJECT_DIR$/packages/core/package.json" />
+      <path value="$PROJECT_DIR$/packages/electron/package.json" />
       <path value="$PROJECT_DIR$/packages/testing/package.json" />
     </packageJsonPaths>
   </component>
@@ -276,12 +309,19 @@
             <path>
               <item name="nuclei" type="b2602c69:ProjectViewProjectNode" />
               <item name="nuclei" type="462c0819:PsiDirectoryNode" />
-              <item name="example" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="nuclei" type="b2602c69:ProjectViewProjectNode" />
               <item name="nuclei" type="462c0819:PsiDirectoryNode" />
-              <item name="example" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="nuclei" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nuclei" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -301,14 +341,6 @@
               <item name="packages" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nuclei" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nuclei" type="462c0819:PsiDirectoryNode" />
-              <item name="packages" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="module" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -328,11 +360,14 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Git\nuclei\examples\core" />
       <recent name="E:\Git\nuclei\packages\core\src\interfaces\module" />
       <recent name="C:\Users\esetm\WebstormProjects\nuclei\packages\core\src\interfaces" />
       <recent name="C:\Users\esetm\WebstormProjects\nuclei\packages\core\src\decorators\module" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Git\nuclei\examples\electron" />
+      <recent name="E:\Git\nuclei\packages\electron" />
       <recent name="C:\Users\esetm\WebstormProjects\nuclei\packages\testing" />
     </key>
   </component>
@@ -359,12 +394,12 @@
       <option name="presentableId" value="Default" />
       <updated>1534318793150</updated>
       <workItem from="1534318794370" duration="25128000" />
-      <workItem from="1534351426631" duration="5911000" />
+      <workItem from="1534351426631" duration="17509000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31039000" />
+    <option name="totallyTimeSpent" value="42637000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
@@ -375,10 +410,11 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3293745" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3293745" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32858273" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.37292162" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.48693585" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -387,11 +423,19 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/examples/electron/src/windows/index.js" />
+        <option value="$PROJECT_DIR$/examples/electron/src/windows/windows.module.js" />
+        <option value="$PROJECT_DIR$/examples/electron/src/windows/main.window.js" />
+        <option value="$PROJECT_DIR$/examples/electron/src/app.module.js" />
+        <option value="$PROJECT_DIR$/examples/electron/src/index.js" />
+      </list>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -402,327 +446,401 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/packages/core/src/interfaces/target.interface.ts">
+    <entry file="file://$PROJECT_DIR$/node_modules/inversify/dts/container/container.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="19" lean-forward="true" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/inversify/lib/planning/planner.js" />
-    <entry file="file://$PROJECT_DIR$/example/tsconfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/module/modules-container.2.ts" />
-    <entry file="file://$PROJECT_DIR$/packages/core/src/module/registry.ts" />
-    <entry file="file://$PROJECT_DIR$/packages/core/src/module/modules-container.ts" />
-    <entry file="file://$PROJECT_DIR$/packages/core/src/module/module-factory.ts" />
-    <entry file="file://$PROJECT_DIR$/packages/core/src/interfaces/module/on-init.interface.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/decorators/module/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/interfaces/module/on-destroy.interface.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/decorators/module/request-scope.decorator.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/tsconfig.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/module.ts" />
-    <entry file="file://$PROJECT_DIR$/packages/core/lib/module.js" />
-    <entry file="file://$PROJECT_DIR$/packages/core/tsconfig.build.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lerna-debug.log" />
-    <entry file="file://$PROJECT_DIR$/packages/core/lib/interfaces/index.js" />
-    <entry file="file://$PROJECT_DIR$/packages/testing/tsconfig.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/testing/src/index.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/testing/tsconfig.build.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="10" column="32" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/testing/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="13" column="3" lean-forward="true" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/bootstrap.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/decorators/module/transient-scope.decorator.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="26" selection-start-column="26" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/__tests__/decorators/module/transient-scope.decorator.spec.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="4" column="31" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="598">
+          <caret line="26" column="7" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/packages/core/src/constants.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="24" column="42" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
+        <state relative-caret-position="345">
+          <caret line="15" column="26" lean-forward="true" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/electron/src/storage.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/electron/src/symbols.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="58" lean-forward="true" selection-start-line="1" selection-start-column="58" selection-end-line="1" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/electron/src/decorators/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="35" selection-start-column="35" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/electron/src/interfaces/on-ready.interface.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/electron/src/interfaces/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="37" selection-start-column="37" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/electron/src/windows/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="23" selection-start-column="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/electron/src/windows/windows.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/electron/src/windows/main.window.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/electron/src/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="3" column="29" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/electron/src/app.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="e#0#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/electron/src/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" selection-start-line="6" selection-end-line="9" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/electron/tsconfig.build.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor>
+            <markdownNavigatorState />
+          </second_editor>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tsconfig.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        <state relative-caret-position="115">
+          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tsconfig.base.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yarn.lock">
+    <entry file="file://$PROJECT_DIR$/examples/electron/build/index.d.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/lerna.json">
+    <entry file="file://$PROJECT_DIR$/examples/electron/src/app.module.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="15" selection-end-column="25" />
+        <state relative-caret-position="253">
+          <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
           <folding>
-            <element signature="n#!!block;n#jest#0;n#!!top" />
+            <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" lean-forward="true" selection-end-line="6" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/core/src/decorators/module/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="44" selection-start-line="2" selection-start-column="44" selection-end-line="2" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/core/tsconfig.build.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/electron/build/app.module.js.map">
+      <provider editor-type-id="sourcemapFileViewerProvider" />
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/electron/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="34" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/electron/tsconfig.build.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/electron/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/electron/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/electron/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/electron/build/windows/main.window.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/electron/build/windows/windows.module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" column="43" lean-forward="true" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/electron/build/index.js">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/packages/core/src/interfaces/module/index.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="39" lean-forward="true" selection-start-line="3" selection-start-column="39" selection-end-line="3" selection-end-column="39" />
+        <state relative-caret-position="92">
+          <caret line="4" column="46" lean-forward="true" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/interfaces/index.ts">
+    <entry file="file://$PROJECT_DIR$/packages/core/src/interfaces/module/dynamic-module.interface.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/interfaces/module/module-with-providers.interface.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="36" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="36" />
+        <state relative-caret-position="46">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
           <folding>
-            <element signature="e#0#48#0" expanded="true" />
+            <element signature="e#0#61#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/index.ts">
+    <entry file="file://$PROJECT_DIR$/examples/electron/build/app.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="70" />
+        <state relative-caret-position="161">
+          <caret line="7" column="62" lean-forward="true" selection-start-line="7" selection-start-column="62" selection-end-line="7" selection-end-column="62" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/decorators/module/module.decorator.ts">
+    <entry file="file://$PROJECT_DIR$/packages/electron/src/electron.module.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="274">
+          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/core/src/interfaces/module/on-module-init.interface.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="22" lean-forward="true" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/core/src/interfaces/module/on-module-destroy.interface.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="10" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/electron/src/electron-core.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="9" lean-forward="true" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/packages/core/src/interfaces/module/module-metadata.interface.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+        <state relative-caret-position="92">
+          <caret line="4" column="24" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="24" />
           <folding>
-            <element signature="e#1#73#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="55" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/test.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/test3.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="13" lean-forward="true" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/test2.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/inversify/dts/container/container.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="14" column="85" selection-start-line="14" selection-start-column="85" selection-end-line="14" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/module/index.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/inversify/dts/interfaces/interfaces.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="214" column="22" selection-start-line="214" selection-start-column="8" selection-end-line="214" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/factory.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/app.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="5" lean-forward="true" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/app2.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/app3.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#59#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/packages/core/src/module/provider-factory.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1219">
-          <caret line="53" column="3" lean-forward="true" selection-start-line="53" selection-start-column="3" selection-end-line="53" selection-end-column="3" />
+        <state relative-caret-position="389">
+          <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="93" selection-end-column="58" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packages/core/src/module/module.ts">
+    <entry file="file://$PROJECT_DIR$/packages/core/src/index.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="30" column="30" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="30" />
+        <state relative-caret-position="115">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/core/src/bootstrap.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/test3.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/test2.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/test.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" column="3" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/app3.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/app2.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="27" lean-forward="true" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/core/src/factory.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="26" column="22" lean-forward="true" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/core/src/module/module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="114" column="52" lean-forward="true" selection-start-line="114" selection-start-column="52" selection-end-line="114" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/core/src/registry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/core/src/app.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="27" column="18" lean-forward="true" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#63#0" expanded="true" />
           </folding>
         </state>
       </provider>

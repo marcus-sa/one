@@ -1,0 +1,15 @@
+{
+  "main": "./build/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "npm run build && electron ."
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3",
+    "typescript": "*"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.12",
+    "electron": "*"
+  }
+}

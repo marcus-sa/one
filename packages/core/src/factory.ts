@@ -1,7 +1,9 @@
 import { Container } from 'inversify';
 
+import { APP_INITIALIZER } from './constants';
+import { Registry } from './registry';
 import { Type } from './interfaces';
-import { Module } from './module/';
+import { Module } from './module';
 
 export class Factory {
 
@@ -15,16 +17,24 @@ export class Factory {
 		defaultScope: 'Singleton',
 	});
 
+	private readonly registry = new Registry();
+
 	constructor(private readonly module: Type<any>) {}
 
 	public async start() {
 		const module = new Module(
 			this.modulesContainer,
 			this.modulesRef,
+			this.registry,
 			this.module,
 		);
 
 		await module.create();
+
+		// @TODO: Call app initializers now or in Module ?
+		await Promise.all(
+			this.registry.getAllProviders(APP_INITIALIZER),
+		);
 	}
 
 }

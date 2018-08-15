@@ -1,20 +1,29 @@
 import { Container } from 'inversify';
 
-import { OnInit, ModuleMetadata, Type, ModuleWithProviders } from '../interfaces';
+import { Injector, METADATA } from '../constants';
 import { ProviderFactory } from './provider-factory';
-import { APP_INITIALIZER, Injector, METADATA } from '../constants';
+import { Registry } from '../registry';
+import {
+	ModuleMetadata,
+	DynamicModule,
+	ModuleImport,
+	ModuleExport,
+	OnModuleInit,
+	Type,
+} from '../interfaces';
 
 // @TODO: Fix type declarations
 export class Module {
 
 	public readonly providers = new Container();
-	public exports: any[];// Array<symbol | Type<any>>;
-	public imports: Array<ModuleWithProviders | Type<any>>;
+	public exports: ModuleExport[];
+	public imports: ModuleImport[];
 
 	constructor(
 		private readonly modulesContainer: Container,
 		private readonly modulesRef: Container,
-		public readonly _target: ModuleWithProviders | Type<any>,
+		private readonly registry: Registry,
+		private readonly _target: Type<any> | DynamicModule,
 	) {}
 
 	public get target(): Type<any> {
@@ -24,11 +33,10 @@ export class Module {
 	}
 
 	private getModuleMetadata(key: string): ModuleMetadata {
-		return typeof this.target === 'function'
-			? Reflect.hasMetadata(key, this.target)
-				? Reflect.getMetadata(key, this.target)
-				: []
-			: this.target[key] || [];
+		return (typeof this.target === 'function'
+			? Reflect.getMetadata(key, this.target)
+			: this.target[key]
+		) || [];
 	}
 
 	private resolveMetadata() {
@@ -42,6 +50,10 @@ export class Module {
 
 	public getModule(module: any) {
 		return this.modulesContainer.get<Module>(module.module || module);
+	}
+
+	public getModuleRef(module: any) {
+		return this.modulesRef.get<Type<any>>(module.module || module);
 	}
 
 	public getProvider(module, provider: any) {
@@ -59,21 +71,40 @@ export class Module {
 				const module = new Module(
 					this.modulesContainer,
 					this.modulesRef,
-					moduleRef,
+					this.registry,
+					<any>moduleRef,
 				);
 				await module.create();
 			}),
 		);
 	}
 
+	private async createMetadata(metadata: ModuleMetadata) {
+		this.imports = await Promise.all(
+			<Promise<ModuleImport>[]>metadata.imports,
+		);
+		this.exports = await Promise.all(
+			<Promise<ModuleExport>[]>metadata.exports,
+		);
+	}
+
+	private bindScopeDefaults() {
+		this.providers.bind(Injector).toConstantValue(this.providers);
+		this.modulesRef.bind(Injector)
+			.toConstantValue(this.providers)
+			.whenInjectedInto(<any>this.target);
+
+		this.providers.bind(Registry).toConstantValue(this.registry);
+		this.modulesRef.bind(Registry)
+			.toConstantValue(this.registry)
+			.whenInjectedInto(<any>this.target);
+	}
+
 	public async create() {
 		if (this.modulesRef.isBound(<any>this.target)) return;
 		const metadata = this.resolveMetadata();
-		this.imports = metadata.imports;
-		this.exports = metadata.exports;
-
-		this.providers.bind(Injector).toConstantValue(this.providers);
-
+		await this.createMetadata(metadata);
+		this.bindScopeDefaults();
 		await this.resolveDependencies();
 
 		const providerFactory = new ProviderFactory(metadata.providers, this);
@@ -82,18 +113,16 @@ export class Module {
 		// @TODO: Instantiate module before or after metadata has been resolved ?
 		this.modulesContainer.bind(<any>this.target).toConstantValue(this);
 		this.modulesRef.bind(<any>this.target).toSelf();
+		this.registry.modules.set(this.target, this);
 
-		console.log(`before APP_INITIALIZER`);
-
-		if (this.providers.isBound(APP_INITIALIZER)) {
-			console.log(this.providers.getAll(APP_INITIALIZER));
-		}
-
-		console.log(`after APP_INITIALIZER`);
+		// @TODO: Make use factories async resolved
+		/*if (this.providers.isBound(APP_INITIALIZER)) {
+			await Promise.all(this.providers.getAll(APP_INITIALIZER));
+		}*/
 
 		const module = this.modulesRef.get(<any>this.target);
 
-		((<OnInit>module).onInit && await (<OnInit>module).onInit());
+		((<OnModuleInit>module).onModuleInit && await (<OnModuleInit>module).onModuleInit());
 	}
 
 }

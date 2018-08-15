@@ -1,11 +1,12 @@
-import { ModuleWithProviders } from './module-with-providers.interface';
+import { DynamicModule } from './dynamic-module.interface';
 import { Provider } from '../provider.interface';
 import { Type } from '../type.interface';
 
-export type ExportMetadata = Provider | ModuleMetadata;
+export type ModuleImport = Type<any> | DynamicModule | symbol;
+export type ModuleExport = DynamicModule | symbol | Provider;
 
 export interface ModuleMetadata {
-	imports?: Array<ModuleWithProviders | Type<any>>;
-	exports?: ExportMetadata[];
+	imports?: Array<ModuleImport | Promise<DynamicModule>>;
+	exports?: Array<ModuleExport | Promise<DynamicModule>>;
 	providers?: Provider[];
 }

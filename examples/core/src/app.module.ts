@@ -1,4 +1,4 @@
-import { OnInit, Module, APP_INITIALIZER } from '@nuclei/core';
+import { Registry, OnModuleInit, Module, APP_INITIALIZER } from '@nuclei/core';
 
 import { Test2Service } from './test2.service';
 import { TestService } from './test.service';
@@ -21,8 +21,12 @@ import { App2Module } from './app2.module';
 		},
 	],
 })
-export class AppModule implements OnInit {
+export class AppModule implements OnModuleInit {
 
-	onInit() {}
+	constructor(private readonly registry: Registry) {}
+
+	onModuleInit() {
+		console.log(this.registry.getModule(AppModule));
+	}
 
 }
