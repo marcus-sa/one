@@ -3,8 +3,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "test": "lerna run test",
-    /*"prepublish": "npm run test && lerna run prepare",
-    "precommit": "npm run test",*/
+    "prepublish": "npm run test && lerna run prepare",
+    "precommit": "npm run test",
     "clean": "rimraf packages/**/lib"
   },
   "devDependencies": {

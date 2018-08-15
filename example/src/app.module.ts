@@ -7,13 +7,18 @@ import { App2Module } from './app2.module';
 @Module({
 	imports: [App2Module],
 	providers: [
-		// @TODO: No matching bindings found for serviceIdentifier: TestService when injecting dependency in useFactory
-		/*{
-			provide: APP_INITIALIZER,
-			useFactory: (test: TestService) => console.log(APP_INITIALIZER, test),
-			deps: [TestService],
-		},*/
 		Test2Service,
+		// @TODO: No matching bindings found for serviceIdentifier: TestService when injecting dependency in useFactory
+		{
+			provide: APP_INITIALIZER,
+			useFactory: () => new Promise(resolve => setTimeout(resolve, 1000)),
+			multi: true,
+		},
+		{
+			provide: APP_INITIALIZER,
+			useFactory: async () => console.log('wtf'),
+			multi: true,
+		},
 	],
 })
 export class AppModule implements OnInit {

@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "dev": "ts-node -r tsconfig-paths/register src/index.ts"
+    "dev": "nodemon --watch ../packages/core --watch ./src -x ts-node -r tsconfig-paths/register src/index.ts"
   },
   "devDependencies": {
+    "nodemon": "^1.18.3",
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.5.0"
   },

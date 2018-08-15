@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 
-import { ModuleMetadata, Type } from '../interfaces';
+import { OnInit, ModuleMetadata, Type, ModuleWithProviders } from '../interfaces';
 import { ProviderFactory } from './provider-factory';
 import { APP_INITIALIZER, Injector, METADATA } from '../constants';
 
@@ -9,18 +9,26 @@ export class Module {
 
 	public readonly providers = new Container();
 	public exports: any[];// Array<symbol | Type<any>>;
-	public imports: Type<any>[];
+	public imports: Array<ModuleWithProviders | Type<any>>;
 
 	constructor(
 		private readonly modulesContainer: Container,
 		private readonly modulesRef: Container,
-		public readonly target: Type<any>,
+		public readonly _target: ModuleWithProviders | Type<any>,
 	) {}
 
+	public get target(): Type<any> {
+		return typeof this._target !== 'function'
+			? <any>this._target.module
+			: this._target;
+	}
+
 	private getModuleMetadata(key: string): ModuleMetadata {
-		return Reflect.hasMetadata(key, this.target)
-			? Reflect.getMetadata(key, this.target)
-			: [];
+		return typeof this.target === 'function'
+			? Reflect.hasMetadata(key, this.target)
+				? Reflect.getMetadata(key, this.target)
+				: []
+			: this.target[key] || [];
 	}
 
 	private resolveMetadata() {
@@ -33,7 +41,7 @@ export class Module {
 	};
 
 	public getModule(module: any) {
-		return this.modulesContainer.get<Module>(module);
+		return this.modulesContainer.get<Module>(module.module || module);
 	}
 
 	public getProvider(module, provider: any) {
@@ -47,7 +55,7 @@ export class Module {
 	private async resolveDependencies() {
 		await Promise.all(
 			this.imports.map(async (moduleRef) => {
-				if (this.modulesRef.isBound(moduleRef)) return;
+				if (this.modulesRef.isBound(<any>moduleRef)) return;
 				const module = new Module(
 					this.modulesContainer,
 					this.modulesRef,
@@ -59,7 +67,7 @@ export class Module {
 	}
 
 	public async create() {
-		if (this.modulesRef.isBound(this.target)) return;
+		if (this.modulesRef.isBound(<any>this.target)) return;
 		const metadata = this.resolveMetadata();
 		this.imports = metadata.imports;
 		this.exports = metadata.exports;
@@ -72,12 +80,20 @@ export class Module {
 		await providerFactory.resolve();
 
 		// @TODO: Instantiate module before or after metadata has been resolved ?
-		this.modulesContainer.bind(this.target).toConstantValue(this);
-		this.modulesRef.bind(this.target).toSelf();
+		this.modulesContainer.bind(<any>this.target).toConstantValue(this);
+		this.modulesRef.bind(<any>this.target).toSelf();
+
+		console.log(`before APP_INITIALIZER`);
 
 		if (this.providers.isBound(APP_INITIALIZER)) {
-			this.providers.getAll(APP_INITIALIZER);
+			console.log(this.providers.getAll(APP_INITIALIZER));
 		}
+
+		console.log(`after APP_INITIALIZER`);
+
+		const module = this.modulesRef.get(<any>this.target);
+
+		((<OnInit>module).onInit && await (<OnInit>module).onInit());
 	}
 
 }

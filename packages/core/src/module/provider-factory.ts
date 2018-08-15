@@ -62,7 +62,7 @@ export class ProviderFactory {
 		}
 
 		return this.module.providers.bind(provider.provide)
-			.toFactory(() => provider.useFactory(...deps()));
+			.toProvider(() => provider.useFactory(...deps()));
 	}
 
 	private getProviderType(provider: any/*Provider*/): PROVIDER_TYPES {
@@ -80,10 +80,11 @@ export class ProviderFactory {
 	}
 
 	private resolveDependencies(provider: any) {
-		const modules = this.module.imports.map(module => {
-			return this.module.getModule(module);
-		});
+		const modules = this.module.imports.map(module =>
+			this.module.getModule(module),
+		);
 
+		// @TODO: Need to bind all providers in nested exports hierarchy
 		modules.forEach(module => {
 			module.exports.forEach(ref => {
 				const providerRef = this.module.getProvider(module.target, ref);
