@@ -1,11 +1,11 @@
 import { Injectable } from '@nuclei/core';
 
-import { MoreNestService } from './more-nest';
+// import { AppService } from '../app.service';
 
 @Injectable()
 export class NestService {
 
-	constructor(private readonly moreNest: MoreNestService) {}
+	// constructor(private readonly moreNest: AppService) {}
 
 	public start() {
 		console.log(this);

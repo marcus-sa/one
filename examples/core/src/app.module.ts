@@ -7,12 +7,6 @@ import { AppService } from './app.service';
 	imports: [NestModule],
 	providers: [
 		AppService,
-		{
-			provide: APP_INITIALIZER,
-			useFactory: (app: AppService) => app.start(),
-			deps: [AppService],
-			multi: true,
-		},
 		// @TODO: Fix useFactory dependency injection
 		{
 			provide: APP_INITIALIZER,

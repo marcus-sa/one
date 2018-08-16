@@ -6,21 +6,23 @@ import {
 	ClassProvider,
 	FactoryProvider,
 	ValueProvider,
-	// Provider,
-	Type,
-	ModuleMetadata,
+	Provider,
+	Type, ExistingProvider, MultiDepsProvider,
 } from '../interfaces';
+import { ProvideToken } from "core/src/interfaces/provider.interface";
 
 export class ProviderFactory {
 
 	constructor(
-		private readonly providers: any[]/*Provider[]*/,
+		private readonly providers: Provider[],
 		private readonly module: Module,
 	) {}
 
-	private getDependencies(dependencies: any[]/*Provider[]*/ = []) {
+	private getDependencies(dependencies: Provider[] = []) {
+		// @TODO: Fix this, currently just a work around
 		return dependencies.map(dependency =>
-			this.module.providers.get(dependency),
+			// this.module.getProvider(dependency),
+			this.module.registry.getProvider(<any>dependency)
 		);
 	}
 
@@ -63,17 +65,17 @@ export class ProviderFactory {
 		}
 
 		return this.module.providers.bind(provider.provide)
-			.toProvider(() => provider.useFactory(...deps()));
+			.toFactory(() => provider.useFactory(...deps()));
 	}
 
-	private getProviderType(provider: any/*Provider*/): PROVIDER_TYPES {
-		if (provider.useFactory) {
+	private getProviderType(provider: Provider): PROVIDER_TYPES {
+		if ((<FactoryProvider>provider).useFactory) {
 			return PROVIDER_TYPES.FACTORY;
-		} else if (provider.useValue) {
+		} else if ((<ValueProvider>provider).useValue) {
 			return PROVIDER_TYPES.VALUE;
-		} else if (provider.useClass) {
+		} else if ((<ClassProvider>provider).useClass) {
 			return PROVIDER_TYPES.CLASS;
-		} else if (provider.useExisting) {
+		} else if ((<ExistingProvider>provider).useExisting) {
 			return PROVIDER_TYPES.EXISTING;
 		}
 
@@ -104,13 +106,13 @@ export class ProviderFactory {
 		});
 	}
 
-	private async bind(type: PROVIDER_TYPES, provider) {
+	private bind(type: PROVIDER_TYPES, provider) {
 		// @TODO: useExisting
 		if (type === PROVIDER_TYPES.DEFAULT) {
 			const scope = this.resolveProviderScope(provider);
 			this.bindProvider(scope, provider);
 		} else if (type === PROVIDER_TYPES.FACTORY) {
-			await this.bindFactoryProvider(provider);
+			this.bindFactoryProvider(provider);
 		} else if (type === PROVIDER_TYPES.VALUE) {
 			this.bindValueProvider(provider);
 		} else if (type === PROVIDER_TYPES.CLASS) {
@@ -119,20 +121,18 @@ export class ProviderFactory {
 	}
 
 	public async resolve() {
-		const bindings = this.providers.map(async (provider) => {
+		this.providers.forEach(provider => {
 			const type = this.getProviderType(provider);
 
-			if (type !== PROVIDER_TYPES.DEFAULT && !provider.multi) {
-				if (this.module.providers.isBound(provider.provide)) {
-					throw new Error(`Provider: ${provider.provide.toString()} is already bound. Flag as multi.`);
+			if (type !== PROVIDER_TYPES.DEFAULT && !(<MultiDepsProvider>provider).multi) {
+				if (this.module.providers.isBound((<ProvideToken>provider).provide)) {
+					throw new Error(`Provider: ${(<ProvideToken>provider).provide.toString()} is already bound. Flag as multi.`);
 				}
 			}
 
 			this.resolveDependencies(provider);
-			await this.bind(type, provider);
+			this.bind(type, provider);
 		});
-
-		await Promise.all(bindings);
 	}
 
 }

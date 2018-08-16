@@ -32,9 +32,11 @@ export class Factory {
 		await module.create();
 
 		// @TODO: Call app initializers now or in Module ?
+		console.log('Before: APP_INITIALIZER');
 		await Promise.all(
 			this.registry.getAllProviders(APP_INITIALIZER),
 		);
+		console.log('After: APP_INITIALIZER');
 	}
 
 }

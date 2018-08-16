@@ -22,7 +22,7 @@ export class Module {
 	constructor(
 		private readonly modulesContainer: Container,
 		private readonly modulesRef: Container,
-		private readonly registry: Registry,
+		public readonly registry: Registry,
 		private readonly _target: Type<any> | DynamicModule,
 	) {}
 
