@@ -9,6 +9,10 @@ export class Registry {
 		return arr.reduce((previous, current) => [...previous, ...current]);
 	}
 
+	public isModuleRef(ref: any) {
+		return this.modules.has(ref);
+	}
+
 	public isModule(module: any) {
 		return module && module.imports && module.exports;
 	}
@@ -29,34 +33,34 @@ export class Registry {
  		}
 	}
 
+	public static pick<T>(from: any[], by: any[]): T[] {
+		return from.filter(f => by.includes(f));
+	}
+
 	public getDependencyFromTree(module: Module, dependency: Provider) {
 		const token = this.getProviderToken(dependency);
-		const modules = new Set();
-		const tree = new Set();
+		const modules = new Set<string>();
 		let provider: Type<any>;
 
 		const findDependency = (module: Module) => {
-			if (!this.isModule(module) || modules.has(module)) return false;
+			if (!this.isModule(module) || modules.has(module.target.name)) return;
 
-			modules.add(module);
-			tree.add(module.target.name);
+			modules.add(module.target.name);
 
 			module.imports.forEach(moduleRef => {
 				const imported = this.getModule(<Type<any>>moduleRef);
 
-				// @TODO: Need to figure out where we are in the loop so we can check if the module exists in exports
-				const isModuleExported = imported.imports.every(module => {
-					return imported.exports.includes(module);
-				});
+				// console.log('findDependency', moduleRef);
 
-				isModuleExported && findDependency(imported);
+				// @TODO: Need to figure out where we are in the loop so we can check if the module exists in exports
+				const modules = Registry.pick<Type<any>>(module.imports, module.exports);
+				modules && findDependency(imported);
 			});
 
-			module.exports.forEach(moduleRef => {
-				const exported = this.getModule(<Type<any>>moduleRef);
+			module.exports.forEach(ref => {
+				const exported = this.getModule(<Type<any>>ref);
 
-				if (moduleRef === dependency) {
-					// provider = exported.providers.get(token);
+				if (ref === dependency) {
 					provider = module.registry.getProvider(dependency);
 					return;
 				}
@@ -72,7 +76,8 @@ export class Registry {
 		findDependency(module);
 
 		if (!provider) {
-			throw new Error(`Couldn't find provider ${this.getProviderName(dependency)} in tree: ${[...tree].join(' -> ')}`);
+			// @TODO: Log real modules tree
+			throw new Error(`Couldn't find provider ${this.getProviderName(dependency)} in tree: ${[...modules].join(' -> ')}`);
 		}
 
 		return provider;

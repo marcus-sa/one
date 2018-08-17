@@ -104,7 +104,7 @@ export class ProviderFactory {
 		modules.forEach(module => {
 			const bind = (module: Module) => {
 				module.exports.forEach(ref => {
-					if (!this.module.registry.isModule(ref)) {
+					if (!this.module.registry.isModuleRef(ref) && !this.module.providers.isBound(<any>ref)) {
 						const providerRef = this.module.getProvider(module.target, <any>ref);
 
 						this.module.providers.bind(<any>ref)
@@ -113,7 +113,7 @@ export class ProviderFactory {
 					}
 
 					const moduleRef = this.module.getModule(<any>ref);
-					if (moduleRef.exports) bind(moduleRef);
+					if (this.module.registry.isModule(moduleRef)) bind(moduleRef);
 				});
 			};
 
@@ -121,17 +121,17 @@ export class ProviderFactory {
 		});
 	}
 
-	private async bind(type: PROVIDER_TYPES, provider) {
+	private async bind(type: PROVIDER_TYPES, provider: Provider) {
 		// @TODO: useExisting
 		if (type === PROVIDER_TYPES.DEFAULT) {
-			const scope = this.resolveProviderScope(provider);
-			this.bindProvider(scope, provider);
+			const scope = this.resolveProviderScope(<Type<any>>provider);
+			this.bindProvider(scope, <Type<any>>provider);
 		} else if (type === PROVIDER_TYPES.FACTORY) {
-			await this.bindFactoryProvider(provider);
+			await this.bindFactoryProvider(<FactoryProvider>provider);
 		} else if (type === PROVIDER_TYPES.VALUE) {
-			this.bindValueProvider(provider);
+			this.bindValueProvider(<ValueProvider>provider);
 		} else if (type === PROVIDER_TYPES.CLASS) {
-			this.bindClassProvider(provider);
+			this.bindClassProvider(<ClassProvider>provider);
 		}
 	}
 
