@@ -1,10 +1,10 @@
-import { APP_INITIALIZER, Module } from '@nuclei/core';
+import { APP_INITIALIZER, DynamicModule, Module } from '@nuclei/core';
 
 import { MoreNestModule } from './more-nest';
 import { NestService } from './nest.service';
-import { AppService } from '../app.service';
 
 @Module({
+	// module: NestModule,
 	imports: [MoreNestModule],
 	providers: [
 		NestService,
@@ -20,4 +20,11 @@ import { AppService } from '../app.service';
 		NestService,
 	],
 })
-export class NestModule {}
+export class NestModule {
+
+	// @TODO: Fix dynamic modules
+	/*public static async forRoot(): Promise<DynamicModule> {
+		return {};
+	}*/
+
+}

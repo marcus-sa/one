@@ -1,7 +1,6 @@
 import { Injectable } from '@nuclei/core';
 
-// import { NestService } from './nest';
-import { MoreNestService } from './nest/more-nest';
+import { NestService } from './nest';
 
 @Injectable()
 export class AppService {
@@ -9,11 +8,11 @@ export class AppService {
 	constructor(
 		// private readonly nest: NestService,
 		// @TODO: Fix hierarchy export of modules and providers
-		private readonly moreNest: MoreNestService,
+		private readonly nest: NestService,
 	) {}
 
 	public start() {
-		console.log(this.moreNest);
+		console.log(this.nest);
 	}
 
 }
