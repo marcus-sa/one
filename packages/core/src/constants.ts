@@ -20,6 +20,8 @@ export enum PROVIDER_TYPES {
 	DEFAULT = 'type',
 }
 
+export const ModuleRefs = Symbol.for('MODULE_REFS');
+export const Modules = Symbol.for('MODULE_REFS');
 export const APP_INITIALIZER = Symbol.for('APP_INITIALIZER');
 export const SCOPE = 'resolve-scope';
 export class Injector extends Container {}

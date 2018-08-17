@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 
-import { APP_INITIALIZER } from './constants';
+import { APP_INITIALIZER, ModuleRefs } from './constants';
 import { Registry } from './registry';
 import { Type } from './interfaces';
 import { Module } from './module';
@@ -12,7 +12,7 @@ export class Factory {
 		defaultScope: 'Singleton',
 	});
 
-	private readonly modulesRef = new Container({
+	private readonly moduleRefs = new Container({
 		autoBindInjectable: true,
 		defaultScope: 'Singleton',
 	});
@@ -24,7 +24,7 @@ export class Factory {
 	public async start() {
 		const module = new Module(
 			this.modulesContainer,
-			this.modulesRef,
+			this.moduleRefs,
 			this.registry,
 			this.module,
 		);
