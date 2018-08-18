@@ -6,18 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@nuclei/core");
-const electron_1 = require("@nuclei/electron");
-const windows_1 = require("./windows");
-let AppModule = class AppModule {
-};
-AppModule = __decorate([
-    core_1.Module({
-        imports: [
-            electron_1.ElectronModule.forRoot(),
-            windows_1.WindowsModule,
-        ],
-    })
-], AppModule);
+var core_1 = require("@nuclei/core");
+var electron_1 = require("@nuclei/electron");
+var windows_1 = require("./windows");
+var AppModule = /** @class */ (function () {
+    function AppModule() {
+    }
+    AppModule = __decorate([
+        core_1.Module({
+            imports: [
+                electron_1.ElectronModule.forRoot(),
+                windows_1.WindowsModule,
+            ],
+        })
+    ], AppModule);
+    return AppModule;
+}());
 exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map

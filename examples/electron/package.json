@@ -1,10 +1,15 @@
 {
-  "main": "./build/index.js",
+  "name": "@nuclei/example-electron",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "private": true,
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "dev": "npm run build && electron ."
   },
   "devDependencies": {
+    "@nuclei/core": "*",
+    "@nuclei/electron": "*",
     "nodemon": "^1.18.3",
     "typescript": "*"
   },

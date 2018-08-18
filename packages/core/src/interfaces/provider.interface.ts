@@ -26,6 +26,6 @@ export interface ValueProvider extends ProvideToken {
 }
 
 export interface FactoryProvider extends ProvideToken, MultiDepsProvider {
-	useFactory: (...args: any[]) => any;
+	useFactory: (...args: any[]) => any | Promise<any>;
 	scope?: SCOPES;
 }

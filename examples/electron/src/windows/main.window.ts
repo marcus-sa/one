@@ -5,8 +5,8 @@ import { Inject } from '@nuclei/core';
 @Window()
 export class MainWindow implements OnReady {
 
-	@Inject(WindowRef)
-	private readonly windowRef: BrowserWindow;
+	/*@Inject(WindowRef)
+	private readonly windowRef: BrowserWindow;*/
 
 	onReady() {}
 

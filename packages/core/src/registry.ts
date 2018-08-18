@@ -1,9 +1,23 @@
-import { Provider, Type, ProvideToken } from './interfaces';
 import { Module } from './module';
+import {
+	Provider,
+	Type,
+	ProvideToken,
+	DynamicModule,
+	ModuleImport,
+	ILazyInject,
+} from './interfaces';
 
 export class Registry {
 
+	public static readonly lazyInjects = new Set<ILazyInject>();
 	public readonly modules = new Map<Type<any>, Module>();
+
+	public static getLazyInjects(target: Type<any>): ILazyInject[] {
+		return [...this.lazyInjects.values()].filter(
+			provider => provider.target === target,
+		);
+	}
 
 	public static flatten(arr: any[][]) {
 		return arr.reduce((previous, current) => [...previous, ...current]);
@@ -14,7 +28,7 @@ export class Registry {
 	}
 
 	public isModule(module: any) {
-		return module && module.imports && module.exports;
+		return !!(module && module.imports && module.exports);
 	}
 
 	public getModule(target: Type<any>): Module {
@@ -37,27 +51,34 @@ export class Registry {
 		return from.filter(f => by.includes(f));
 	}
 
-	public getDependencyFromTree(module: Module, dependency: Provider) {
+	public async getDependencyFromTree(module: Module, dependency: Provider) {
 		const token = this.getProviderToken(dependency);
 		const modules = new Set<string>();
 		let provider: Type<any>;
 
-		const findDependency = (module: Module) => {
-			if (!this.isModule(module) || modules.has(module.target.name)) return;
+		const findDependency = async (module: Module) => {
+			if (provider || !this.isModule(module) || modules.has(module.target.name)) return;
 
 			modules.add(module.target.name);
 
-			module.imports.forEach(moduleRef => {
-				const imported = this.getModule(<Type<any>>moduleRef);
+			if (module.providers.isBound(token)) {
+				provider =
+					module.registry.isProviderBound(dependency)
+						? module.registry.getProvider(dependency)
+						: module.providers.get(token);
+			}
 
-				// console.log('findDependency', moduleRef);
+			const imports = module.imports.map(async (moduleRef) => {
+				const imported = this.getModule(
+					<Type<any>>await this.resolveModule(moduleRef)
+				);
 
 				// @TODO: Need to figure out where we are in the loop so we can check if the module exists in exports
 				const modules = Registry.pick<Type<any>>(module.imports, module.exports);
-				modules && findDependency(imported);
+				modules && await findDependency(imported);
 			});
 
-			module.exports.forEach(ref => {
+			const exports = module.exports.map(async (ref) => {
 				const exported = this.getModule(<Type<any>>ref);
 
 				if (ref === dependency) {
@@ -65,15 +86,13 @@ export class Registry {
 					return;
 				}
 
-				findDependency(exported);
+				await findDependency(exported);
 			});
 
-			if (module.providers.isBound(token)) {
-				provider = module.registry.getProvider(dependency);
-			}
+			await Promise.all([...imports, ...exports]);
 		};
 
-		findDependency(module);
+		await findDependency(module);
 
 		if (!provider) {
 			// @TODO: Log real modules tree
@@ -81,6 +100,16 @@ export class Registry {
 		}
 
 		return provider;
+	}
+
+	public async resolveModule(module: ModuleImport | Promise<DynamicModule>): Promise<Type<any>> {
+		if ((<Promise<DynamicModule>>module).then) {
+			return (await (<Promise<DynamicModule>>module)).module;
+		} else if ((<DynamicModule>module).module) {
+			return (<DynamicModule>module).module;
+		}
+
+		return <Type<any>>module;
 	}
 
 	public getAllProviders(provider: Provider) {

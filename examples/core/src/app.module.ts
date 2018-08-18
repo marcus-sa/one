@@ -5,9 +5,10 @@ import { AppService } from './app.service';
 import { MoreNestService } from './nest/more-nest';
 
 @Module({
-	imports: [NestModule],
+	imports: [NestModule.forRoot()],
 	providers: [
 		AppService,
+		// @TODO: Doesn't resolve in correct order
 		{
 			provide: APP_INITIALIZER,
 			useFactory: (moreNest: MoreNestService) => moreNest.hello(),

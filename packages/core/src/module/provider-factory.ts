@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
 import { PROVIDER_TYPES, SCOPE, SCOPES } from '../constants';
+import { Registry } from '../registry';
 import { Module } from './module';
 import {
 	ClassProvider,
@@ -21,8 +22,10 @@ export class ProviderFactory {
 	) {}
 
 	private getDependencies(dependencies: Provider[] = []) {
-		return dependencies.map(dependency =>
-			this.module.registry.getDependencyFromTree(this.module, dependency)
+		return Promise.all(
+			dependencies.map(dependency =>
+				this.module.registry.getDependencyFromTree(this.module, dependency),
+			)
 		);
 	}
 
@@ -57,28 +60,21 @@ export class ProviderFactory {
 	}
 
 	private async bindFactoryProvider(provider: FactoryProvider) {
-		const deps = () => this.getDependencies(provider.deps);
+		const deps = await this.getDependencies(provider.deps);
 
-		// return new Promise((resolve, reject) => {
-			/*const next = async (factory: Promise<Function>) => {
-				try {
-					const result = await factory;
-					resolve();
-					console.log(result);
-					return result;
-				} catch (e) {
-					reject(e);
-				}
-			};*/
-
-			if (provider.scope === SCOPES.TRANSIENT) {
-				this.module.providers.bind(provider.provide)
-					.toDynamicValue(() => provider.useFactory(...deps()));
-			}
-
+		if (provider.scope === SCOPES.TRANSIENT) {
 			this.module.providers.bind(provider.provide)
-				.toProvider(() => provider.useFactory(...deps()));
-		//});
+				.toDynamicValue(() => provider.useFactory(...deps));
+		}
+
+
+		// @TODO: No support for async bindings
+		/*this.module.providers.bind(provider.provide)
+			.toProvider(async () => {
+				return provider.useFactory(...(await deps()));
+			});*/
+		this.module.providers.bind(provider.provide)
+			.toProvider(() => provider.useFactory(...deps));
 	}
 
 	private getProviderType(provider: Provider): PROVIDER_TYPES {
@@ -95,9 +91,12 @@ export class ProviderFactory {
 		return PROVIDER_TYPES.DEFAULT;
 	}
 
-	private resolveDependencies(provider: Provider) {
-		const modules = this.module.imports.map(module =>
-			this.module.registry.modules.get(<any>module),
+	private async resolveDependencies(provider: Provider) {
+		const modules = await Promise.all(
+			this.module.imports.map(async (module) => {
+				const moduleRef = await this.module.registry.resolveModule(module);
+				return this.module.registry.modules.get(moduleRef);
+			}),
 		);
 
 		// @TODO: Need to bind all providers in nested exports hierarchy
@@ -107,25 +106,43 @@ export class ProviderFactory {
 					if (!this.module.registry.isModuleRef(ref) && !this.module.providers.isBound(<any>ref)) {
 						const providerRef = this.module.getProvider(module.target, <any>ref);
 
-						this.module.providers.bind(<any>ref)
+						return this.module.providers.bind(<any>ref)
 							.toConstantValue(providerRef)
 							.whenInjectedInto(<any>this.module.registry.getProviderToken(provider));
 					}
 
-					const moduleRef = this.module.getModule(<any>ref);
-					if (this.module.registry.isModule(moduleRef)) bind(moduleRef);
+					if (this.module.registry.isModuleRef(<any>ref)) {
+						bind(this.module.registry.getModule(<any>ref));
+					}
 				});
 			};
 
 			bind(module);
 		});
+
 	}
 
 	private async bind(type: PROVIDER_TYPES, provider: Provider) {
 		// @TODO: useExisting
 		if (type === PROVIDER_TYPES.DEFAULT) {
 			const scope = this.resolveProviderScope(<Type<any>>provider);
+			const lazyInjects = Registry.getLazyInjects(<Type<any>>provider);
+			lazyInjects.forEach(({ forwardRef }) => {
+				forwardRef(this.module.lazyInject);
+			});
 			this.bindProvider(scope, <Type<any>>provider);
+
+			/*binding.onActivation((ctx, p) => {
+				console.log('onActivation', provider);
+				lazyInjects.forEach(lazyInject => {
+					// A little hack ;)
+					setTimeout(() => {
+						p[lazyInject.provider] = this.module.registry.getProvider(<Type<any>>lazyInject.provider());
+					});
+				});
+
+				return p;
+			});*/
 		} else if (type === PROVIDER_TYPES.FACTORY) {
 			await this.bindFactoryProvider(<FactoryProvider>provider);
 		} else if (type === PROVIDER_TYPES.VALUE) {
@@ -148,7 +165,7 @@ export class ProviderFactory {
 				}
 
 				await this.bind(type, provider);
-				this.resolveDependencies(provider);
+				await this.resolveDependencies(provider);
 			}),
 		);
 	}

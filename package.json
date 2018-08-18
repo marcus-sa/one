@@ -1,6 +1,8 @@
 {
   "private": true,
   "scripts": {
+    "example:core": "cd examples/core && npm run dev",
+    "example:electron": "cd examples/electron && npm run dev",
     "bootstrap": "lerna bootstrap",
     "test": "lerna run test",
     "prepublish": "npm run test && lerna run prepare",

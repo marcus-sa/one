@@ -1,6 +1,6 @@
 import { APP_INITIALIZER, Module, DynamicModule } from '@nuclei/core';
 
-import { AppService } from './app.service';
+import { ElectronService } from './electron.service';
 
 @Module()
 export class ElectronCoreModule {
@@ -9,11 +9,11 @@ export class ElectronCoreModule {
 		return {
 			module: ElectronCoreModule,
 			providers: [
-				AppService,
+				ElectronService,
 				{
 					provide: APP_INITIALIZER,
-					useFactory: (appService: AppService) => appService.start(),
-					deps: [AppService],
+					useFactory: (electron: ElectronService) => electron.start(),
+					deps: [ElectronService],
 					multi: true,
 				}
 			],

@@ -1,4 +1,5 @@
 import { Container } from 'inversify';
+import getDecorators from 'inversify-inject-decorators';
 
 import { Injector, METADATA } from '../constants';
 import { ProviderFactory } from './provider-factory';
@@ -19,6 +20,7 @@ export class Module {
 	public readonly providers = new Container({
 		autoBindInjectable: true,
 	});
+	public readonly lazyInject = getDecorators(this.providers).lazyInject;
 	public exports: ModuleExport[];
 	public imports: ModuleImport[];
 
@@ -30,15 +32,13 @@ export class Module {
 	) {}
 
 	public get target(): Type<any> {
-		return typeof this._target !== 'function'
-			? (<DynamicModule>this._target).module
-			: this._target;
+		return this.getTargetModule(this._target);
 	}
 
 	private getModuleMetadata(key: string): ModuleMetadata {
-		return (typeof this.target === 'function'
+		return (typeof this._target === 'function'
 			? Reflect.getMetadata(key, this.target)
-			: this.target[key]
+			: this._target[key]
 		) || [];
 	}
 
@@ -59,6 +59,12 @@ export class Module {
 		return this.moduleRefs.get<Type<any>>((<DynamicModule>module).module || (<Type<any>>module));
 	}
 
+	public getTargetModule(module: ModuleImport) {
+		return typeof module !== 'function'
+			? (<DynamicModule>module).module
+			: module;
+	}
+
 	public getProvider(module: Type<any>, provider: Provider) {
 		const token = this.registry.getProviderToken(provider);
 		const moduleRef = this.registry.modules.get(module);
@@ -70,14 +76,20 @@ export class Module {
 
 	private async resolveDependencies() {
 		await Promise.all(
-			this.imports.map(async (moduleRef: Type<any>) => {
-				if (this.moduleRefs.isBound(moduleRef)) return;
+			this.imports.map(async (ref: Type<any>) => {
+				const moduleRef = await ref;
+
+				if (this.moduleRefs.isBound(
+					this.getTargetModule(moduleRef))
+				) return;
+
 				const module = new Module(
 					this.modulesContainer,
 					this.moduleRefs,
 					this.registry,
 					moduleRef,
 				);
+
 				await module.create();
 			}),
 		);
