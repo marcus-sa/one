@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 import getDecorators from 'inversify-inject-decorators';
 
-import { Injector, METADATA } from '../constants';
+import { Injector, METADATA, MODULE_INITIALIZER } from '../constants';
 import { ProviderFactory } from './provider-factory';
 import { Registry } from '../registry';
 import {
@@ -102,7 +102,6 @@ export class Module {
 		this.exports = await Promise.all(
 			<Promise<ModuleExport>[]>metadata.exports,
 		);
-		// this.providerMetadata = metadata.providers;
 	}
 
 	private bindGlobalProviders() {
@@ -127,15 +126,14 @@ export class Module {
 		const providerFactory = new ProviderFactory(metadata.providers, this);
 		await providerFactory.resolve();
 
-		// @TODO: Instantiate module before or after metadata has been resolved ?
-		// this.modulesContainer.bind(<any>this.target).toConstantValue(this);
 		this.moduleRefs.bind(<any>this.target).toSelf();
 		this.registry.modules.set(this.target, this);
 
-		// @TODO: Make use factories async resolved
-		/*if (this.providers.isBound(APP_INITIALIZER)) {
-			await Promise.all(this.providers.getAll(APP_INITIALIZER));
-		}*/
+		console.log(`BEFORE: ${this.target.name} - MODULE_INITIALIZER`);
+		if (this.providers.isBound(MODULE_INITIALIZER)) {
+			await Promise.all(this.providers.getAll(MODULE_INITIALIZER));
+		}
+		console.log(`AFTER: ${this.target.name} - MODULE_INITIALIZER`);
 
 		const module = this.moduleRefs.get(<any>this.target);
 

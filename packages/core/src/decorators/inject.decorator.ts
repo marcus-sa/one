@@ -1,12 +1,12 @@
 import { inject } from 'inversify';
 
-import { Type, ForwardRef, TLazyInject } from '../interfaces';
+import { Type, ForwardRef } from '../interfaces';
 import { Registry } from '../registry';
 
 function createLazyInjection(target: object, property: string) {
 	return (
-		lazyInject: TLazyInject,
-		provider: Type<any> | symbol,
+		lazyInject,
+		provider,
 	) => lazyInject(provider)(target, property);
 }
 

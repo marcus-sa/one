@@ -25,9 +25,8 @@ export class ProviderFactory {
 		return Promise.all(
 			dependencies.map(dependency => {
 				const provider = Registry.getForwardRef(<any>dependency);
-				console.log(provider);
 
-				return this.module.registry.getDependencyFromTree(this.module, provider);
+				return this.module.registry.getDependencyFromTree(this.module, <any>provider);
 			}),
 		);
 	}
@@ -72,10 +71,6 @@ export class ProviderFactory {
 
 
 		// @TODO: No support for async bindings
-		/*this.module.providers.bind(provider.provide)
-			.toProvider(async () => {
-				return provider.useFactory(...(await deps()));
-			});*/
 		this.module.providers.bind(provider.provide)
 			.toProvider(() => provider.useFactory(...deps));
 	}
@@ -131,7 +126,8 @@ export class ProviderFactory {
 			const scope = this.resolveProviderScope(<Type<any>>provider);
 			const lazyInjects = Registry.getLazyInjects(<Type<any>>provider);
 			lazyInjects.forEach(({ lazyInject, forwardRef }) => {
-				lazyInject(this.module.lazyInject, forwardRef.forwardRef());
+				const token = Registry.getForwardRef(forwardRef);
+				lazyInject(this.module.lazyInject, <any>token);
 			});
 			this.bindProvider(scope, <Type<any>>provider);
 		} else if (type === PROVIDER_TYPES.FACTORY) {
@@ -146,10 +142,12 @@ export class ProviderFactory {
 	public async resolve() {
 		await Promise.all(
 			this.providers.map(async (provider) => {
-				if (this.module.registry.isProviderBound(provider)) return;
+				const isMulti = (<MultiDepsProvider>provider).multi;
+
+				if (!isMulti && this.module.registry.isProviderBound(provider)) return;
 				const type = this.getProviderType(provider);
 
-				if (type !== PROVIDER_TYPES.DEFAULT && !(<MultiDepsProvider>provider).multi) {
+				if (type !== PROVIDER_TYPES.DEFAULT && isMulti) {
 					if (this.module.providers.isBound((<ProvideToken>provider).provide)) {
 						throw new Error(`Provider: ${(<ProvideToken>provider).provide.toString()} is already bound. Flag as multi.`);
 					}

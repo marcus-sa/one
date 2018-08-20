@@ -58,7 +58,7 @@ export class Registry {
  		}
 	}
 
-	public static pick<T>(from: any[], by: any[]): T[] {
+	public static pick<T = any>(from: any[], by: any[]): T[] {
 		return from.filter(f => by.includes(f));
 	}
 
@@ -77,16 +77,15 @@ export class Registry {
 					module.registry.isProviderBound(dependency)
 						? module.registry.getProvider(dependency)
 						: module.providers.get(token);
-				console.log(provider);
 			}
 
 			const imports = module.imports.map(async (moduleRef) => {
 				const imported = this.getModule(
-					<Type<any>>await this.resolveModule(moduleRef)
+					await this.resolveModule(moduleRef)
 				);
 
 				// @TODO: Need to figure out where we are in the loop so we can check if the module exists in exports
-				const modules = Registry.pick<Type<any>>(module.imports, module.exports);
+				const modules = Registry.pick(module.imports, module.exports);
 				modules && await findDependency(imported);
 			});
 

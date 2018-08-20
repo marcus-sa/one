@@ -1,3 +1,3 @@
-import { ForwardRef, TestForwardRef } from './interfaces';
+import { ForwardRef, TForwardRef } from './interfaces';
 
-export const forwardRef = (forwardRef: TestForwardRef): ForwardRef => ({ forwardRef });
+export const forwardRef = (forwardRef: TForwardRef): ForwardRef => ({ forwardRef });
