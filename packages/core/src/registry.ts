@@ -1,11 +1,12 @@
 import { Module } from './module';
 import {
-	Provider,
-	Type,
-	ProvideToken,
 	DynamicModule,
+	ProvideToken,
 	ModuleImport,
 	ILazyInject,
+	ForwardRef,
+	Provider,
+	Type,
 } from './interfaces';
 
 export class Registry {
@@ -17,6 +18,16 @@ export class Registry {
 		return [...this.lazyInjects.values()].filter(
 			provider => provider.target === target,
 		);
+	}
+
+	public static isForwardRef(provider: Type<any> | symbol | ForwardRef) {
+		return provider.hasOwnProperty('forwardRef');
+	}
+
+	public static getForwardRef(provider: Type<any> | symbol | ForwardRef) {
+		return Registry.isForwardRef(provider)
+			? (<ForwardRef>provider).forwardRef()
+			: provider;
 	}
 
 	public static flatten(arr: any[][]) {
@@ -66,6 +77,7 @@ export class Registry {
 					module.registry.isProviderBound(dependency)
 						? module.registry.getProvider(dependency)
 						: module.providers.get(token);
+				console.log(provider);
 			}
 
 			const imports = module.imports.map(async (moduleRef) => {

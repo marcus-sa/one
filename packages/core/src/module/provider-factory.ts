@@ -23,9 +23,12 @@ export class ProviderFactory {
 
 	private getDependencies(dependencies: Provider[] = []) {
 		return Promise.all(
-			dependencies.map(dependency =>
-				this.module.registry.getDependencyFromTree(this.module, dependency),
-			)
+			dependencies.map(dependency => {
+				const provider = Registry.getForwardRef(<any>dependency);
+				console.log(provider);
+
+				return this.module.registry.getDependencyFromTree(this.module, provider);
+			}),
 		);
 	}
 
@@ -127,22 +130,10 @@ export class ProviderFactory {
 		if (type === PROVIDER_TYPES.DEFAULT) {
 			const scope = this.resolveProviderScope(<Type<any>>provider);
 			const lazyInjects = Registry.getLazyInjects(<Type<any>>provider);
-			lazyInjects.forEach(({ forwardRef }) => {
-				forwardRef(this.module.lazyInject);
+			lazyInjects.forEach(({ lazyInject, forwardRef }) => {
+				lazyInject(this.module.lazyInject, forwardRef.forwardRef());
 			});
 			this.bindProvider(scope, <Type<any>>provider);
-
-			/*binding.onActivation((ctx, p) => {
-				console.log('onActivation', provider);
-				lazyInjects.forEach(lazyInject => {
-					// A little hack ;)
-					setTimeout(() => {
-						p[lazyInject.provider] = this.module.registry.getProvider(<Type<any>>lazyInject.provider());
-					});
-				});
-
-				return p;
-			});*/
 		} else if (type === PROVIDER_TYPES.FACTORY) {
 			await this.bindFactoryProvider(<FactoryProvider>provider);
 		} else if (type === PROVIDER_TYPES.VALUE) {

@@ -1,11 +1,11 @@
-import { Injectable, LazyInject } from '@nuclei/core';
+import { Injectable, Inject, forwardRef } from '@nuclei/core';
 
 import { SecondService } from './second.service';
 
 @Injectable()
 export class FirstService {
 
-	@LazyInject(() => SecondService)
+	@Inject(forwardRef(() => FirstService))
 	public readonly second: SecondService;
 
 }

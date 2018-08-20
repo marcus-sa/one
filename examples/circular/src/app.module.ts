@@ -1,4 +1,4 @@
-import { Module, APP_INITIALIZER } from '@nuclei/core';
+import { Module, APP_INITIALIZER, forwardRef } from '@nuclei/core';
 
 import { FirstService } from './first.service';
 import { SecondService } from './second.service';
@@ -11,6 +11,7 @@ import { SecondService } from './second.service';
 		{
 			provide: APP_INITIALIZER,
 			useFactory: (first: FirstService) => console.log(first.second),
+			// forwardRef(() => FirstService)
 			deps: [FirstService],
 			multi: true,
 		},
