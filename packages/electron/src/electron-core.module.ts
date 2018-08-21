@@ -5,7 +5,7 @@ import { ElectronService } from './electron.service';
 @Module()
 export class ElectronCoreModule {
 
-	public static forRoot(): DynamicModule {
+	public static forRoot(options: any): DynamicModule {
 		return {
 			module: ElectronCoreModule,
 			providers: [
@@ -15,7 +15,7 @@ export class ElectronCoreModule {
 					useFactory: (electron: ElectronService) => electron.start(),
 					deps: [ElectronService],
 					multi: true,
-				}
+				},
 			],
 		};
 	}

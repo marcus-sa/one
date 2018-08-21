@@ -7,18 +7,25 @@ import { NestService } from './nest.service';
 export class NestModule {
 
 	// @TODO: Fix dynamic modules
-	public static async forRoot(): Promise<DynamicModule> {
-		return {
-			module: NestModule,
-			imports: [MoreNestModule],
-			providers: [
-				NestService,
-			],
-			exports: [
-				MoreNestModule,
-				NestService,
-			],
-		};
+	public static forRoot(): Promise<DynamicModule> {
+		console.log('NestModule#forRoot');
+		return new Promise(resolve => {
+			setTimeout(() => {
+				resolve({
+					module: NestModule,
+					imports: [MoreNestModule],
+					providers: [
+						NestService,
+					],
+					exports: [
+						MoreNestModule,
+						NestService,
+					],
+				});
+			}, 5000);
+		});
+
+
 	}
 
 }

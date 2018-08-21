@@ -18,6 +18,7 @@ export class ProviderFactory {
 
 	constructor(
 		private readonly providers: Provider[],
+		private readonly registry: Registry,
 		private readonly module: Module,
 	) {}
 
@@ -26,7 +27,7 @@ export class ProviderFactory {
 			dependencies.map(dependency => {
 				const provider = Registry.getForwardRef(<any>dependency);
 
-				return this.module.registry.getDependencyFromTree(this.module, <any>provider);
+				return this.registry.getDependencyFromTree(this.module, <any>provider);
 			}),
 		);
 	}
@@ -61,6 +62,7 @@ export class ProviderFactory {
 			.toConstantValue(provider.useValue);
 	}
 
+	// @TODO: Add support for async bindings
 	private async bindFactoryProvider(provider: FactoryProvider) {
 		const deps = await this.getDependencies(provider.deps);
 
@@ -69,8 +71,6 @@ export class ProviderFactory {
 				.toDynamicValue(() => provider.useFactory(...deps));
 		}
 
-
-		// @TODO: No support for async bindings
 		this.module.providers.bind(provider.provide)
 			.toProvider(() => provider.useFactory(...deps));
 	}
@@ -92,25 +92,24 @@ export class ProviderFactory {
 	private async resolveDependencies(provider: Provider) {
 		const modules = await Promise.all(
 			this.module.imports.map(async (module) => {
-				const moduleRef = await this.module.registry.resolveModule(module);
-				return this.module.registry.modules.get(moduleRef);
+				const moduleRef = await this.registry.resolveModule(module);
+				return this.registry.modules.get(moduleRef);
 			}),
 		);
 
-		// @TODO: Need to bind all providers in nested exports hierarchy
 		modules.forEach(module => {
 			const bind = (module: Module) => {
 				module.exports.forEach(ref => {
-					if (!this.module.registry.isModuleRef(ref) && !this.module.providers.isBound(<any>ref)) {
+					if (!this.registry.isModuleRef(ref) && !this.module.providers.isBound(<any>ref)) {
 						const providerRef = this.module.getProvider(module.target, <any>ref);
 
 						return this.module.providers.bind(<any>ref)
 							.toConstantValue(providerRef)
-							.whenInjectedInto(<any>this.module.registry.getProviderToken(provider));
+							.whenInjectedInto(<any>this.registry.getProviderToken(provider));
 					}
 
-					if (this.module.registry.isModuleRef(<any>ref)) {
-						bind(this.module.registry.getModule(<any>ref));
+					if (this.registry.isModuleRef(<any>ref)) {
+						bind(this.registry.getModule(<any>ref));
 					}
 				});
 			};
@@ -121,7 +120,7 @@ export class ProviderFactory {
 	}
 
 	private async bind(type: PROVIDER_TYPES, provider: Provider) {
-		// @TODO: useExisting
+		// @TODO: Add useExisting binding
 		if (type === PROVIDER_TYPES.DEFAULT) {
 			const scope = this.resolveProviderScope(<Type<any>>provider);
 			const lazyInjects = Registry.getLazyInjects(<Type<any>>provider);
@@ -144,7 +143,7 @@ export class ProviderFactory {
 			this.providers.map(async (provider) => {
 				const isMulti = (<MultiDepsProvider>provider).multi;
 
-				if (!isMulti && this.module.registry.isProviderBound(provider)) return;
+				if (!isMulti && this.registry.isProviderBound(provider)) return;
 				const type = this.getProviderType(provider);
 
 				if (type !== PROVIDER_TYPES.DEFAULT && isMulti) {

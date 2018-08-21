@@ -5,7 +5,7 @@ import { Registry } from './registry';
 import { Type } from './interfaces';
 import { Module } from './module';
 
-// @TODO: Doesn't work as it should <https://github.com/inversify/InversifyJS/blob/master/wiki/hierarchical_di.md>
+// @TODO: Figure out why <https://github.com/inversify/InversifyJS/blob/master/wiki/hierarchical_di.md> doesn't work
 export class Factory {
 
 	private readonly modulesContainer = new Container({
@@ -32,7 +32,6 @@ export class Factory {
 
 		await module.create();
 
-		// @TODO: Call app initializers now or in Module ?
 		console.log('Before: APP_INITIALIZER');
 		await Promise.all(
 			this.registry.getAllProviders(<any>APP_INITIALIZER),

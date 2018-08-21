@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import { Module } from './module';
 import {
 	DynamicModule,
@@ -13,6 +15,20 @@ export class Registry {
 
 	public static readonly lazyInjects = new Set<ILazyInject>();
 	public readonly modules = new Map<Type<any>, Module>();
+
+	public static defineMetadata<T = object>(
+		target: T,
+		metadata: {[name: string]: any},
+		exclude: string[] = [],
+	) {
+		Object.keys(metadata)
+			.filter(p => !exclude.includes(p))
+			.forEach(property => {
+				Reflect.defineMetadata(property, metadata[property], target);
+			});
+
+		return target;
+	}
 
 	public static getLazyInjects(target: Type<any>): ILazyInject[] {
 		return [...this.lazyInjects.values()].filter(
@@ -65,7 +81,7 @@ export class Registry {
 	public async getDependencyFromTree(module: Module, dependency: Provider) {
 		const token = this.getProviderToken(dependency);
 		const modules = new Set<string>();
-		let provider: Type<any>;
+		let provider!: Type<any>;
 
 		const findDependency = async (module: Module) => {
 			if (provider || !this.isModule(module) || modules.has(module.target.name)) return;
@@ -80,11 +96,12 @@ export class Registry {
 			}
 
 			const imports = module.imports.map(async (moduleRef) => {
+				// @TODO: Still resolves twice
 				const imported = this.getModule(
 					await this.resolveModule(moduleRef)
 				);
 
-				// @TODO: Need to figure out where we are in the loop so we can check if the module exists in exports
+				// @TODO: Need to figure out where we are in the loop so we can check if the module exists in exports correctly
 				const modules = Registry.pick(module.imports, module.exports);
 				modules && await findDependency(imported);
 			});
@@ -113,11 +130,26 @@ export class Registry {
 		return provider;
 	}
 
+	// @TODO: Find a way to cache resolved modules, in case the async imports include some sort of initialization
 	public async resolveModule(module: ModuleImport | Promise<DynamicModule>): Promise<Type<any>> {
+		const exclude = ['module'];
+
 		if ((<Promise<DynamicModule>>module).then) {
-			return (await (<Promise<DynamicModule>>module)).module;
+			const moduleRef = await (<Promise<DynamicModule>>module);
+
+			return Registry.defineMetadata<Type<any>>(
+				moduleRef.module,
+				moduleRef,
+				exclude,
+			);
 		} else if ((<DynamicModule>module).module) {
-			return (<DynamicModule>module).module;
+			const moduleRef = <DynamicModule>module;
+
+			return Registry.defineMetadata<Type<any>>(
+				moduleRef.module,
+				moduleRef,
+				exclude,
+			);
 		}
 
 		return <Type<any>>module;

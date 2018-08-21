@@ -1,9 +1,13 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "./packages",
+    "baseUrl": "./",
     "paths": {
-      "@nuclei/*": ["./*/src"]
+      "@nuclei/*": ["./packages/*/src"]
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "examples"
+  ]
 }
