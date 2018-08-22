@@ -31,7 +31,7 @@ export class ProviderFactory {
     );
   }
 
-  private resolveProviderScope(provider: Type<any>): Scopes {
+  private resolveProviderScope(provider: Type<any>): keyof Scopes {
     return Reflect.getMetadata(SCOPE, provider);
   }
 
@@ -63,6 +63,7 @@ export class ProviderFactory {
 
   // @TODO: Add support for async bindings
   private async bindFactoryProvider(provider: FactoryProvider) {
+    // Shouldn't resolve dependencies before the actual binding happens
     const deps = await this.getDependencies(provider.deps);
 
     if (provider.scope === SCOPES.TRANSIENT) {
@@ -76,7 +77,7 @@ export class ProviderFactory {
       .toProvider(() => provider.useFactory(...deps));
   }
 
-  private getProviderType(provider: Provider): ProviderTypes {
+  private getProviderType(provider: Provider): keyof ProviderTypes {
     if ((<FactoryProvider>provider).useFactory) {
       return PROVIDER_TYPES.FACTORY;
     } else if ((<ValueProvider>provider).useValue) {
@@ -125,7 +126,7 @@ export class ProviderFactory {
     });
   }
 
-  private async bind(type: ProviderTypes, provider: Provider) {
+  private async bind(type: keyof ProviderTypes, provider: Provider) {
     // @TODO: Add useExisting binding
     if (type === PROVIDER_TYPES.DEFAULT) {
       const scope = this.resolveProviderScope(<Type<any>>provider);
