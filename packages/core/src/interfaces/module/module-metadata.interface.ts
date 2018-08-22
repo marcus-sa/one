@@ -6,7 +6,7 @@ export type ModuleImport = Type<any> | DynamicModule;
 export type ModuleExport = Provider | DynamicModule | symbol;
 
 export interface ModuleMetadata {
-	imports?: Array<ModuleImport | Promise<DynamicModule>>;
-	exports?: Array<ModuleExport | Promise<DynamicModule>>;
-	providers?: Provider[];
+  imports?: Array<ModuleImport | Promise<DynamicModule>>;
+  exports?: Array<ModuleExport | Promise<DynamicModule>>;
+  providers?: Provider[];
 }

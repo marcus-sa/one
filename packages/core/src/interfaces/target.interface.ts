@@ -1,3 +1,3 @@
 export interface Target {
-	target: Function;
+  target: Function;
 }

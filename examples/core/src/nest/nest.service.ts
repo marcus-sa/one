@@ -5,11 +5,9 @@ import { MoreNestService } from './more-nest';
 
 @Injectable()
 export class NestService {
+  constructor(private readonly moreNest: MoreNestService) {}
 
-	constructor(private readonly moreNest: MoreNestService) {}
-
-	public start() {
-		console.log(this);
-	}
-
+  public start() {
+    console.log(this);
+  }
 }

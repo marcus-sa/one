@@ -4,10 +4,8 @@ import { TEST } from './test';
 
 @Injectable()
 export class FirstService {
+  @Inject(TEST)
+  public readonly test: string;
 
-	@Inject(TEST)
-	public readonly test: string;
-
-	constructor(public readonly injector: Injector) {}
-
+  constructor(public readonly injector: Injector) {}
 }

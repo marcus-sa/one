@@ -4,8 +4,6 @@ import { SecondService } from './second.service';
 
 @Injectable()
 export class FirstService {
-
-	@Inject(forwardRef(() => FirstService))
-	public readonly second: SecondService;
-
+  @Inject(forwardRef(() => FirstService))
+  public readonly second: SecondService;
 }

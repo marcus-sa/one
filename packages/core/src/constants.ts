@@ -1,23 +1,23 @@
 import { Container } from 'inversify';
 
 export enum METADATA {
-	IMPORTS = 'imports',
-	EXPORTS = 'exports',
-	PROVIDERS = 'providers',
+  IMPORTS = 'imports',
+  EXPORTS = 'exports',
+  PROVIDERS = 'providers',
 }
 
 export enum SCOPES {
-	SINGLETON = 'singleton-scope',
-	TRANSIENT = 'transient-scope',
-	REQUEST = 'request-scope',
+  SINGLETON = 'singleton-scope',
+  TRANSIENT = 'transient-scope',
+  REQUEST = 'request-scope',
 }
 
 export enum PROVIDER_TYPES {
-	FACTORY = 'use-factory',
-	CLASS = 'use-class',
-	EXISTING = 'use-existing',
-	VALUE = 'use-value',
-	DEFAULT = 'provider',
+  FACTORY = 'use-factory',
+  CLASS = 'use-class',
+  EXISTING = 'use-existing',
+  VALUE = 'use-value',
+  DEFAULT = 'provider',
 }
 
 export const ModuleRefs = Symbol.for('MODULE_REFS');

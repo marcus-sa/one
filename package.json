@@ -1,19 +1,32 @@
 {
   "private": true,
   "scripts": {
+    "format": "prettier **/**/*.ts --write && git status",
+    "lint": "ts-lint -p tsconfig.json -c tslint.json",
     "example:core": "cd examples/core && npm run dev",
     "example:electron": "cd examples/electron && npm run dev",
     "bootstrap": "lerna bootstrap",
     "test": "lerna run test",
     "prepublish": "npm run test && lerna run prepare",
-    "precommit": "npm run test",
     "clean": "rimraf packages/**/lib"
+  },
+  "husky": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "{examples,packages}/**/*.{ts,json}": [
+      "npm run format",
+      "git add"
+    ]
   },
   "devDependencies": {
     "@types/jest": "^23.3.1",
     "@types/node": "^8.0.28",
+    "husky": "^0.14.3",
     "jest": "^23.5.0",
     "lerna": "^2.9.0",
+    "lint-staged": "^7.2.2",
+    "prettier": "^1.14.2",
     "rimraf": "^2.6.2",
     "rollup": "^0.64.1",
     "rollup-plugin-node-resolve": "^3.3.0",

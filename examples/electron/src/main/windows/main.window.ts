@@ -4,8 +4,6 @@ import { Inject } from '@nuclei/core';
 
 @Window()
 export class MainWindow {
-
-	@Inject(WindowRef)
-	public readonly windowRef: BrowserWindow;
-
+  @Inject(WindowRef)
+  public readonly windowRef: BrowserWindow;
 }
