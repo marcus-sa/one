@@ -14,6 +14,7 @@ import {
 export class Registry {
 
 	public static readonly lazyInjects = new Set<ILazyInject>();
+	public readonly moduleRefs2 = new Set<string>();
 	public readonly modules = new Map<Type<any>, Module>();
 
 	public static defineMetadata<T = object>(
@@ -64,6 +65,16 @@ export class Registry {
 		);
 	}
 
+	public getModuleFromProviderRef(provider: Provider, modules: Module[] | IterableIterator<Module> = this.modules.values()) {
+		const token = this.getProviderToken(provider);
+
+		for (const module of modules) {
+			if (module.providers.isBound(token)) {
+				return module;
+			}
+		}
+	}
+
 	public getProvider(provider: Provider, modules: Module[] | IterableIterator<Module> = this.modules.values()) {
 		const token = this.getProviderToken(provider);
 
@@ -90,8 +101,8 @@ export class Registry {
 
 			if (module.providers.isBound(token)) {
 				provider =
-					module.registry.isProviderBound(dependency)
-						? module.registry.getProvider(dependency)
+					this.isProviderBound(dependency)
+						? this.getProvider(dependency)
 						: module.providers.get(token);
 			}
 
@@ -110,7 +121,7 @@ export class Registry {
 				const exported = this.getModule(<Type<any>>ref);
 
 				if (ref === dependency) {
-					provider = module.registry.getProvider(dependency);
+					provider = this.getProvider(dependency);
 					return;
 				}
 

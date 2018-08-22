@@ -25,7 +25,6 @@ export class Module {
 	public imports: Type<any>[];
 
 	constructor(
-		private readonly modulesContainer: Container,
 		private readonly moduleRefs: Container,
 		private readonly registry: Registry,
 		public readonly target: Type<any>,
@@ -42,10 +41,6 @@ export class Module {
 		}), {});
 	};
 
-	public getModule(module: ModuleImport) {
-		return this.modulesContainer.get<Module>((<DynamicModule>module).module || (<Type<any>>module));
-	}
-
 	public getModuleRef(module: ModuleImport) {
 		return this.moduleRefs.get<Type<any>>((<DynamicModule>module).module || (<Type<any>>module));
 	}
@@ -59,7 +54,7 @@ export class Module {
 		}
 	}
 
-	private async resolveModule(ref: ModuleImport, i: number) {
+	public async resolveModule(ref: ModuleImport, i: number) {
 		if (!this.resolvedModules.has(i)) {
 			const module = await this.registry.resolveModule(ref);
 			this.resolvedModules.set(i, module);
@@ -76,7 +71,6 @@ export class Module {
 				if (this.moduleRefs.isBound(moduleRef)) return;
 
 				const module = new Module(
-					this.modulesContainer,
 					this.moduleRefs,
 					this.registry,
 					moduleRef,
@@ -87,11 +81,19 @@ export class Module {
 		);
 	}
 
-	private async createMetadata(metadata: ModuleMetadata) {
-		this.imports = await Promise.all(
-			<Promise<Type<any>>[]>metadata.imports
-				.map((ref, i) => this.resolveModule(<any>ref, i)),
+	private async resolveMetadataImports(
+		imports: Array<ModuleImport | Promise<DynamicModule>>,
+	) {
+		return await Promise.all(
+			<Promise<Type<any>>[]>imports
+				.map((ref, i) =>
+					this.resolveModule(<any>ref, i),
+				),
 		);
+	}
+
+	private async createMetadata(metadata: ModuleMetadata) {
+		this.imports = await this.resolveMetadataImports(metadata.imports);
 		this.exports = await Promise.all(
 			<Promise<ModuleExport>[]>metadata.exports,
 		);
@@ -116,11 +118,11 @@ export class Module {
 		this.bindGlobalProviders();
 		await this.resolveDependencies();
 
-		const providerFactory = new ProviderFactory(metadata.providers, this.registry, this);
-		await providerFactory.resolve();
-
 		this.moduleRefs.bind(<any>this.target).toSelf();
 		this.registry.modules.set(this.target, this);
+
+		const providerFactory = new ProviderFactory(metadata.providers, this.registry, this);
+		await providerFactory.resolve();
 
 		console.log(`BEFORE: ${this.target.name} - MODULE_INITIALIZER`);
 		if (this.providers.isBound(MODULE_INITIALIZER)) {

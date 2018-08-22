@@ -2,7 +2,7 @@ import {
 	Module,
 	Provider,
 	MODULE_INITIALIZER,
-	DynamicModule
+	DynamicModule, Type
 } from '@nuclei/core';
 
 import { PROVIDERS } from './symbols';
@@ -12,7 +12,7 @@ import { TestService } from './test.service';
 @Module()
 export class TestModule {
 
-	public static forRoot(providers: Provider[] = []): DynamicModule {
+	public static forRoot(providers: Type<any>[]): DynamicModule {
 		return {
 			module: TestModule,
 			exports: providers,
@@ -20,12 +20,8 @@ export class TestModule {
 				TestService,
 				...providers,
 				{
-					provide: PROVIDERS,
-					useValue: providers,
-				},
-				{
 					provide: MODULE_INITIALIZER,
-					useFactory: (test: TestService) => test.bind(),
+					useFactory: (test: TestService) => test.bind(providers),
 					deps: [TestService],
 					multi: true,
 				},

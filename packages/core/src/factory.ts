@@ -8,11 +8,6 @@ import { Module } from './module';
 // @TODO: Figure out why <https://github.com/inversify/InversifyJS/blob/master/wiki/hierarchical_di.md> doesn't work
 export class Factory {
 
-	private readonly modulesContainer = new Container({
-		autoBindInjectable: true,
-		defaultScope: 'Singleton',
-	});
-
 	private readonly moduleRefs = new Container({
 		autoBindInjectable: true,
 		defaultScope: 'Singleton',
@@ -24,7 +19,6 @@ export class Factory {
 
 	public async start() {
 		const module = new Module(
-			this.modulesContainer,
 			this.moduleRefs,
 			this.registry,
 			this.module,

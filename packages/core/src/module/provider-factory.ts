@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { PROVIDER_TYPES, SCOPE, SCOPES } from '../constants';
+import { Injector, PROVIDER_TYPES, SCOPE, SCOPES } from '../constants';
 import { Registry } from '../registry';
 import { Module } from './module';
 import {
@@ -91,8 +91,8 @@ export class ProviderFactory {
 
 	private async resolveDependencies(provider: Provider) {
 		const modules = await Promise.all(
-			this.module.imports.map(async (module) => {
-				const moduleRef = await this.registry.resolveModule(module);
+			this.module.imports.map(async (module, i) => {
+				const moduleRef = await this.module.resolveModule(module, i);
 				return this.registry.modules.get(moduleRef);
 			}),
 		);
@@ -116,7 +116,6 @@ export class ProviderFactory {
 
 			bind(module);
 		});
-
 	}
 
 	private async bind(type: PROVIDER_TYPES, provider: Provider) {

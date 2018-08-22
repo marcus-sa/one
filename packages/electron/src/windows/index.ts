@@ -1,2 +1,2 @@
-export * from './windows-core.module';
+export * from './windows.module';
 export * from './symbols';
