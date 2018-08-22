@@ -30,7 +30,7 @@ export interface Metadata {
 }
 
 export const METADATA: Metadata = {
-  IMPORT: 'imports',
+  IMPORTS: 'imports',
   EXPORTS: 'exports',
   PROVIDERS: 'providers',
 };

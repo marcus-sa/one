@@ -1,4 +1,5 @@
 {
+  "private": true,
   "scripts": {
     "dev": "nodemon --watch ../../packages/core --watch ./src -x ts-node -r tsconfig-paths/register src/index.ts"
   },

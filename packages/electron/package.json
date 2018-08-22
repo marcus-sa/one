@@ -11,6 +11,7 @@
   "author": "Marcus S. Abildskov",
   "license": "MIT",
   "dependencies": {
+    "@one/core": "*",
     "electron": "*",
     "reflect-metadata": "^0.1.12"
   },

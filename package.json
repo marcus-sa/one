@@ -3,12 +3,12 @@
   "scripts": {
     "format": "prettier **/**/*.ts --write && git status",
     "lint": "ts-lint -p tsconfig.json -c tslint.json",
-    "example:core": "cd examples/core && npm run dev",
-    "example:electron": "cd examples/electron && npm run dev",
     "bootstrap": "lerna bootstrap",
     "test": "jest",
     "prepublish": "npm run test && lerna run prepare",
-    "clean": "rimraf packages/**/lib"
+    "clean": "rimraf packages/**/lib",
+    "examples:core": "cd examples/core && npm run dev",
+    "examples:electron": "cd examples/electron && npm run dev"
   },
   "husky": {
     "pre-commit": "lint-staged"
@@ -28,7 +28,6 @@
     "lint-staged": "^7.2.2",
     "prettier": "^1.14.2",
     "rimraf": "^2.6.2",
-    "source-map-support": "^0.5.9",
     "ts-jest": "22.4.6",
     "typescript": "^2.8.1"
   },

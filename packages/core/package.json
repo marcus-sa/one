@@ -11,12 +11,12 @@
   "author": "Marcus S. Abildskov",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "^8.0.28",
     "inversify": "^4.13.0",
     "inversify-inject-decorators": "^3.1.0",
     "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {
+    "@types/node": "^8.0.28",
     "typescript": "^2.5.2"
   }
 }

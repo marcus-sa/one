@@ -11,7 +11,7 @@
   "author": "Marcus S. Abildskov",
   "license": "MIT",
   "dependencies": {
-    "@nuclei/core": "1.0.0"
+    "@one/core": "1.0.0"
   },
   "devDependencies": {
     "typescript": "^2.5.2"
