@@ -1,6 +1,6 @@
-import { Window, WindowRef } from '@nuclei/electron';
+import { Window, WindowRef } from '@one/electron';
 import { BrowserWindow } from 'electron';
-import { Inject } from '@nuclei/core';
+import { Inject } from '@one/core';
 
 @Window()
 export class MainWindow {

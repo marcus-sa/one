@@ -13,7 +13,6 @@ import {
 
 export class Registry {
   public static readonly lazyInjects = new Set<ILazyInject>();
-  public readonly moduleRefs2 = new Set<string>();
   public readonly modules = new Map<Type<any>, Module>();
 
   public static defineMetadata<T = object>(
@@ -37,7 +36,7 @@ export class Registry {
   }
 
   public static isForwardRef(provider: Type<any> | symbol | ForwardRef) {
-    return provider.hasOwnProperty('forwardRef');
+    return (provider || {}).hasOwnProperty('forwardRef');
   }
 
   public static getForwardRef(provider: Type<any> | symbol | ForwardRef) {

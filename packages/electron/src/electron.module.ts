@@ -1,4 +1,4 @@
-import { Module, DynamicModule } from '@nuclei/core';
+import { Module, DynamicModule } from '@one/core';
 import { app } from 'electron';
 
 import { ElectronCoreModule } from './electron-core.module';

@@ -1,5 +1,5 @@
-import { Module } from '@nuclei/core';
-import { ElectronWindowsModule } from '@nuclei/electron';
+import { Module } from '@one/core';
+import { ElectronWindowsModule } from '@one/electron';
 
 import { MainWindow } from './main.window';
 

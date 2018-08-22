@@ -1,4 +1,4 @@
-import { Injectable } from '@nuclei/core';
+import { Injectable } from '@one/core';
 
 @Injectable()
 export class MoreNestService {

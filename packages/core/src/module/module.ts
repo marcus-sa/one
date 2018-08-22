@@ -15,17 +15,17 @@ import {
 } from '../interfaces';
 
 export class Module {
-  public readonly providers = new Container({
+  public readonly providers = new Container(/*{
     autoBindInjectable: true,
-  });
+  }*/);
   public readonly lazyInject = getDecorators(this.providers).lazyInject;
-  private readonly resolvedModules = new Map<number, Type<any>>();
+  public readonly resolvedModules = new Map<number, Type<any>>();
   public exports: ModuleExport[];
   public imports: Type<any>[];
 
   constructor(
-    private readonly moduleRefs: Container,
-    private readonly registry: Registry,
+    public readonly moduleRefs: Container,
+    public readonly registry: Registry,
     public readonly target: Type<any>,
   ) {}
 
@@ -116,7 +116,6 @@ export class Module {
     await this.resolveDependencies();
 
     this.moduleRefs.bind(<any>this.target).toSelf();
-    this.registry.modules.set(this.target, this);
 
     const providerFactory = new ProviderFactory(
       metadata.providers,
@@ -124,6 +123,8 @@ export class Module {
       this,
     );
     await providerFactory.resolve();
+
+    this.registry.modules.set(this.target, this);
 
     console.log(`BEFORE: ${this.target.name} - MODULE_INITIALIZER`);
     if (this.providers.isBound(MODULE_INITIALIZER)) {

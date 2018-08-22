@@ -1,4 +1,4 @@
-import { DynamicModule, Module, MODULE_INITIALIZER, Type } from '@nuclei/core';
+import { DynamicModule, Module, MODULE_INITIALIZER, Type } from '@one/core';
 
 import { WindowsService } from './windows.service';
 

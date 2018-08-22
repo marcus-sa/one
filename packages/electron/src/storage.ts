@@ -1,4 +1,4 @@
-import { Target, Type } from '@nuclei/core';
+import { Target, Type } from '@one/core';
 
 import { EventMetadata, WindowMetadata } from './interfaces';
 

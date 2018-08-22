@@ -1,4 +1,4 @@
-import { Injectable, Type, Injector } from '@nuclei/core';
+import { Injectable, Type, Injector } from '@one/core';
 
 import { TEST } from './symbols';
 

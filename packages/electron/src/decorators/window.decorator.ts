@@ -1,5 +1,5 @@
 import { BrowserWindowConstructorOptions } from 'electron';
-import { Injectable } from '@nuclei/core';
+import { Injectable } from '@one/core';
 
 import { MetadataStorage } from '../storage';
 

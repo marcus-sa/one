@@ -24,5 +24,7 @@ export class Factory {
     console.log('Before: APP_INITIALIZER');
     await Promise.all(this.registry.getAllProviders(<any>APP_INITIALIZER));
     console.log('After: APP_INITIALIZER');
+
+    return module;
   }
 }

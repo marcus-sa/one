@@ -1,4 +1,4 @@
-import { Target } from '@nuclei/core';
+import { Target } from '@one/core';
 
 import { BrowserWindowConstructorOptions } from 'electron';
 

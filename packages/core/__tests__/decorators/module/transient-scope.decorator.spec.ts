@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { TransientScope, SCOPES, SCOPE } from '@nuclei/core';
+import { TransientScope, SCOPES, SCOPE } from '@one/core';
 
 describe('@TransientScope()', () => {
   it('should define metadata scope as transient', () => {

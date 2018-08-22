@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { Injector, PROVIDER_TYPES, SCOPE, SCOPES } from '../constants';
+import { Injector, PROVIDER_TYPES, ProviderTypes, SCOPE, Scopes, SCOPES } from '../constants';
 import { Registry } from '../registry';
 import { Module } from './module';
 import {
@@ -31,11 +31,11 @@ export class ProviderFactory {
     );
   }
 
-  private resolveProviderScope(provider: Type<any>): SCOPES {
+  private resolveProviderScope(provider: Type<any>): Scopes {
     return Reflect.getMetadata(SCOPE, provider);
   }
 
-  private bindProvider(scope: SCOPES, provider: Type<any>) {
+  private bindProvider(scope: Scopes, provider: Type<any>) {
     const binding = this.module.providers.bind(provider).toSelf();
 
     switch (scope) {
@@ -76,7 +76,7 @@ export class ProviderFactory {
       .toProvider(() => provider.useFactory(...deps));
   }
 
-  private getProviderType(provider: Provider): PROVIDER_TYPES {
+  private getProviderType(provider: Provider): ProviderTypes {
     if ((<FactoryProvider>provider).useFactory) {
       return PROVIDER_TYPES.FACTORY;
     } else if ((<ValueProvider>provider).useValue) {
@@ -125,7 +125,7 @@ export class ProviderFactory {
     });
   }
 
-  private async bind(type: PROVIDER_TYPES, provider: Provider) {
+  private async bind(type: ProviderTypes, provider: Provider) {
     // @TODO: Add useExisting binding
     if (type === PROVIDER_TYPES.DEFAULT) {
       const scope = this.resolveProviderScope(<Type<any>>provider);

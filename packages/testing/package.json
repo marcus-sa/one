@@ -1,5 +1,5 @@
 {
-  "name": "@nuclei/testing",
+  "name": "@one/testing",
   "version": "1.0.0",
   "description": "Testing utilities for Nuclei",
   "main": "lib/index.js",

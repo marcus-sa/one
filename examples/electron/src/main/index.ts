@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { bootstrap } from '@nuclei/core';
+import { bootstrap } from '@one/core';
 
 import { AppModule } from './app.module';
 

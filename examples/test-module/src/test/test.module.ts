@@ -4,7 +4,7 @@ import {
   MODULE_INITIALIZER,
   DynamicModule,
   Type,
-} from '@nuclei/core';
+} from '@one/core';
 
 import { PROVIDERS } from './symbols';
 

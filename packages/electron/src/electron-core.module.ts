@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Module, DynamicModule } from '@nuclei/core';
+import { APP_INITIALIZER, Module, DynamicModule } from '@one/core';
 
 import { ElectronService } from './electron.service';
 

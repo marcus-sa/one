@@ -1,4 +1,4 @@
-import { Module } from '@nuclei/core';
+import { Module } from '@one/core';
 
 import { MoreNestService } from './more-nest.service';
 

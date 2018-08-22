@@ -1,4 +1,4 @@
-import { Module, APP_INITIALIZER, forwardRef } from '@nuclei/core';
+import { Module, APP_INITIALIZER, forwardRef } from '@one/core';
 
 import { FirstService } from './first.service';
 import { SecondService } from './second.service';

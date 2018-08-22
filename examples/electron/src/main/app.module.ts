@@ -1,5 +1,5 @@
-import { Module, APP_INITIALIZER } from '@nuclei/core';
-import { ElectronModule } from '@nuclei/electron';
+import { Module, APP_INITIALIZER } from '@one/core';
+import { ElectronModule } from '@one/electron';
 
 import { WindowsModule, MainWindow } from './windows';
 

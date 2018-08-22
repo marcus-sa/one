@@ -1,4 +1,4 @@
-import { Injectable, Inject, forwardRef } from '@nuclei/core';
+import { Injectable, Inject, forwardRef } from '@one/core';
 
 import { FirstService } from './first.service';
 
