@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "format": "prettier **/**/*.ts --write && git status",
+    "format": "prettier **/**/*.{js,ts} --write && git status",
     "lint": "ts-lint -p tsconfig.json -c tslint.json",
     "bootstrap": "lerna bootstrap",
     "test": "jest",

@@ -81,7 +81,6 @@ export class Registry {
     const findDependency = async (module: Module) => {
       if (provider || !this.isModule(module) || modules.has(module.target.name))
         return;
-      console.log(module.target.name, module.imports, module.exports);
 
       modules.add(module.target.name);
 
@@ -92,7 +91,7 @@ export class Registry {
       }
 
       const imports = module.imports.map(async (moduleRef, i) => {
-        if (!module.exports.includes(moduleRef) && !module.root) return;
+        if (!module.exports.includes(moduleRef)) return;
         // this.getModule(await this.resolveModule(moduleRef));
         const resolvedModule = this.getModule(
           await module.resolveModuleByIndex(moduleRef, i),

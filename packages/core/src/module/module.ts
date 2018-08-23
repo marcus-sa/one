@@ -22,7 +22,6 @@ export class Module {
   public readonly resolvedModules = new Map<number, Type<any>>();
   public exports: ModuleExport[];
   public imports: Type<any>[];
-  public root?: boolean;
 
   constructor(
     public readonly moduleRefs: Container,
