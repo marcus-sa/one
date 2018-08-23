@@ -5,6 +5,6 @@ import { MainWindow } from './main.window';
 
 @Module({
   exports: [ElectronWindowsModule],
-  imports: [ElectronWindowsModule.forFeature([MainWindow])],
+  imports: [ElectronWindowsModule.register([MainWindow])],
 })
 export class WindowsModule {}

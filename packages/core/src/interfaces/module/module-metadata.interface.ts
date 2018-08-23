@@ -3,7 +3,7 @@ import { Provider } from '../provider.interface';
 import { Type } from '../type.interface';
 
 export type ModuleImport = Type<any> | DynamicModule;
-export type ModuleExport = Provider | DynamicModule | symbol;
+export type ModuleExport = Provider | Type<any> | DynamicModule | symbol;
 
 export interface ModuleMetadata {
   imports?: Array<ModuleImport | Promise<DynamicModule>>;

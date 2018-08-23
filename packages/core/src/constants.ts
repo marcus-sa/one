@@ -23,39 +23,19 @@ import { Container } from 'inversify';
 }
  */
 
-export interface Metadata {
-  IMPORTS: 'imports';
-  EXPORTS: 'exports';
-  PROVIDERS: 'providers';
-}
-
-export const METADATA: Metadata = {
+export const METADATA = {
   IMPORTS: 'imports',
   EXPORTS: 'exports',
   PROVIDERS: 'providers',
 };
 
-export interface Scopes {
-  SINGLETON: 'singleton-scope';
-  TRANSIENT: 'transient-scope';
-  REQUEST: 'request-scope';
-}
-
-export const SCOPES: Scopes = {
+export const SCOPES = {
   SINGLETON: 'singleton-scope',
   TRANSIENT: 'transient-scope',
   REQUEST: 'request-scope',
 };
 
-export interface ProviderTypes {
-  FACTORY: 'use-factory';
-  CLASS: 'use-class';
-  EXISTING: 'use-existing';
-  VALUE: 'use-value';
-  DEFAULT: 'provider';
-}
-
-export const PROVIDER_TYPES: ProviderTypes = {
+export const PROVIDER_TYPES = {
   FACTORY: 'use-factory',
   CLASS: 'use-class',
   EXISTING: 'use-existing',

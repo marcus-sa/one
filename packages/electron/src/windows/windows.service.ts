@@ -2,14 +2,26 @@ import { Injectable, Type, Injector } from '@one/core';
 import { BrowserWindow } from 'electron';
 
 import { MetadataStorage } from '../storage';
+import { EventManager } from '../managers';
 import { WindowRef } from './symbols';
 
-// Use one service to manage all window features
 @Injectable()
 export class WindowsService {
   private readonly windowRefs = new Map<Type<any>, BrowserWindow>();
 
   constructor(private readonly injector: Injector) {}
+
+  public bindWindowEvents() {
+    [...this.windowRefs.entries()].forEach(([window, windowRef]) => {
+      const eventManager = new EventManager(this.injector, window);
+
+      eventManager.bindWindowEvents(windowRef);
+    });
+  }
+
+  public async start() {
+    this.bindWindowEvents();
+  }
 
   public async add(windows: Type<any>[]) {
     windows.forEach(window => {

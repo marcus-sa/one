@@ -1,5 +1,4 @@
 import { Type } from './type.interface';
-import { Scopes } from '../constants';
 
 export type Provider =
   | ValueProvider
@@ -32,5 +31,5 @@ export interface ValueProvider extends ProvideToken {
 
 export interface FactoryProvider extends ProvideToken, MultiDepsProvider {
   useFactory: (...args: any[]) => any | Promise<any>;
-  scope?: Scopes;
+  scope?: string;
 }

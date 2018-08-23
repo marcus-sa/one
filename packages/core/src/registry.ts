@@ -49,6 +49,10 @@ export class Registry {
     return arr.reduce((previous, current) => [...previous, ...current]);
   }
 
+  public getModules(): Module[] {
+    return [...this.modules.values()];
+  }
+
   public isModuleRef(ref: any) {
     return this.modules.has(ref);
   }
@@ -58,7 +62,7 @@ export class Registry {
   }
 
   public getModule(target: Type<any>): Module {
-    return [...this.modules.values()].find(module => module.target === target);
+    return this.getModules().find(module => module.target === target);
   }
 
   public getModuleFromProviderRef(
@@ -176,8 +180,10 @@ export class Registry {
     const token = this.getProviderToken(provider);
 
     return Registry.flatten(
-      [...this.modules.values()].map(({ providers }) => {
-        return providers.isBound(token) ? providers.getAll(token) : [];
+      this.getModules().map(({ providers }) => {
+        return providers.isBound(token)
+          ? providers.getAll(token)
+          : [];
       }),
     );
   }
@@ -193,7 +199,7 @@ export class Registry {
   }
 
   public isProviderBound(provider: Provider) {
-    return [...this.modules.values()].some(({ providers }) =>
+    return this.getModules().some(({ providers }) =>
       providers.isBound(this.getProviderToken(provider)),
     );
   }

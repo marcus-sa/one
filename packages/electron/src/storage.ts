@@ -10,14 +10,18 @@ export class MetadataStorage {
     metadata: Set<T>,
     target: Type<any> | Function,
   ): T {
-    return [...metadata.values()].find(value => value.target === target);
+    return [...metadata.values()].find(
+      value => value.target === target,
+    );
   }
 
   private static filterByTarget<T extends Target>(
     metadata: Set<T>,
     target: Type<any> | Function,
   ): T[] {
-    return [...metadata.values()].filter(value => value.target === target);
+    return [...metadata.values()].filter(
+      value => value.target === target,
+    );
   }
 
   public static getWindowByType(target: Type<any> | Function) {
