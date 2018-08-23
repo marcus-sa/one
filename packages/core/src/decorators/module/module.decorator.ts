@@ -1,11 +1,11 @@
 import { injectable } from 'inversify';
 
 import { ModuleMetadata } from '../../interfaces';
-import { Registry } from '../../registry';
+import { Reflector } from '../../reflector';
 
 export function Module(metadata: ModuleMetadata = {}): ClassDecorator {
   return (target: object) => {
-    Registry.defineMetadata(target, metadata);
+    Reflector.defineMetadataByKeys(target, metadata);
 
     return injectable()(target);
   };

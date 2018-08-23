@@ -1,4 +1,4 @@
-import { Window, WindowRef, Event, Once } from '@one/electron';
+import { Window, WindowRef, Event } from '@one/electron';
 import { BrowserWindow } from 'electron';
 import { Inject } from '@one/core';
 
@@ -7,9 +7,8 @@ export class MainWindow {
   @Inject(WindowRef)
   public readonly windowRef: BrowserWindow;
 
-  @Once()
-  @Event('maximize')
-  public onReady() {
-    console.log('MainWindow is ready');
+  @Event('closed')
+  public onClosed() {
+    console.log(this.windowRef, 'MainWindow has been closed');
   }
 }

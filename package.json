@@ -7,8 +7,9 @@
     "test": "jest",
     "prepublish": "yarn test && lerna run prepare",
     "clean": "rimraf packages/**/lib",
-    "examples:core": "cd examples/core && yarn dev",
-    "examples:electron": "cd examples/electron && yarn dev"
+    "examples:core": "node example.cli.js --example core",
+    "examples:circular": "node example.cli.js --example circular",
+    "examples:electron": "node example.cli.js --example core --watch core,electron"
   },
   "husky": {
     "pre-commit": "lint-staged"
@@ -26,10 +27,15 @@
     "jest": "23.1.0",
     "lerna": "^2.9.0",
     "lint-staged": "^7.2.2",
+    "nodemon": "^1.18.3",
     "prettier": "^1.14.2",
+    "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "ts-jest": "22.4.6",
-    "typescript": "^2.8.1"
+    "ts-node": "^7.0.1",
+    "tsconfig-paths": "^3.5.0",
+    "typescript": "^2.8.1",
+    "yargs": "^12.0.1"
   },
   "workspaces": [
     "packages/*"

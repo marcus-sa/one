@@ -12,8 +12,7 @@
     "webpack": "^4.17.0"
   },
   "dependencies": {
-    "electron": "*",
-    "reflect-metadata": "^0.1.12"
+    "electron": "*"
   },
   "electronWebpack": {
     "main": {

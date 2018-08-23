@@ -7,7 +7,6 @@ import { NestService } from './nest.service';
 export class NestModule {
   // @TODO: Fix dynamic modules
   public static forRoot(): Promise<DynamicModule> {
-    console.log('NestModule#forRoot');
     return new Promise(resolve => {
       setTimeout(() => {
         resolve({
@@ -16,7 +15,7 @@ export class NestModule {
           providers: [NestService],
           exports: [MoreNestModule, NestService],
         });
-      }, 5000);
+      }, 2000);
     });
   }
 }

@@ -22,6 +22,7 @@ export class Module {
   public readonly resolvedModules = new Map<number, Type<any>>();
   public exports: ModuleExport[];
   public imports: Type<any>[];
+  public root?: boolean;
 
   constructor(
     public readonly moduleRefs: Container,
@@ -58,7 +59,7 @@ export class Module {
     }
   }
 
-  public async resolveModule(ref: ModuleImport, i: number) {
+  public async resolveModuleByIndex(ref: ModuleImport, i: number) {
     if (!this.resolvedModules.has(i)) {
       const module = await this.registry.resolveModule(ref);
       this.resolvedModules.set(i, module);
@@ -71,7 +72,7 @@ export class Module {
   private async resolveDependencies() {
     await Promise.all(
       this.imports.map(async (ref: Type<any>, i) => {
-        const moduleRef = await this.resolveModule(ref, i);
+        const moduleRef = await this.resolveModuleByIndex(ref, i);
         if (this.moduleRefs.isBound(moduleRef)) return;
 
         const module = new Module(this.moduleRefs, this.registry, moduleRef);
@@ -85,7 +86,7 @@ export class Module {
     imports: Array<ModuleImport | Promise<DynamicModule>>,
   ) {
     return await Promise.all(<Promise<Type<any>>[]>(
-      imports.map((ref, i) => this.resolveModule(<any>ref, i))
+      imports.map((ref, i) => this.resolveModuleByIndex(<any>ref, i))
     ));
   }
 

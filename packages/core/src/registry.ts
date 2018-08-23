@@ -1,6 +1,6 @@
-import 'reflect-metadata';
-
+import { Reflector } from './reflector';
 import { Module } from './module';
+import { Utils } from './util';
 import {
   DynamicModule,
   ProvideToken,
@@ -14,20 +14,6 @@ import {
 export class Registry {
   public static readonly lazyInjects = new Set<ILazyInject>();
   public readonly modules = new Map<Type<any>, Module>();
-
-  public static defineMetadata<T = object>(
-    target: T,
-    metadata: { [name: string]: any },
-    exclude: string[] = [],
-  ) {
-    Object.keys(metadata)
-      .filter(p => !exclude.includes(p))
-      .forEach(property => {
-        Reflect.defineMetadata(property, metadata[property], target);
-      });
-
-    return target;
-  }
 
   public static getLazyInjects(target: Type<any>): ILazyInject[] {
     return [...this.lazyInjects.values()].filter(
@@ -43,10 +29,6 @@ export class Registry {
     return Registry.isForwardRef(provider)
       ? (<ForwardRef>provider).forwardRef()
       : provider;
-  }
-
-  public static flatten(arr: any[][]) {
-    return arr.reduce((previous, current) => [...previous, ...current]);
   }
 
   public getModules(): Module[] {
@@ -67,7 +49,7 @@ export class Registry {
 
   public getModuleFromProviderRef(
     provider: Provider,
-    modules: Module[] | IterableIterator<Module> = this.modules.values(),
+    modules: Module[] = this.getModules(),
   ) {
     const token = this.getProviderToken(provider);
 
@@ -80,7 +62,7 @@ export class Registry {
 
   public getProvider(
     provider: Provider,
-    modules: Module[] | IterableIterator<Module> = this.modules.values(),
+    modules: Module[] = this.getModules(),
   ) {
     const token = this.getProviderToken(provider);
 
@@ -91,10 +73,6 @@ export class Registry {
     }
   }
 
-  public static pick<T = any>(from: any[], by: any[]): T[] {
-    return from.filter(f => by.includes(f));
-  }
-
   public async getDependencyFromTree(module: Module, dependency: Provider) {
     const token = this.getProviderToken(dependency);
     const modules = new Set<string>();
@@ -103,6 +81,7 @@ export class Registry {
     const findDependency = async (module: Module) => {
       if (provider || !this.isModule(module) || modules.has(module.target.name))
         return;
+      console.log(module.target.name, module.imports, module.exports);
 
       modules.add(module.target.name);
 
@@ -112,13 +91,15 @@ export class Registry {
           : module.providers.get(token);
       }
 
-      const imports = module.imports.map(async moduleRef => {
-        // @TODO: Still resolves twice
-        const imported = this.getModule(await this.resolveModule(moduleRef));
+      const imports = module.imports.map(async (moduleRef, i) => {
+        if (!module.exports.includes(moduleRef) && !module.root) return;
+        // this.getModule(await this.resolveModule(moduleRef));
+        const resolvedModule = this.getModule(
+          await module.resolveModuleByIndex(moduleRef, i),
+        );
 
         // @TODO: Need to figure out where we are in the loop so we can check if the module exists in exports correctly
-        const modules = Registry.pick(module.imports, module.exports);
-        modules && (await findDependency(imported));
+        await findDependency(resolvedModule);
       });
 
       const exports = module.exports.map(async ref => {
@@ -154,32 +135,27 @@ export class Registry {
     module: ModuleImport | Promise<DynamicModule>,
   ): Promise<Type<any>> {
     const exclude = ['module'];
+    let moduleRef;
 
     if ((<Promise<DynamicModule>>module).then) {
-      const moduleRef = await (<Promise<DynamicModule>>module);
-
-      return Registry.defineMetadata<Type<any>>(
-        moduleRef.module,
-        moduleRef,
-        exclude,
-      );
+      moduleRef = await (<Promise<DynamicModule>>module);
     } else if ((<DynamicModule>module).module) {
-      const moduleRef = <DynamicModule>module;
-
-      return Registry.defineMetadata<Type<any>>(
-        moduleRef.module,
-        moduleRef,
-        exclude,
-      );
+      moduleRef = <DynamicModule>module;
+    } else if (!moduleRef) {
+      return <Type<any>>module;
     }
 
-    return <Type<any>>module;
+    return Reflector.defineMetadataByKeys<Type<any>>(
+      moduleRef.module,
+      moduleRef,
+      exclude,
+    );
   }
 
   public getAllProviders(provider: Provider) {
     const token = this.getProviderToken(provider);
 
-    return Registry.flatten(
+    return Utils.flatten(
       this.getModules().map(({ providers }) => {
         return providers.isBound(token)
           ? providers.getAll(token)

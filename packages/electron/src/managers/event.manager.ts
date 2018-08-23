@@ -24,11 +24,9 @@ export class EventManager {
     return Reflect.getMetadata(METADATA.TYPE, this.provider);
   }*/
 
-  public bindWindowEvents(windowRef: BrowserWindow) {
+  public async bindWindowEvents(windowRef: BrowserWindow) {
     const provider = this.getProvider();
     const events = this.getEvents();
-
-    console.log(windowRef);
 
     events.forEach(event => {
       windowRef.on(<any>event.name, (...args: any[]) => {

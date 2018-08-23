@@ -7,7 +7,10 @@ export class ElectronWindowsModule {
   public static register(windows: Type<any>[]): DynamicModule {
     return {
       module: ElectronWindowsModule,
-      exports: windows,
+      exports: [
+        WindowsService,
+        windows,
+      ],
       providers: [
         WindowsService,
         ...windows,

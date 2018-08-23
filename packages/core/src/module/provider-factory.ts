@@ -94,7 +94,7 @@ export class ProviderFactory {
   private async resolveDependencies(provider: Provider) {
     const modules = await Promise.all(
       this.module.imports.map(async (module, i) => {
-        const moduleRef = await this.module.resolveModule(module, i);
+        const moduleRef = await this.module.resolveModuleByIndex(module, i);
         return this.registry.modules.get(moduleRef);
       }),
     );
@@ -163,8 +163,8 @@ export class ProviderFactory {
           }
         }
 
-        await this.bind(type, provider);
         await this.resolveDependencies(provider);
+        await this.bind(type, provider);
       }),
     );
   }
