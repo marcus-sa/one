@@ -11,7 +11,7 @@ DI architecture using TypeScript
 <br />
 ☑️ [Lazy injection using `forwardRef`](https://github.com/marcus-sa/one/blob/master/examples/circular/src/first.service.ts)
 <br />
-☑️ [Async module imports](https://github.com/marcus-sa/one/blob/master/packages/electron/src/electron-core.module.ts)
+☑️ [Async module imports](https://github.com/marcus-sa/one/blob/master/packages/electron/src/electron.module.ts)
 ### Missing
 ❎ [Add support for async `FactoryProvider` bindings](https://github.com/marcus-sa/one/issues/6)
 <br />
