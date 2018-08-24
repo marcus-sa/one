@@ -43,12 +43,6 @@ export class Module {
     );
   }
 
-  public getModuleRef(module: ModuleImport) {
-    return this.moduleRefs.get<Type<any>>(
-      (<DynamicModule>module).module || <Type<any>>module,
-    );
-  }
-
   public getProvider(module: Type<any>, provider: Provider) {
     const token = this.registry.getProviderToken(provider);
     const moduleRef = this.registry.modules.get(module);
@@ -84,9 +78,11 @@ export class Module {
   private async resolveMetadataImports(
     imports: Array<ModuleImport | Promise<DynamicModule>>,
   ) {
-    return await Promise.all(<Promise<Type<any>>[]>(
-      imports.map((ref, i) => this.resolveModuleByIndex(<any>ref, i))
-    ));
+    return await Promise.all(
+      imports.map<Promise<Type<any>>>(
+        (ref, i) => this.resolveModuleByIndex(<any>ref, i),
+      ),
+    );
   }
 
   private async createMetadata(metadata: ModuleMetadata) {
@@ -126,11 +122,9 @@ export class Module {
 
     this.registry.modules.set(this.target, this);
 
-    console.log(`BEFORE: ${this.target.name} - MODULE_INITIALIZER`);
     if (this.providers.isBound(MODULE_INITIALIZER)) {
       await Promise.all(this.providers.getAll(MODULE_INITIALIZER));
     }
-    console.log(`AFTER: ${this.target.name} - MODULE_INITIALIZER`);
 
     const module = this.moduleRefs.get(<any>this.target);
 

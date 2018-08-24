@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 
-import { APP_INITIALIZER, ModuleRefs } from './constants';
+import { APP_INITIALIZER } from './constants';
 import { Registry } from './registry';
 import { Type } from './interfaces';
 import { Module } from './module';

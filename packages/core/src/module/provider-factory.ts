@@ -67,7 +67,7 @@ export class ProviderFactory {
     const deps = await this.getDependencies(provider.deps);
 
     if (provider.scope === SCOPES.TRANSIENT) {
-      this.module.providers
+      return this.module.providers
         .bind(provider.provide)
         .toDynamicValue(() => provider.useFactory(...deps));
     }

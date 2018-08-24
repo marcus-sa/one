@@ -1,6 +1,8 @@
 {
   "private": true,
   "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "format": "prettier **/**/*.{js,ts} --write && git status",
     "lint": "ts-lint -p tsconfig.json -c tslint.json",
     "bootstrap": "lerna bootstrap",
@@ -23,6 +25,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.1",
     "@types/node": "^8.0.28",
+    "docusaurus": "^1.3.3",
     "husky": "^0.14.3",
     "jest": "23.1.0",
     "lerna": "^2.9.0",

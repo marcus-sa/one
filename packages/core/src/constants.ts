@@ -1,5 +1,4 @@
 // No enum support for ts-jest
-
 import { Container } from 'inversify';
 
 /**
@@ -23,12 +22,18 @@ import { Container } from 'inversify';
 }
  */
 
+export const APP_INITIALIZER = Symbol.for('APP_INITIALIZER');
+export const MODULE_INITIALIZER = Symbol.for('MODULE_INITIALIZER');
+
+export class Injector extends Container {}
+
 export const METADATA = {
   IMPORTS: 'imports',
   EXPORTS: 'exports',
   PROVIDERS: 'providers',
 };
 
+export const SCOPE = 'resolve-scope';
 export const SCOPES = {
   SINGLETON: 'singleton-scope',
   TRANSIENT: 'transient-scope',
@@ -42,10 +47,3 @@ export const PROVIDER_TYPES = {
   VALUE: 'use-value',
   DEFAULT: 'provider',
 };
-
-export const ModuleRefs = Symbol.for('MODULE_REFS');
-export const Modules = Symbol.for('MODULE_REFS');
-export const APP_INITIALIZER = Symbol.for('APP_INITIALIZER');
-export const MODULE_INITIALIZER = Symbol.for('MODULE_INITIALIZER');
-export const SCOPE = 'resolve-scope';
-export class Injector extends Container {}
