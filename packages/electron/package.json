@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@one/electron",
   "version": "1.0.0",
   "description": "",
@@ -16,8 +17,6 @@
     "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {
-    "@types/node": "^8.0.28",
-    "@types/electron": "*",
-    "typescript": "^2.5.2"
+    "@types/electron": "*"
   }
 }

@@ -12,10 +12,14 @@
 const users = [
   {
     caption: 'Venobo',
-    // You will need to prepend the image path with your baseUrl
-    // if it is not '/', like: '/test-site/img/docusaurus.svg'.
     image: '/img/docusaurus.svg',
     infoLink: 'https://github.com/marcus-sa/venobo',
+    pinned: true,
+  },
+  {
+    caption: 'Zeus',
+    image: '/img/docusaurus.svg',
+    infoLink: 'https://github.com/marcus-sa/zeus',
     pinned: true,
   },
 ];

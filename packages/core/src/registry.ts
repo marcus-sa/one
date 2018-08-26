@@ -92,12 +92,10 @@ export class Registry {
 
       const imports = module.imports.map(async (moduleRef, i) => {
         if (!module.exports.includes(moduleRef)) return;
-        // this.getModule(await this.resolveModule(moduleRef));
         const resolvedModule = this.getModule(
           await module.resolveModuleByIndex(moduleRef, i),
         );
 
-        // @TODO: Need to figure out where we are in the loop so we can check if the module exists in exports correctly
         await findDependency(resolvedModule);
       });
 
@@ -134,12 +132,12 @@ export class Registry {
     module: ModuleImport | Promise<DynamicModule>,
   ): Promise<Type<any>> {
     const exclude = ['module'];
-    let moduleRef;
+    let moduleRef!: Type<any>;
 
     if ((<Promise<DynamicModule>>module).then) {
       moduleRef = await (<Promise<DynamicModule>>module);
     } else if ((<DynamicModule>module).module) {
-      moduleRef = <DynamicModule>module;
+      moduleRef = (<DynamicModule>module).module;
     } else if (!moduleRef) {
       return <Type<any>>module;
     }
@@ -156,9 +154,7 @@ export class Registry {
 
     return Utils.flatten(
       this.getModules().map(({ providers }) => {
-        return providers.isBound(token)
-          ? providers.getAll(token)
-          : [];
+        return providers.isBound(token) ? providers.getAll(token) : [];
       }),
     );
   }
