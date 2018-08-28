@@ -132,12 +132,12 @@ export class Registry {
     module: ModuleImport | Promise<DynamicModule>,
   ): Promise<Type<any>> {
     const exclude = ['module'];
-    let moduleRef!: Type<any>;
+    let moduleRef!: DynamicModule;
 
     if ((<Promise<DynamicModule>>module).then) {
       moduleRef = await (<Promise<DynamicModule>>module);
     } else if ((<DynamicModule>module).module) {
-      moduleRef = (<DynamicModule>module).module;
+      moduleRef = <DynamicModule>module;
     } else if (!moduleRef) {
       return <Type<any>>module;
     }

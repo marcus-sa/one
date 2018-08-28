@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "precommit": "pretty-quick --staged",
+    "commit": "git-cz",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "lint": "ts-lint -p tsconfig.json -c tslint.json",
@@ -17,6 +18,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.1",
     "@types/node": "^8.0.28",
+    "git-cz": "^1.7.1",
     "husky": "^0.14.3",
     "jest": "23.1.0",
     "lerna": "^2.9.0",
