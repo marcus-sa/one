@@ -1,6 +1,6 @@
 import { interfaces } from 'inversify';
 
-import { Target } from './target.interface';
+import { TargetRef } from './target-ref.interface';
 import { ForwardRef } from './forward-ref.interface';
 import { Type } from './type.interface';
 
@@ -12,7 +12,7 @@ export type TLazyInject = (
     | interfaces.Abstract<any>,
 ) => (proto: any, key: string) => void;
 
-export interface ILazyInject extends Target {
+export interface ILazyInject extends TargetRef {
   forwardRef: ForwardRef;
   lazyInject: (lazyInject: TLazyInject, provider: Type<any> | symbol) => any;
 }

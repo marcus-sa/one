@@ -1,5 +1,5 @@
 {
-  "name": "@one/core",
+  "name": "@one/ds-client",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -11,13 +11,6 @@
   "author": "Marcus S. Abildskov",
   "license": "MIT",
   "dependencies": {
-    "inversify": "^4.13.0",
-    "inversify-inject-decorators": "^3.1.0",
-<<<<<<< HEAD
-    "reflect-metadata": "^0.1.12"
-=======
-    "reflect-metadata": "^0.1.12",
-    "rxjs": "^6.2.2"
->>>>>>> feat: 🎸 added deepstream.io modules
+    "deepstream.io-client-js": "^2.3.0"
   }
 }

@@ -5,7 +5,8 @@ export type Provider =
   | FactoryProvider
   | ExistingProvider
   | ClassProvider
-  | Type<any>;
+  | Type<any>
+  | symbol;
 
 export interface ClassProvider {
   provide?: symbol;

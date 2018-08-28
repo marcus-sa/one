@@ -9,6 +9,9 @@
     "test": "jest",
     "prepublish": "yarn test && lerna run prepare",
     "clean": "rimraf packages/**/lib",
+    "examples:core": "node example.cli.js --example core",
+    "examples:circular": "node example.cli.js --example circular",
+    "examples:electron": "node example.cli.js --example core --watch core,electron",
     "pretty-quick": "pretty-quick"
   },
   "devDependencies": {
