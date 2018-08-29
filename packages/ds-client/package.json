@@ -11,6 +11,8 @@
   "author": "Marcus S. Abildskov",
   "license": "MIT",
   "dependencies": {
-    "deepstream.io-client-js": "^2.3.0"
+    "@one/core": "*",
+    "deepstream.io-client-js": "^2.3.0",
+    "lodash.omit": "^4.5.0"
   }
 }

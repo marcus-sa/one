@@ -1,1 +1,3 @@
-export interface DsClient extends deepstreamIO.Client {}
+import { Client } from './deepstream';
+
+export interface DsClient extends Client {}

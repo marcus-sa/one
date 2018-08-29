@@ -1,5 +1,5 @@
 {
-  "name": "@one/ds-server",
+  "name": "@one/config",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -12,6 +12,14 @@
   "license": "MIT",
   "dependencies": {
     "@one/core": "*",
-    "deepstream.io": "*"
+    "fs-extra": "^7.0.0",
+    "glob": "^7.1.3",
+    "lodash.get": "^4.4.2",
+    "lodash.set": "^4.3.2",
+    "yaml": "^1.0.0-rc.8"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^5.0.4",
+    "@types/glob": "^5.0.35"
   }
 }

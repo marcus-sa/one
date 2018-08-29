@@ -5,11 +5,12 @@ import { RpcResponseError, RpcResponseReject } from './exceptions';
 import { DsClient } from '../ds-client.interface';
 import { DEEPSTREAM_CLIENT } from '../symbols';
 import { RpcStorage } from './rpc.storage';
+import { RPCResponse } from '../deepstream';
 
-export type ProvideCallback = (
+export type ProvideCallback = <T>(
   data: any,
-  response: deepstreamIO.RPCResponse,
-) => Observable<T> | Promise<any> | any;
+  response: RPCResponse,
+) => Observable<T> | Promise<T> | T;
 
 @Injectable()
 export class DsRpcService {
@@ -39,7 +40,7 @@ export class DsRpcService {
   }
 
   private async rpcResponseZone(
-    response: deepstreamIO.RPCResponse,
+    response: RPCResponse,
     promise: () => Promise<any>,
   ) {
     try {
@@ -47,12 +48,12 @@ export class DsRpcService {
       return result ? response.send(result) : response.ack();
     } catch (error) {
       if (error instanceof RpcResponseError) {
-        return response.error(error);
+        return response.error(error.message);
       } else if (error instanceof RpcResponseReject) {
         return response.reject();
       }
 
-      response.error(`Unhandled error: ${error}`);
+      response.error(`Unhandled error: ${error.message}`);
     }
   }
 

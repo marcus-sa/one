@@ -25,7 +25,6 @@ export class ProviderFactory {
     return Promise.all(
       dependencies.map(dependency => {
         const provider = Registry.getForwardRef(<any>dependency);
-
         return this.registry.getDependencyFromTree(this.module, <any>provider);
       }),
     );
@@ -65,15 +64,17 @@ export class ProviderFactory {
   private async bindFactoryProvider(provider: FactoryProvider) {
     // Shouldn't resolve dependencies before the actual binding happens
     const deps = await this.getDependencies(provider.deps);
+    // const factory = await provider.useFactory(...deps);
 
-    if (provider.scope === SCOPES.TRANSIENT) {
+    /*if (provider.scope === SCOPES.TRANSIENT) {
       return this.module.providers
         .bind(provider.provide)
         .toDynamicValue(() => provider.useFactory(...deps));
-    }
+    }*/
 
     this.module.providers
       .bind(provider.provide)
+      // .toConstantValue(factory);
       .toProvider(() => provider.useFactory(...deps));
   }
 
@@ -150,19 +151,15 @@ export class ProviderFactory {
       this.providers.map(async provider => {
         const isMulti = (<MultiDepsProvider>provider).multi;
 
-        if (!isMulti && this.registry.isProviderBound(provider)) return;
-        const type = this.getProviderType(provider);
-
-        if (type !== PROVIDER_TYPES.DEFAULT && isMulti) {
-          if (this.module.providers.isBound((<ProvideToken>provider).provide)) {
-            throw new Error(
-              `Provider: ${(<ProvideToken>(
-                provider
-              )).provide.toString()} is already bound. Flag as multi.`,
-            );
-          }
+        if (!isMulti && this.registry.isProviderBound(provider)) {
+          throw new Error(
+            `Provider: ${this.registry.getProviderName(
+              provider,
+            )} is already bound.`,
+          );
         }
 
+        const type = this.getProviderType(provider);
         await this.resolveDependencies(provider);
         await this.bind(type, provider);
       }),

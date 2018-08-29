@@ -1,27 +1,39 @@
-import { DynamicModule, Module, MODULE_INITIALIZER } from '@one/core';
-import deepstream from 'deepstream.io-client-js';
+import { AsyncModuleConfig, DynamicModule, Module } from '@one/core';
+import * as omit from 'lodash.omit';
 
-import { DsClientService } from './ds-client.service';
-import { DEEPSTREAM_CLIENT } from './symbols';
+import { DEEPSTREAM_PROVIDERS, DEEPSTREAM_EXPORTS } from './providers';
+import { DsClientConfig } from './ds-client-config.interface';
+import { DEEPSTREAM_CLIENT_CONFIG } from './symbols';
 
 @Module()
 export class DsClientModule {
-  public static forRoot(url: string, authParams?: any): DynamicModule {
+  public static forRootAsync(
+    metadata: AsyncModuleConfig<DsClientConfig>,
+  ): DynamicModule {
     return {
       module: DsClientModule,
-      exports: [DEEPSTREAM_CLIENT, DsClientService],
+      exports: DEEPSTREAM_EXPORTS,
+      imports: metadata.imports,
       providers: [
         {
-          provide: DEEPSTREAM_CLIENT,
-          useValue: deepstream(url),
+          provide: DEEPSTREAM_CLIENT_CONFIG,
+          ...omit(metadata, 'imports'),
         },
-        DsClientService,
-        authParams && {
-          provide: MODULE_INITIALIZER,
-          useFactory: (dsClient: DsClientService) => dsClient.login(authParams),
-          deps: [DsClientService],
-          multi: true,
+        ...DEEPSTREAM_PROVIDERS,
+      ],
+    };
+  }
+
+  public static forRoot(config: DsClientConfig): DynamicModule {
+    return {
+      module: DsClientModule,
+      // exports: DEEPSTREAM_EXPORTS,
+      providers: [
+        {
+          provide: DEEPSTREAM_CLIENT_CONFIG,
+          useValue: config,
         },
+        ...DEEPSTREAM_PROVIDERS,
       ],
     };
   }

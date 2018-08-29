@@ -15,13 +15,14 @@ import {
 } from '../interfaces';
 
 export class Module {
-  public readonly providers = new Container(/*{
+  public readonly providers = new Container /*{
     autoBindInjectable: true,
-  }*/);
+  }*/();
   public readonly lazyInject = getDecorators(this.providers).lazyInject;
   public readonly resolvedModules = new Map<number, Type<any>>();
   public exports: ModuleExport[];
   public imports: Type<any>[];
+  public isResolved: boolean = false;
 
   constructor(
     public readonly moduleRefs: Container,
@@ -69,7 +70,6 @@ export class Module {
         if (this.moduleRefs.isBound(moduleRef)) return;
 
         const module = new Module(this.moduleRefs, this.registry, moduleRef);
-
         await module.create();
       }),
     );
@@ -79,8 +79,8 @@ export class Module {
     imports: Array<ModuleImport | Promise<DynamicModule>>,
   ) {
     return await Promise.all(
-      imports.map<Promise<Type<any>>>(
-        (ref, i) => this.resolveModuleByIndex(<any>ref, i),
+      imports.map<Promise<Type<any>>>((ref, i) =>
+        this.resolveModuleByIndex(<any>ref, i),
       ),
     );
   }

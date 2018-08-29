@@ -1,4 +1,5 @@
 import { Type } from './type.interface';
+import { ForwardRef } from './forward-ref.interface';
 
 export type Provider =
   | ValueProvider
@@ -6,6 +7,7 @@ export type Provider =
   | ExistingProvider
   | ClassProvider
   | Type<any>
+  | ForwardRef
   | symbol;
 
 export interface ClassProvider {
@@ -17,8 +19,11 @@ export interface ProvideToken {
   provide: symbol;
 }
 
-export interface MultiDepsProvider {
-  deps?: any[];
+export interface DepsProvider {
+  deps?: Array<Type<any> | symbol | ForwardRef>;
+}
+
+export interface MultiDepsProvider extends DepsProvider {
   multi?: boolean;
 }
 

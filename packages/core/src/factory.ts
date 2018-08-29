@@ -18,7 +18,7 @@ export class Factory {
 
   public async start() {
     const module = new Module(this.moduleRefs, this.registry, this.module);
-    await module.create();
+    await module.create(this.module);
 
     console.log('Before: APP_INITIALIZER');
     await Promise.all(this.registry.getAllProviders(<any>APP_INITIALIZER));

@@ -1,1 +1,2 @@
 export const DEEPSTREAM_CLIENT = Symbol.for('DEEPSTREAM_CLIENT');
+export const DEEPSTREAM_CLIENT_CONFIG = Symbol.for('DEEPSTREAM_CLIENT_CONFIG');

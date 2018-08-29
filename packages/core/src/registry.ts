@@ -74,6 +74,7 @@ export class Registry {
   }
 
   public async getDependencyFromTree(module: Module, dependency: Provider) {
+    console.log(<any>dependency);
     const token = this.getProviderToken(dependency);
     const modules = new Set<string>();
     let provider!: Type<any>;
@@ -85,9 +86,11 @@ export class Registry {
       modules.add(module.target.name);
 
       if (module.providers.isBound(token)) {
+        console.log('token', token);
         provider = this.isProviderBound(dependency)
           ? this.getProvider(dependency)
           : module.providers.get(token);
+        return;
       }
 
       const imports = module.imports.map(async (moduleRef, i) => {
@@ -115,6 +118,7 @@ export class Registry {
 
     await findDependency(module);
 
+    console.log(module.target.name, dependency);
     if (!provider) {
       // @TODO: Log real modules tree
       throw new Error(
@@ -160,7 +164,7 @@ export class Registry {
   }
 
   public getProviderName(provider: Provider) {
-    return (<ProvideToken>provider).provide
+    return (<ProvideToken>provider).hasOwnProperty('provide')
       ? (<ProvideToken>provider).provide.toString()
       : (<Type<any>>provider).name;
   }

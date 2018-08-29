@@ -2,6 +2,7 @@
   <dictionary name="esetm">
     <words>
       <w>initializers</w>
+      <w>promisify</w>
     </words>
   </dictionary>
 </component>
