@@ -11,7 +11,7 @@ export function Inject(
   provider: Type<any> | symbol | ForwardRef,
 ): PropertyDecorator {
   return (target: object, property: string) => {
-    if (!Registry.isForwardRef(provider)) {
+    if (!Registry.hasForwardRef(provider)) {
       return inject(<any>provider)(target, property);
     }
 

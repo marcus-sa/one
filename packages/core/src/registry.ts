@@ -1,6 +1,6 @@
-import { Reflector } from './reflector';
-import { Module } from './module';
+import { Module } from './module/module';
 import { Utils } from './util';
+import { ModuleContainer } from './module/container';
 import {
   DynamicModule,
   ProvideToken,
@@ -9,11 +9,12 @@ import {
   ForwardRef,
   Provider,
   Type,
-} from './interfaces';
+} from './interfaces/index';
 
 export class Registry {
   public static readonly lazyInjects = new Set<ILazyInject>();
-  public readonly modules = new Map<Type<any>, Module>();
+
+  constructor(private readonly container: ModuleContainer) {}
 
   public static getLazyInjects(target: Type<any>): ILazyInject[] {
     return [...this.lazyInjects.values()].filter(
@@ -21,33 +22,35 @@ export class Registry {
     );
   }
 
-  public static isForwardRef(provider: Type<any> | symbol | ForwardRef) {
-    return (provider || {}).hasOwnProperty('forwardRef');
+  public static hasForwardRef(provider: any) {
+    return provider && provider.hasOwnProperty('forwardRef');
   }
 
   public static getForwardRef(provider: Type<any> | symbol | ForwardRef) {
-    return Registry.isForwardRef(provider)
+    return Registry.hasForwardRef(provider)
       ? (<ForwardRef>provider).forwardRef()
       : provider;
   }
 
-  public getModules(): Module[] {
-    return [...this.modules.values()];
+  public static isDynamicModule(module: ModuleImport): module is DynamicModule {
+    return !!(<DynamicModule>module).module;
   }
 
-  public isModuleRef(ref: any) {
-    return this.modules.has(ref);
-  }
+  /*public getAllProviders(provider: Type<any> | symbol) {
+    const modules = [...this.container.getModules()];
 
-  public isModule(module: any) {
-    return !!(module && module.imports && module.exports);
-  }
+    return Utils.flatten(
+      modules.map(token => {
+        const module = this.container.getModuleRef(token);
 
-  public getModule(target: Type<any>): Module {
-    return this.getModules().find(module => module.target === target);
-  }
+        return module.providers.isBound(provider)
+          ? module.providers.get(provider)
+          : [];
+      }),
+    );
+  }*/
 
-  public getModuleFromProviderRef(
+  /*public getModuleFromProviderRef(
     provider: Provider,
     modules: Module[] = this.getModules(),
   ) {
@@ -71,9 +74,9 @@ export class Registry {
         return providers.get(token);
       }
     }
-  }
+  }*/
 
-  public async getDependencyFromTree(module: Module, dependency: Provider) {
+  /*public async getDependencyFromTree(module: Module, dependency: Provider) {
     console.log(<any>dependency);
     const token = this.getProviderToken(dependency);
     const modules = new Set<string>();
@@ -129,31 +132,9 @@ export class Registry {
     }
 
     return provider;
-  }
+  }*/
 
-  // @TODO: Find a way to cache resolved modules, in case the async imports include some sort of initialization
-  public async resolveModule(
-    module: ModuleImport | Promise<DynamicModule>,
-  ): Promise<Type<any>> {
-    const exclude = ['module'];
-    let moduleRef!: DynamicModule;
-
-    if ((<Promise<DynamicModule>>module).then) {
-      moduleRef = await (<Promise<DynamicModule>>module);
-    } else if ((<DynamicModule>module).module) {
-      moduleRef = <DynamicModule>module;
-    } else if (!moduleRef) {
-      return <Type<any>>module;
-    }
-
-    return Reflector.defineMetadataByKeys<Type<any>>(
-      moduleRef.module,
-      moduleRef,
-      exclude,
-    );
-  }
-
-  public getAllProviders(provider: Provider) {
+  /*public getAllProviders(provider: Provider) {
     const token = this.getProviderToken(provider);
 
     return Utils.flatten(
@@ -161,21 +142,15 @@ export class Registry {
         return providers.isBound(token) ? providers.getAll(token) : [];
       }),
     );
-  }
+  }*/
 
   public getProviderName(provider: Provider) {
-    return (<ProvideToken>provider).hasOwnProperty('provide')
+    return (<any>provider).hasOwnProperty('provide')
       ? (<ProvideToken>provider).provide.toString()
       : (<Type<any>>provider).name;
   }
 
   public getProviderToken(provider: Provider) {
     return (<ProvideToken>provider).provide || <Type<any>>provider;
-  }
-
-  public isProviderBound(provider: Provider) {
-    return this.getModules().some(({ providers }) =>
-      providers.isBound(this.getProviderToken(provider)),
-    );
   }
 }

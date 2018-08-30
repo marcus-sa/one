@@ -14,4 +14,8 @@ export class Reflector {
 
     return target;
   }
+
+  public static reflectMetadata(target: object, metadataKey: string) {
+    return Reflect.getMetadata(metadataKey, target) || [];
+  }
 }
