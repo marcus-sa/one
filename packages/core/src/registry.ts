@@ -1,15 +1,17 @@
-import { Module } from './module/module';
-import { Utils } from './util';
 import { ModuleContainer } from './module/container';
+import { Utils } from './util';
 import {
-  DynamicModule,
   ProvideToken,
-  ModuleImport,
   ILazyInject,
   ForwardRef,
   Provider,
   Type,
-} from './interfaces/index';
+  FactoryProvider,
+  ValueProvider,
+  ClassProvider,
+  ExistingProvider,
+  DynamicModule,
+} from './interfaces';
 
 export class Registry {
   public static readonly lazyInjects = new Set<ILazyInject>();
@@ -23,7 +25,7 @@ export class Registry {
   }
 
   public static hasForwardRef(provider: any) {
-    return provider && provider.hasOwnProperty('forwardRef');
+    return provider && (<ForwardRef>provider).forwardRef;
   }
 
   public static getForwardRef(provider: Type<any> | symbol | ForwardRef) {
@@ -32,8 +34,42 @@ export class Registry {
       : provider;
   }
 
-  public static isDynamicModule(module: ModuleImport): module is DynamicModule {
+  public static getProviderName(provider: Partial<Provider>) {
+    return this.isProvideToken(provider)
+      ? (<ProvideToken>provider).provide.toString()
+      : (<Type<any>>provider).name;
+  }
+
+  public static getProviderToken(provider: Provider): symbol | Type<any> {
+    return (<ProvideToken>provider).provide || <Type<any>>provider;
+  }
+
+  public static isDynamicModule(module: any): module is DynamicModule {
     return !!(<DynamicModule>module).module;
+  }
+
+  public static isFactoryProvider(
+    provider: Provider,
+  ): provider is FactoryProvider {
+    return !!(<FactoryProvider>provider).useFactory;
+  }
+
+  public static isValueProvider(provider: Provider): provider is ValueProvider {
+    return !!(<ValueProvider>provider).useValue;
+  }
+
+  public static isClassProvider(provider: Provider): provider is ClassProvider {
+    return !!(<ClassProvider>provider).useClass;
+  }
+
+  public static isExistingProvider(
+    provider: Provider,
+  ): provider is ExistingProvider {
+    return !!(<ExistingProvider>provider).useExisting;
+  }
+
+  public static isProvideToken(provider: any): provider is ProvideToken {
+    return !!(<ProvideToken>provider).provide;
   }
 
   /*public getAllProviders(provider: Type<any> | symbol) {
@@ -134,23 +170,14 @@ export class Registry {
     return provider;
   }*/
 
-  /*public getAllProviders(provider: Provider) {
-    const token = this.getProviderToken(provider);
+  public getAllProviders(provider: Provider) {
+    const token = Registry.getProviderToken(provider);
 
     return Utils.flatten(
-      this.getModules().map(({ providers }) => {
+      [...this.container.getModules().values()].map(({ providers }) => {
+        console.log(token);
         return providers.isBound(token) ? providers.getAll(token) : [];
       }),
     );
-  }*/
-
-  public getProviderName(provider: Provider) {
-    return (<any>provider).hasOwnProperty('provide')
-      ? (<ProvideToken>provider).provide.toString()
-      : (<Type<any>>provider).name;
-  }
-
-  public getProviderToken(provider: Provider) {
-    return (<ProvideToken>provider).provide || <Type<any>>provider;
   }
 }

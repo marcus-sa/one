@@ -1,4 +1,4 @@
-import { inject } from 'inversify';
+import { inject, LazyServiceIdentifer } from 'inversify';
 
 import { Type, ForwardRef } from '../interfaces';
 import { Registry } from '../registry';
@@ -15,10 +15,13 @@ export function Inject(
       return inject(<any>provider)(target, property);
     }
 
-    Registry.lazyInjects.add({
+    return inject(
+      new LazyServiceIdentifer(() => (<ForwardRef>provider).forwardRef()),
+    )(target, property);
+    /*Registry.lazyInjects.add({
       target: target.constructor,
       forwardRef: <ForwardRef>provider,
       lazyInject: createLazyInjection(target, property),
-    });
+    });*/
   };
 }

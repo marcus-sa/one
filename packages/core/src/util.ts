@@ -1,14 +1,16 @@
 import { Observable } from 'rxjs';
 
 export class Utils {
-  public static isPromise(val: any): val is Promise<any> {
-    return val && val.hasOwnProperty('then') && this.isFunction(val.then);
+  public static async getDeferred<T>(value: any): Promise<T> {
+    return this.isPromise(value) ? await value : value;
   }
 
-  public static isObservable(val: any): val is Observable<any> {
-    return (
-      val && val.hasOwnProperty('subscribe') && this.isFunction(val.subscribe)
-    );
+  public static isPromise<T>(val: any): val is Promise<T> {
+    return val && this.isFunction(val.then);
+  }
+
+  public static isObservable<T>(val: any): val is Observable<T> {
+    return val && this.isFunction(val.subscribe);
   }
 
   public static isFunction(val: any): val is Function {
@@ -25,6 +27,10 @@ export class Utils {
 
   public static isString(val: any): val is string {
     return typeof val === 'string';
+  }
+
+  public static isUndefined(val: any): val is undefined {
+    return typeof val === 'undefined';
   }
 
   public static promisify<F>(fn: F) {

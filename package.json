@@ -8,6 +8,7 @@
     "lint": "ts-lint -p tsconfig.json -c tslint.json",
     "bootstrap": "lerna bootstrap",
     "test": "jest",
+    "prepare": "lerna run prepare",
     "prepublish": "yarn test && lerna run prepare",
     "clean": "rimraf packages/**/lib",
     "examples:core": "node example.cli.js --example core",

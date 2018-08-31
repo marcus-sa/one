@@ -1,18 +1,11 @@
-import { Container } from 'inversify';
-
 import { DynamicModule, ModuleImport, Provider, Type } from '../interfaces';
+import { UnknownModuleException, InvalidModuleException } from '../errors';
 import { ModuleCompiler } from './compiler';
-import { Registry } from '../registry';
 import { Module } from './module';
-import { Utils } from '../util';
 
 export class ModuleContainer {
   private readonly moduleCompiler = new ModuleCompiler();
-  private readonly modules = new Set<string>();
-  private readonly moduleRefs = new Container({
-    autoBindInjectable: true,
-    defaultScope: 'Singleton',
-  });
+  private readonly modules = new Map<string, Module>();
   private readonly dynamicModulesMetadata = new Map<
     string,
     Partial<DynamicModule>
@@ -23,7 +16,7 @@ export class ModuleContainer {
       throw new Error('getModuleRef');
     }
 
-    return this.modulesRefs.get<Module>(token);
+    return this.modules.get(token);
   }
 
   public getModules() {
@@ -31,21 +24,23 @@ export class ModuleContainer {
   }
 
   public async addProvider(provider: Provider, token: string) {
-    if (!this.modules.has(token)) throw new Error('addProvider');
+    if (!this.modules.has(token)) throw new UnknownModuleException([provider]);
 
-    const module = this.modulesRefs.get<Module>(token);
+    const module = this.modules.get(token);
     await module.addProvider(provider);
   }
 
-  public addExportedProvider(component: Type<any>, token: string) {
-    if (!this.modules.has(token)) throw new Error('UnknownModuleException');
+  public addExported(component: Type<any>, token: string) {
+    if (!this.modules.has(token)) throw new UnknownModuleException([component]);
 
-    const module = this.moduleRefs.get<Module>(token);
-    module.addExportedProvider(component);
+    const module = this.modules.get(token);
+    module.addExported(component);
   }
 
+  public async callModuleInitProviders() {}
+
   public async addModule(module: ModuleImport, scope: Type<any>[]) {
-    if (!module) throw new Error('Container#addModule');
+    if (!module) throw new InvalidModuleException(scope);
 
     const {
       target,
@@ -55,10 +50,11 @@ export class ModuleContainer {
     if (this.modules.has(token)) return;
 
     const moduleRef = new Module(target, scope, this);
-    this.moduleRefs.bind(token).to(moduleRef);
-    this.modules.add(token);
+    this.modules.set(token, moduleRef);
 
-    this.addDynamicMetadata(token, dynamicMetadata, target);
+    this.addDynamicMetadata(token, dynamicMetadata, [].concat(scope, target));
+
+    await moduleRef.create();
   }
 
   private addDynamicMetadata(
@@ -72,7 +68,7 @@ export class ModuleContainer {
     this.addDynamicModules(dynamicModuleMetadata.imports, scope);
   }
 
-  private addDynamicModules(modules: ModuleImport[] = []) {
+  private addDynamicModules(modules: ModuleImport[] = [], scope: Type<any>[]) {
     modules.forEach(module => this.addModule(module, scope));
   }
 
@@ -82,15 +78,15 @@ export class ModuleContainer {
   ) {
     if (!this.modules.has(token)) return;
 
-    const module = this.moduleRefs.get<Module>(token);
-    const scope = [...module.scope, module.target];
+    const module = this.modules.get(token);
+    const scope = [].concat(module.scope, module.target);
 
     const { token: relatedModuleToken } = await this.moduleCompiler.compile(
       relatedModule,
       scope,
     );
 
-    const related = this.moduleRefs.get<Module>(relatedModuleToken);
+    const related = this.modules.get(relatedModuleToken);
     module.addRelatedModule(related);
   }
 

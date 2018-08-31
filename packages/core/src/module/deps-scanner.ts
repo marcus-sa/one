@@ -1,3 +1,8 @@
+import { CircularDependencyException } from '../errors';
+import { ModuleContainer } from './container';
+import { Reflector } from '../reflector';
+import { METADATA } from '../constants';
+import { Registry } from '../registry';
 import {
   DynamicModule,
   ForwardRef,
@@ -5,11 +10,6 @@ import {
   Provider,
   Type,
 } from '../interfaces';
-import { ModuleContainer } from './container';
-import { Reflector } from '../reflector';
-import { METADATA } from '../constants';
-import { Registry } from '../registry';
-import { For } from 'examples/electron/node_modules/@babel/types/lib';
 
 export class DependenciesScanner {
   constructor(private readonly container: ModuleContainer) {}
@@ -19,10 +19,7 @@ export class DependenciesScanner {
     await this.scanModulesForDependencies();
   }
 
-  private async scanForModules(
-    module: Type<any> | DynamicModule,
-    scope: Type<any>[] = [],
-  ) {
+  private async scanForModules(module: ModuleImport, scope: Type<any>[] = []) {
     await this.storeModule(module, scope);
 
     const imports = Reflector.reflectMetadata(module, METADATA.IMPORTS);
@@ -31,7 +28,7 @@ export class DependenciesScanner {
       : imports;
 
     for (const innerModule of modules) {
-      await this.scanForModules(innerModule);
+      await this.scanForModules(innerModule, [].concat(scope, module));
     }
   }
 
@@ -47,11 +44,11 @@ export class DependenciesScanner {
   }
 
   public async storeRelatedModule(
-    related: any,
+    related: Provider,
     token: string,
     context: string,
   ) {
-    if (!related) throw new Error(`CircularDependencyException#${context}`);
+    if (!related) throw new CircularDependencyException(context);
 
     if (Registry.hasForwardRef(related)) {
       return await this.container.addRelatedModule(
@@ -60,15 +57,13 @@ export class DependenciesScanner {
       );
     }
 
-    await this.container.addRelatedModule(related, token);
+    await this.container.addRelatedModule(<any>related, token);
   }
 
   public async scanModulesForDependencies() {
     const modules = this.container.getModules();
 
-    for (const token of modules) {
-      const { target } = this.container.getModuleRef(token);
-
+    for (const [token, { target }] of modules) {
       await this.reflectRelatedModules(target, token, target.name);
       await this.reflectProviders(target, token);
       this.reflectExports(target, token);
@@ -110,12 +105,12 @@ export class DependenciesScanner {
     );
 
     exports.forEach(exportedComponent =>
-      this.storeExportedProvider(exportedComponent, token),
+      this.storeExported(exportedComponent, token),
     );
   }
 
-  private storeExportedProvider(component: Type<any>, token: string) {
-    this.container.addExportedProvider(component, token);
+  private storeExported(component: Type<any>, token: string) {
+    this.container.addExported(component, token);
   }
 
   private async reflectRelatedModules(

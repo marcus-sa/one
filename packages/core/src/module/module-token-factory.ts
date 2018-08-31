@@ -1,5 +1,6 @@
 import { Type, DynamicModule } from '../interfaces';
 import * as hash from 'object-hash';
+import { MoreNestModule } from 'examples/core/src/nest/more-nest';
 
 export class ModuleTokenFactory {
   public create(
@@ -7,13 +8,11 @@ export class ModuleTokenFactory {
     scope: Type<any>[],
     dynamicModuleMetadata?: Partial<DynamicModule>,
   ) {
-    const opaqueToken = {
-      module: this.getModuleName(target),
-      dynamic: this.getDynamicMetadataToken(dynamicModuleMetadata),
-      scope: this.getScopeStack(scope),
-    };
-
-    return hash(opaqueToken);
+    return hash({
+      module: target,
+      dynamic: dynamicModuleMetadata || '', // this.getDynamicMetadataToken(dynamicModuleMetadata),
+      scope: scope.reverse(),
+    });
   }
 
   private getDynamicMetadataToken(

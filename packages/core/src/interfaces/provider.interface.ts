@@ -2,6 +2,7 @@ import { Type } from './type.interface';
 import { ForwardRef } from './forward-ref.interface';
 
 export type Provider =
+  | ProvideToken
   | ValueProvider
   | FactoryProvider
   | ExistingProvider
