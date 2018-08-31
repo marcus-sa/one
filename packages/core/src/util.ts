@@ -5,6 +5,10 @@ export class Utils {
     return this.isPromise(value) ? await value : value;
   }
 
+  public static isIterable<T>(val: any): val is Iterable<T> {
+    return val && this.isFunction(val[Symbol.iterator]);
+  }
+
   public static isPromise<T>(val: any): val is Promise<T> {
     return val && this.isFunction(val.then);
   }
@@ -33,13 +37,13 @@ export class Utils {
     return typeof val === 'undefined';
   }
 
-  public static promisify<F>(fn: F) {
+  public static promisify<F extends Function>(fn: F) {
     return <T>(...args: any[]): Promise<T> => {
       if (!this.isFunction(fn))
         throw new Error(`Can't promisify a non function: ${fn}`);
 
       return new Promise((resolve, reject) => {
-        fn(...args, (err, ...rest) => {
+        fn(...args, (err: Error, ...rest: any[]) => {
           if (err) return reject(err);
           resolve(...rest);
         });
@@ -47,8 +51,22 @@ export class Utils {
     };
   }
 
+  public static getValues<S, T>(
+    entries: IterableIterator<[S, T]> | Array<[S, T]>,
+  ) {
+    const iterable = this.isIterable(entries);
+
+    return (<Array<[S, T]>>(iterable ? [...entries] : entries)).map<T>(
+      ([_, value]) => value,
+    );
+  }
+
+  public static concat<T>(...props: any[]): T[] {
+    return [].concat(...props);
+  }
+
   public static flatten<T>(arr: any[][]): T[] {
-    return arr.reduce((previous, current) => [...previous, ...current]);
+    return arr.reduce((previous, current) => [...previous, ...current], []);
   }
 
   public static pick<T>(from: any[], by: any[]): T[] {

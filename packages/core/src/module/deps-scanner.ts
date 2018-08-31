@@ -3,11 +3,14 @@ import { ModuleContainer } from './container';
 import { Reflector } from '../reflector';
 import { METADATA } from '../constants';
 import { Registry } from '../registry';
+import { Module } from './module';
+import { Utils } from '../util';
 import {
   DynamicModule,
   ForwardRef,
   ModuleImport,
   Provider,
+  Token,
   Type,
 } from '../interfaces';
 
@@ -17,25 +20,43 @@ export class DependenciesScanner {
   public async scan(module: Type<any>) {
     await this.scanForModules(module);
     await this.scanModulesForDependencies();
+    await this.container.createModules();
   }
 
-  private async scanForModules(module: ModuleImport, scope: Type<any>[] = []) {
+  private async scanForModules(
+    module: ModuleImport,
+    scope: Type<Module>[] = [],
+    ctxRegistry: ModuleImport[] = [],
+  ) {
     await this.storeModule(module, scope);
+    ctxRegistry.push(module);
 
-    const imports = Reflector.reflectMetadata(module, METADATA.IMPORTS);
+    if (Registry.hasForwardRef(module)) {
+      module = (<ForwardRef>module).forwardRef();
+    }
+
+    const imports = Reflector.reflectMetadata(
+      <Type<any>>module,
+      METADATA.IMPORTS,
+    );
     const modules = Registry.isDynamicModule(module)
       ? [...imports, ...(module.imports || [])]
       : imports;
 
     for (const innerModule of modules) {
-      await this.scanForModules(innerModule, [].concat(scope, module));
+      // if (ctxRegistry.includes(innerModule)) continue;
+      const scopedModules = Utils.concat<Type<Module>>(scope, module);
+      await this.scanForModules(innerModule, scopedModules);
     }
   }
 
-  private async storeModule(module: any, scope: Type<any>[]) {
+  private async storeModule(
+    module: Partial<ModuleImport>,
+    scope: Type<Module>[],
+  ) {
     if (Registry.hasForwardRef(module)) {
       return await this.container.addModule(
-        (<ForwardRef>module).forwardRef<any>(),
+        (<ForwardRef>module).forwardRef(),
         scope,
       );
     }
@@ -52,25 +73,33 @@ export class DependenciesScanner {
 
     if (Registry.hasForwardRef(related)) {
       return await this.container.addRelatedModule(
-        (<ForwardRef>related).forwardRef<any>(),
+        (<ForwardRef>related).forwardRef(),
         token,
       );
     }
 
-    await this.container.addRelatedModule(<any>related, token);
+    await this.container.addRelatedModule(
+      <Type<any> | DynamicModule>related,
+      token,
+    );
   }
 
   public async scanModulesForDependencies() {
-    const modules = this.container.getModules();
+    const modules = this.container.getReversedModules();
 
-    for (const [token, { target }] of modules) {
-      await this.reflectRelatedModules(target, token, target.name);
-      await this.reflectProviders(target, token);
-      this.reflectExports(target, token);
+    for (const [token, module] of modules) {
+      await this.reflectRelatedModules(
+        module.target,
+        token,
+        module.target.name,
+      );
+      await this.reflectProviders(module.target, token);
+      this.reflectExports(module.target, token);
+      await module.create();
     }
   }
 
-  private async reflectProviders(module: Type<any>, token: string) {
+  private async reflectProviders(module: Type<Module>, token: string) {
     const providers = this.getDynamicMetadata<Provider>(
       module,
       token,
@@ -86,8 +115,8 @@ export class DependenciesScanner {
     await this.container.addProvider(provider, token);
   }
 
-  private getDynamicMetadata<T = Type<any>>(
-    module: Type<any>,
+  private getDynamicMetadata<T = Token>(
+    module: Type<Module>,
     token: string,
     metadataKey: keyof DynamicModule,
   ): T[] {
@@ -97,7 +126,7 @@ export class DependenciesScanner {
     ];
   }
 
-  private reflectExports(module: Type<any>, token: string) {
+  private reflectExports(module: Type<Module>, token: string) {
     const exports = this.getDynamicMetadata(
       module,
       token,
@@ -109,12 +138,12 @@ export class DependenciesScanner {
     );
   }
 
-  private storeExported(component: Type<any>, token: string) {
+  private storeExported(component: Token, token: string) {
     this.container.addExported(component, token);
   }
 
   private async reflectRelatedModules(
-    module: Type<any>,
+    module: Type<Module>,
     token: string,
     context: string,
   ) {

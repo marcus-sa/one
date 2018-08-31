@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import { Type } from './interfaces';
+
 export class Reflector {
   public static defineMetadataByKeys<T = object>(
     target: T,
@@ -15,7 +17,7 @@ export class Reflector {
     return target;
   }
 
-  public static reflectMetadata(target: object, metadataKey: string) {
-    return Reflect.getMetadata(metadataKey, target) || [];
+  public static reflectMetadata(target: Type<any>, metadataKey: string) {
+    return Reflect.getMetadata(metadataKey, <any>target) || [];
   }
 }

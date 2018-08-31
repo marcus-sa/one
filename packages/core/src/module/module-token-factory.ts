@@ -1,13 +1,12 @@
 import { Type, DynamicModule } from '../interfaces';
 import * as hash from 'object-hash';
-import { MoreNestModule } from 'examples/core/src/nest/more-nest';
 
 export class ModuleTokenFactory {
   public create(
     target: Type<any>,
     scope: Type<any>[],
     dynamicModuleMetadata?: Partial<DynamicModule>,
-  ) {
+  ): string {
     return hash({
       module: target,
       dynamic: dynamicModuleMetadata || '', // this.getDynamicMetadataToken(dynamicModuleMetadata),

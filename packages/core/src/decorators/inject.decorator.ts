@@ -1,27 +1,23 @@
-import { inject, LazyServiceIdentifer } from 'inversify';
+import { inject } from 'inversify';
 
-import { Type, ForwardRef } from '../interfaces';
+import { ForwardRef, Token, TLazyInject } from '../interfaces';
 import { Registry } from '../registry';
 
 function createLazyInjection(target: object, property: string) {
-  return (lazyInject, provider) => lazyInject(provider)(target, property);
+  return (lazyInject: TLazyInject, provider: Token) =>
+    lazyInject(provider)(target, property);
 }
 
-export function Inject(
-  provider: Type<any> | symbol | ForwardRef,
-): PropertyDecorator {
-  return (target: object, property: string) => {
+export function Inject(provider: Token | ForwardRef): PropertyDecorator {
+  return (target, property) => {
     if (!Registry.hasForwardRef(provider)) {
-      return inject(<any>provider)(target, property);
+      return inject(<Token>provider)(target, <string>property);
     }
 
-    return inject(
-      new LazyServiceIdentifer(() => (<ForwardRef>provider).forwardRef()),
-    )(target, property);
-    /*Registry.lazyInjects.add({
+    Registry.lazyInjects.add({
       target: target.constructor,
       forwardRef: <ForwardRef>provider,
-      lazyInject: createLazyInjection(target, property),
-    });*/
+      lazyInject: createLazyInjection(target, <string>property),
+    });
   };
 }

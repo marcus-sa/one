@@ -1,4 +1,4 @@
-import { ModuleContainer } from './module/container';
+import { Module, ModuleContainer } from './module';
 import { Utils } from './util';
 import {
   ProvideToken,
@@ -11,6 +11,7 @@ import {
   ClassProvider,
   ExistingProvider,
   DynamicModule,
+  ModuleImport,
 } from './interfaces';
 
 export class Registry {
@@ -28,13 +29,13 @@ export class Registry {
     return provider && (<ForwardRef>provider).forwardRef;
   }
 
-  public static getForwardRef(provider: Type<any> | symbol | ForwardRef) {
+  public static getForwardRef(provider: ModuleImport) {
     return Registry.hasForwardRef(provider)
       ? (<ForwardRef>provider).forwardRef()
       : provider;
   }
 
-  public static getProviderName(provider: Partial<Provider>) {
+  public static getProviderName(provider: ProvideToken | Type<any>) {
     return this.isProvideToken(provider)
       ? (<ProvideToken>provider).provide.toString()
       : (<Type<any>>provider).name;
@@ -48,14 +49,16 @@ export class Registry {
     return !!(<DynamicModule>module).module;
   }
 
-  public static isFactoryProvider(
+  public static isFactoryProvider<T = any>(
     provider: Provider,
-  ): provider is FactoryProvider {
-    return !!(<FactoryProvider>provider).useFactory;
+  ): provider is FactoryProvider<T> {
+    return !!(<FactoryProvider<T>>provider).useFactory;
   }
 
-  public static isValueProvider(provider: Provider): provider is ValueProvider {
-    return !!(<ValueProvider>provider).useValue;
+  public static isValueProvider<T = any>(
+    provider: Provider,
+  ): provider is ValueProvider<T> {
+    return !!(<ValueProvider<T>>provider).useValue;
   }
 
   public static isClassProvider(provider: Provider): provider is ClassProvider {
@@ -68,7 +71,7 @@ export class Registry {
     return !!(<ExistingProvider>provider).useExisting;
   }
 
-  public static isProvideToken(provider: any): provider is ProvideToken {
+  public static isProvideToken(provider: Provider): provider is ProvideToken {
     return !!(<ProvideToken>provider).provide;
   }
 
@@ -169,15 +172,4 @@ export class Registry {
 
     return provider;
   }*/
-
-  public getAllProviders(provider: Provider) {
-    const token = Registry.getProviderToken(provider);
-
-    return Utils.flatten(
-      [...this.container.getModules().values()].map(({ providers }) => {
-        console.log(token);
-        return providers.isBound(token) ? providers.getAll(token) : [];
-      }),
-    );
-  }
 }

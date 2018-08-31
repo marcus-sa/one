@@ -1,4 +1,4 @@
-import { Injectable } from '@one/core';
+import { Injectable, Injector } from '@one/core';
 
 import { NestService } from './nest';
 
@@ -7,10 +7,10 @@ export class AppService {
   constructor(
     // private readonly nest: NestService,
     // @TODO: Fix hierarchy export of modules and providers
-    private readonly nest: NestService,
+    private readonly injector: Injector,
   ) {}
 
   public start() {
-    console.log(this.nest);
+    console.log(this.injector.get<NestService>(NestService));
   }
 }

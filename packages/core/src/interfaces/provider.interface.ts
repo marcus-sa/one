@@ -1,5 +1,6 @@
 import { Type } from './type.interface';
 import { ForwardRef } from './forward-ref.interface';
+import { Token } from './token.interface';
 
 export type Provider =
   | ProvideToken
@@ -7,12 +8,11 @@ export type Provider =
   | FactoryProvider
   | ExistingProvider
   | ClassProvider
-  | Type<any>
   | ForwardRef
-  | symbol;
+  | Token;
 
 export interface ClassProvider {
-  provide?: symbol;
+  provide: symbol;
   useClass: Type<any>;
 }
 
@@ -21,7 +21,7 @@ export interface ProvideToken {
 }
 
 export interface DepsProvider {
-  deps?: Array<Type<any> | symbol | ForwardRef>;
+  deps: Array<Token | ForwardRef>;
 }
 
 export interface MultiDepsProvider extends DepsProvider {
@@ -29,14 +29,14 @@ export interface MultiDepsProvider extends DepsProvider {
 }
 
 export interface ExistingProvider {
-  useExisting: Type<any> | symbol;
+  useExisting: Token;
 }
 
-export interface ValueProvider extends ProvideToken {
-  useValue: any;
+export interface ValueProvider<T> extends ProvideToken {
+  useValue: T;
 }
 
-export interface FactoryProvider extends ProvideToken, MultiDepsProvider {
-  useFactory: (...args: any[]) => any | Promise<any>;
+export interface FactoryProvider<T> extends ProvideToken, MultiDepsProvider {
+  useFactory: (...args: any[]) => T | Promise<T>;
   scope?: string;
 }

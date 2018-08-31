@@ -9,6 +9,7 @@ export class NestModule {
   public static forRoot(): Promise<DynamicModule> {
     return new Promise(resolve => {
       setTimeout(() => {
+        console.log('NestModule#forRoot');
         resolve({
           module: NestModule,
           imports: [MoreNestModule],

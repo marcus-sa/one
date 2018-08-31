@@ -8,6 +8,9 @@ import {
   ClassProvider,
   DynamicModule,
   FactoryProvider,
+  ForwardRef,
+  ModuleExport,
+  ModuleImport,
   OnModuleInit,
   Provider,
   Type,
@@ -20,11 +23,13 @@ import {
   SCOPE,
   SCOPES,
 } from '../constants';
+import { Utils } from '@one/core';
 
 type Token = Type<any> | symbol;
 
 export class Module {
   private readonly relatedModules = new Set<Module>();
+  public readonly providerContainer = new Set<Provider>();
   public readonly providers = new Container();
   public readonly lazyInject = getDecorators(this.providers).lazyInject;
   public readonly exports = new Set<Token>();
@@ -39,33 +44,32 @@ export class Module {
     this.relatedModules.add(relatedModule);
   }
 
-  public async addProvider(provider: Provider) {
-    const type = this.getProviderType(provider);
-
-    await this.bind(type, provider);
+  public addProvider(provider: Provider) {
+    this.providerContainer.add(provider);
+    // const type = this.getProviderType(provider);
+    // await this.bind(provider);
   }
 
-  private validateExported(token: Token, exported) {
-    if (this.providers.isBound(token)) return token;
+  private validateExported(token: Token, exported: ModuleExport) {
+    if (this.providerContainer.has(exported)) return token;
 
     const imported = [...this.relatedModules.values()];
-    const importedRefNames = imported
+    const importedRefNames = <any[]>imported
       .filter(item => item)
       .map(({ target }) => target)
-      .filter(target => target)
-      .map(({ name }) => name);
+      .filter(target => target);
 
-    const name = Registry.getProviderName(token);
-    if (!importedRefNames.includes(name)) {
-      throw new UnknownExportException(this.target.name, exported.name);
+    if (!importedRefNames.includes(token)) {
+      throw new UnknownExportException(
+        this.target.name,
+        (<Type<any>>exported).name,
+      );
     }
 
     return token;
   }
 
-  public addExported(exported: Partial<Provider | DynamicModule>) {
-    console.log('addExported', exported);
-
+  public addExported(exported: ModuleImport) {
     const addExportedUnit = (token: Token) =>
       this.exports.add(this.validateExported(token, <any>exported));
 
@@ -80,19 +84,86 @@ export class Module {
     addExportedUnit(Registry.getProviderToken(<Type<any>>exported));
   }
 
-  public async create() {
-    this.addGlobalProviders();
+  // @TODO: Instead of having this complex exports finder, use scopes and relatedModules upon resolving
+  private getRelatedModuleExports(parentModule: Module): Token[] {
+    let providers: Token[] = [];
 
-    const module = this.providers.resolve<Type<any>>(this.target);
+    const findModule = (target: Type<any>) => {
+      return Utils.getValues<string, Module>(
+        this.container.getModules().entries(),
+      ).find(module => module.target === target);
+    };
+
+    const find = (module: Module) => {
+      const exports = [...module.exports.values()];
+      const modules = [...module.relatedModules.values()];
+
+      console.log(exports);
+
+      modules.forEach(module => {
+        const index = exports.indexOf(module.target);
+
+        if (index !== 1) {
+          const moduleRef = findModule(<Type<any>>exports[index]);
+          exports.splice(index, 1);
+          return this.getRelatedModuleExports(moduleRef!);
+        }
+
+        providers = [...providers, ...exports];
+      });
+    };
+
+    for (const module of parentModule.relatedModules.values()) {
+      find(module);
+    }
+
+    return providers;
+  }
+
+  private linkRelatedProviders() {
+    const providers = this.getRelatedModuleExports(this);
+
+    console.log(providers);
+
+    providers.forEach(provider => {
+      const ref = this.container.getProvider(provider);
+
+      return this.providers
+        .bind(provider)
+        .toConstantValue(ref)
+        .whenInjectedInto(<any>provider);
+    });
+  }
+
+  private async bindProviders() {
+    const providers = [...this.providerContainer.values()];
+
+    this.linkRelatedProviders();
+
+    await Promise.all(
+      providers.map(async provider => {
+        const type = this.getProviderType(provider);
+        await this.bind(type, provider);
+      }),
+    );
+  }
+
+  public async create() {
+    if (this.providers.isBound(this.target)) return;
+
+    this.providers.bind(this.target).toSelf();
+    const module = this.providers.get<Type<Module>>(this.target);
+
+    await this.bindProviders();
 
     (<OnModuleInit>module).onModuleInit &&
       (await (<OnModuleInit>module).onModuleInit());
 
     await Promise.all(
-      this.providers.isBound(MODULE_INITIALIZER)
-        ? this.providers.getAll(<any>MODULE_INITIALIZER)
-        : [],
+      this.container.getAllProviders(MODULE_INITIALIZER, this.target),
     );
+
+    console.log(this.target.name, 'created');
   }
 
   private getProviderType(provider: Provider) {
@@ -129,20 +200,20 @@ export class Module {
     return this.providers.bind(provider.provide).to(provider.useClass);
   }
 
-  private bindValueProvider(provider: ValueProvider) {
+  private bindValueProvider(provider: ValueProvider<any>) {
     return this.providers
       .bind(provider.provide)
       .toConstantValue(provider.useValue);
   }
 
-  private async getDependencyFromTree(dependency: Type<any> | symbol) {
+  private async getDependencyFromTree(dependency: Token | ForwardRef) {
     let provider!: Type<any>;
 
     const findDependency = async (module: Module) => {
       if (provider) return;
 
-      if (module.providers.isBound(dependency)) {
-        provider = module.providers.get(dependency);
+      if (module.providers.isBound(<Token>dependency)) {
+        provider = module.providers.get(<Token>dependency);
         return;
       }
 
@@ -155,26 +226,24 @@ export class Module {
 
     await findDependency(this);
 
-    console.log(provider);
-
     return provider;
   }
 
-  private async bindFactoryProvider(provider: FactoryProvider) {
+  private async bindFactoryProvider(provider: FactoryProvider<Type<any>>) {
     // Shouldn't resolve dependencies before the actual binding happens
     const deps = await Promise.all(
-      provider.deps.map(dep => this.getDependencyFromTree(<any>dep)),
+      provider.deps.map(dep => this.getDependencyFromTree(dep)),
     );
     // const factory = await provider.useFactory(...deps);
     if (provider.scope === SCOPES.TRANSIENT) {
       return this.providers
         .bind(provider.provide)
-        .toDynamicValue(() => provider.useFactory(...deps));
+        .toDynamicValue(() => <any>provider.useFactory(...deps));
     }
 
     this.providers
       .bind(provider.provide)
-      .toProvider(() => provider.useFactory(...deps));
+      .toProvider(() => <any>provider.useFactory(...deps));
   }
 
   private resolveProviderScope(provider: Type<any>) {
@@ -192,9 +261,9 @@ export class Module {
       });
       this.bindProvider(scope, <Type<any>>provider);
     } else if (type === PROVIDER_TYPES.FACTORY) {
-      await this.bindFactoryProvider(<FactoryProvider>provider);
+      await this.bindFactoryProvider(<FactoryProvider<any>>provider);
     } else if (type === PROVIDER_TYPES.VALUE) {
-      this.bindValueProvider(<ValueProvider>provider);
+      this.bindValueProvider(<ValueProvider<any>>provider);
     } else if (type === PROVIDER_TYPES.CLASS) {
       this.bindClassProvider(<ClassProvider>provider);
     }
@@ -202,9 +271,16 @@ export class Module {
 
   public addGlobalProviders() {
     this.providers.bind(Injector).toConstantValue(this.providers);
+    this.providers.bind(ModuleContainer).toConstantValue(this.container);
+
     this.providers
       .bind(Injector)
       .toConstantValue(this.providers)
+      .whenInjectedInto(this.target);
+
+    this.providers
+      .bind(ModuleContainer)
+      .toConstantValue(this.container)
       .whenInjectedInto(this.target);
   }
 }

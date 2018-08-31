@@ -3,6 +3,6 @@ export { Type } from '../type.interface';
 
 export interface ModuleFactory {
   target: Type<any>;
-  token?: string;
+  token: string;
   dynamicMetadata?: Partial<DynamicModule>;
 }

@@ -4,7 +4,7 @@ export class BaseMetadataStorage {
   protected static findByTarget<T extends TargetRef>(
     metadata: Set<T>,
     target: Type<any> | Function,
-  ): T {
+  ): T | undefined {
     return [...metadata.values()].find(value => value.target === target);
   }
 

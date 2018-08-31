@@ -8,7 +8,6 @@ import { MoreNestService } from './nest/more-nest';
   imports: [NestModule.forRoot()],
   providers: [
     AppService,
-    // @TODO: Doesn't resolve in correct order
     {
       provide: APP_INITIALIZER,
       useFactory: (moreNest: MoreNestService) => moreNest.hello(),
