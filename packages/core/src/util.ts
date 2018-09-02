@@ -69,8 +69,15 @@ export class Utils {
     return arr.reduce((previous, current) => [...previous, ...current], []);
   }
 
-  public static omit<T>(from: any[], by: any[]) {
-    return this.pick<T>(by, from); // from.filter(f => !by.includes(f));
+  public static omit<T extends { [name: string]: any }>(
+    from: T,
+    ...by: any[]
+  ): T {
+    for (const key of by) {
+      delete from[key];
+    }
+
+    return from;
   }
 
   public static pick<T>(from: any[], by: any[]): T[] {

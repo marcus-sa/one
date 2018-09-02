@@ -1,5 +1,10 @@
-import { AsyncModuleConfig, DynamicModule, Module } from '@one/core';
-import * as omit from 'lodash.omit';
+import {
+  AsyncModuleConfig,
+  DynamicModule,
+  Module,
+  ModuleMetadata,
+  Utils,
+} from '@one/core';
 
 import { DEEPSTREAM_PROVIDERS, DEEPSTREAM_EXPORTS } from './providers';
 import { DsClientConfig } from './ds-client-config.interface';
@@ -8,7 +13,7 @@ import { DEEPSTREAM_CLIENT_CONFIG } from './symbols';
 @Module()
 export class DsClientModule {
   public static forRootAsync(
-    metadata: AsyncModuleConfig<DsClientConfig>,
+    metadata: AsyncModuleConfig<Partial<DsClientConfig>>,
   ): DynamicModule {
     return {
       module: DsClientModule,
@@ -17,21 +22,27 @@ export class DsClientModule {
       providers: [
         {
           provide: DEEPSTREAM_CLIENT_CONFIG,
-          ...omit(metadata, 'imports'),
+          ...Utils.omit<ModuleMetadata>(metadata, 'imports'),
         },
         ...DEEPSTREAM_PROVIDERS,
       ],
     };
   }
 
-  public static forRoot(config: DsClientConfig): DynamicModule {
+  public static forRoot(
+    url: string,
+    config: Partial<DsClientConfig>,
+  ): DynamicModule {
     return {
       module: DsClientModule,
       // exports: DEEPSTREAM_EXPORTS,
       providers: [
         {
           provide: DEEPSTREAM_CLIENT_CONFIG,
-          useValue: config,
+          useValue: {
+            url,
+            ...config,
+          } as DsClientConfig,
         },
         ...DEEPSTREAM_PROVIDERS,
       ],

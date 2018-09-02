@@ -1,4 +1,4 @@
-import { Provider, MODULE_INITIALIZER } from '@one/core';
+import { Provider, MODULE_INITIALIZER, Utils } from '@one/core';
 import deepstream = require('deepstream.io-client-js');
 
 import { DEEPSTREAM_CLIENT, DEEPSTREAM_CLIENT_CONFIG } from './symbols';
@@ -10,7 +10,7 @@ export const DEEPSTREAM_EXPORTS = [DEEPSTREAM_CLIENT, DsClientService];
 export const DEEPSTREAM_CLIENT_PROVIDER: Provider = {
   provide: MODULE_INITIALIZER,
   useFactory: (config: DsClientConfig, dsClient: DsClientService) => {
-    return dsClient.login(config.credentials);
+    return dsClient.login(Utils.omit(config, 'url'));
   },
   deps: [DEEPSTREAM_CLIENT_CONFIG, DsClientService],
   multi: true,

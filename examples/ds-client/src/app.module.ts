@@ -6,7 +6,7 @@ import { UserRpcService } from './user-rpc.service';
 
 @Module({
   imports: [
-    DsClientModule.forRoot(process.env.DS, {
+    DsClientModule.forRoot(<string>process.env.DS, {
       username: process.env.USERNAME,
       password: process.env.PASSWORD,
     }),
