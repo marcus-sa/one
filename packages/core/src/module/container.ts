@@ -19,14 +19,14 @@ export class ModuleContainer {
     Partial<DynamicModule>
   >();
 
-  public getProvider(provider: Token) {
-    const modules = this.modules.values();
-
+  public getProvider(provider: Token, modules = this.modules.values()) {
     for (const { providers } of modules) {
       if (providers.isBound(provider)) {
         return providers.get(provider);
       }
     }
+
+    throw new Error(provider.toString() + ' could not be found');
   }
 
   public getAllProviders(provider: Provider, target?: Type<Module>) {
@@ -42,6 +42,18 @@ export class ModuleContainer {
             providers.isBound(token) ? providers.getAll(token) : [],
         ),
     );
+  }
+
+  public getModuleValues() {
+    return Utils.getValues<string, Module>(this.modules.entries());
+  }
+
+  public hasModuleRef(module: Type<any>) {
+    return this.getModuleValues().some(({ target }) => target === module);
+  }
+
+  public getModuleRef(module: Type<any>) {
+    return this.getModuleValues().find(({ target }) => target === module);
   }
 
   public getModule(token: string) {
@@ -113,10 +125,7 @@ export class ModuleContainer {
     modules.forEach(module => this.addModule(module, scope));
   }
 
-  public async addRelatedModule(
-    relatedModule: Type<any> | DynamicModule,
-    token: string,
-  ) {
+  public async addImport(relatedModule: ModuleImport, token: string) {
     // if (!this.modules.has(token)) return;
 
     const module = this.getModule(token);
@@ -128,7 +137,7 @@ export class ModuleContainer {
     );
 
     const related = this.getModule(relatedModuleToken);
-    module.addRelatedModule(related);
+    module.addImport(related);
   }
 
   public getDynamicMetadataByToken(token: string, key: keyof DynamicModule) {

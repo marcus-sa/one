@@ -19,6 +19,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.1",
     "@types/node": "^8.0.28",
+    "@types/object-hash": "^1.2.0",
     "git-cz": "^1.7.1",
     "husky": "^0.14.3",
     "jest": "23.1.0",

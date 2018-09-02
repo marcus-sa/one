@@ -1,4 +1,5 @@
-import { Module, ModuleContainer } from './module';
+import { Module, ModuleCompiler, ModuleContainer } from './module';
+import { MODULE_METADATA } from './constants';
 import { Utils } from './util';
 import {
   ProvideToken,
@@ -17,12 +18,15 @@ import {
 export class Registry {
   public static readonly lazyInjects = new Set<ILazyInject>();
 
-  constructor(private readonly container: ModuleContainer) {}
-
   public static getLazyInjects(target: Type<any>): ILazyInject[] {
     return [...this.lazyInjects.values()].filter(
       provider => provider.target === target,
     );
+  }
+
+  public static async isModule(any: Type<any>) {
+    const { target } = await ModuleCompiler.extractMetadata(any);
+    return Reflect.hasMetadata(MODULE_METADATA, target);
   }
 
   public static hasForwardRef(provider: any) {

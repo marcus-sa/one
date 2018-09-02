@@ -3,7 +3,9 @@ import getDecorators from 'inversify-inject-decorators';
 
 import { UnknownExportException } from '../errors';
 import { ModuleContainer } from './container';
+import { Reflector } from '../reflector';
 import { Registry } from '../registry';
+import { Utils } from '../util';
 import {
   ClassProvider,
   DynamicModule,
@@ -20,15 +22,14 @@ import {
   Injector,
   MODULE_INITIALIZER,
   PROVIDER_TYPES,
-  SCOPE,
+  SCOPE_METADATA,
   SCOPES,
 } from '../constants';
-import { Utils } from '@one/core';
 
 type Token = Type<any> | symbol;
 
 export class Module {
-  private readonly relatedModules = new Set<Module>();
+  private readonly imports = new Set<Module>();
   public readonly providerContainer = new Set<Provider>();
   public readonly providers = new Container();
   public readonly lazyInject = getDecorators(this.providers).lazyInject;
@@ -40,20 +41,21 @@ export class Module {
     private readonly container: ModuleContainer,
   ) {}
 
-  public addRelatedModule(relatedModule: Module) {
-    this.relatedModules.add(relatedModule);
+  public addImport(relatedModule: Module) {
+    this.imports.add(relatedModule);
   }
 
   public addProvider(provider: Provider) {
     this.providerContainer.add(provider);
-    // const type = this.getProviderType(provider);
-    // await this.bind(provider);
   }
 
   private validateExported(token: Token, exported: ModuleExport) {
     if (this.providerContainer.has(exported)) return token;
 
-    const imported = [...this.relatedModules.values()];
+    const imported = [
+      ...this.imports.values(),
+      // ...this.relatedProviders.values(),
+    ];
     const importedRefNames = <any[]>imported
       .filter(item => item)
       .map(({ target }) => target)
@@ -84,55 +86,48 @@ export class Module {
     addExportedUnit(Registry.getProviderToken(<Type<any>>exported));
   }
 
-  // @TODO: Instead of having this complex exports finder, use scopes and relatedModules upon resolving
-  private getRelatedModuleExports(parentModule: Module): Token[] {
-    let providers: Token[] = [];
-
-    const findModule = (target: Type<any>) => {
-      return Utils.getValues<string, Module>(
-        this.container.getModules().entries(),
-      ).find(module => module.target === target);
-    };
-
-    const find = (module: Module) => {
-      const exports = [...module.exports.values()];
-      const modules = [...module.relatedModules.values()];
-
-      console.log(exports);
-
-      modules.forEach(module => {
-        const index = exports.indexOf(module.target);
-
-        if (index !== 1) {
-          const moduleRef = findModule(<Type<any>>exports[index]);
-          exports.splice(index, 1);
-          return this.getRelatedModuleExports(moduleRef!);
-        }
-
-        providers = [...providers, ...exports];
-      });
-    };
-
-    for (const module of parentModule.relatedModules.values()) {
-      find(module);
-    }
-
-    return providers;
+  public getProviders() {
+    return [
+      ...this.providerContainer.values(),
+      ...this.getRelatedProviders().values(),
+    ];
   }
 
   private linkRelatedProviders() {
-    const providers = this.getRelatedModuleExports(this);
-
-    console.log(providers);
+    const providers = [...this.getRelatedProviders().values()];
 
     providers.forEach(provider => {
       const ref = this.container.getProvider(provider);
 
-      return this.providers
-        .bind(provider)
-        .toConstantValue(ref)
-        .whenInjectedInto(<any>provider);
+      this.providers.bind(provider).toConstantValue(ref);
     });
+  }
+
+  private getRelatedProviders() {
+    const providerScope = new Set<Token>();
+
+    const find = (module: Module) => {
+      module = <any>Registry.getForwardRef(<any>module);
+
+      if (Reflector.isProvider(<any>module)) {
+        providerScope.add(<any>module);
+      } else {
+        for (const related of module.exports.values()) {
+          if (this.container.hasModuleRef(<Type<Module>>related)) {
+            const ref = this.container.getModuleRef(<Type<Module>>related);
+            find(ref!);
+          } else {
+            providerScope.add(related);
+          }
+        }
+      }
+    };
+
+    for (const related of this.imports.values()) {
+      find(related);
+    }
+
+    return providerScope;
   }
 
   private async bindProviders() {
@@ -206,34 +201,23 @@ export class Module {
       .toConstantValue(provider.useValue);
   }
 
-  private async getDependencyFromTree(dependency: Token | ForwardRef) {
-    let provider!: Type<any>;
+  private async getDependencies(dependencies: ModuleImport[]) {
+    const providers = this.getProviders();
+    // Shouldn't resolve dependencies before the actual binding happens
 
-    const findDependency = async (module: Module) => {
-      if (provider) return;
-
-      if (module.providers.isBound(<Token>dependency)) {
-        provider = module.providers.get(<Token>dependency);
-        return;
-      }
-
-      await Promise.all(
-        [...module.relatedModules.values()].map(module =>
-          findDependency(module),
-        ),
-      );
-    };
-
-    await findDependency(this);
-
-    return provider;
+    return await Promise.all(
+      dependencies.map(dep => {
+        const token = Registry.getForwardRef(dep);
+        return this.container.getProvider(
+          providers.find(provider => provider === token),
+        );
+      }),
+    );
   }
 
   private async bindFactoryProvider(provider: FactoryProvider<Type<any>>) {
-    // Shouldn't resolve dependencies before the actual binding happens
-    const deps = await Promise.all(
-      provider.deps.map(dep => this.getDependencyFromTree(dep)),
-    );
+    const deps = await this.getDependencies(provider.deps);
+
     // const factory = await provider.useFactory(...deps);
     if (provider.scope === SCOPES.TRANSIENT) {
       return this.providers
@@ -241,13 +225,13 @@ export class Module {
         .toDynamicValue(() => <any>provider.useFactory(...deps));
     }
 
-    this.providers
+    return this.providers
       .bind(provider.provide)
       .toProvider(() => <any>provider.useFactory(...deps));
   }
 
   private resolveProviderScope(provider: Type<any>) {
-    return Reflect.getMetadata(SCOPE, provider);
+    return Reflect.getMetadata(SCOPE_METADATA, provider);
   }
 
   private async bind(type: string, provider: Provider) {

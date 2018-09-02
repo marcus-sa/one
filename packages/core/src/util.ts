@@ -53,7 +53,7 @@ export class Utils {
 
   public static getValues<S, T>(
     entries: IterableIterator<[S, T]> | Array<[S, T]>,
-  ) {
+  ): T[] {
     const iterable = this.isIterable(entries);
 
     return (<Array<[S, T]>>(iterable ? [...entries] : entries)).map<T>(
@@ -67,6 +67,10 @@ export class Utils {
 
   public static flatten<T>(arr: any[][]): T[] {
     return arr.reduce((previous, current) => [...previous, ...current], []);
+  }
+
+  public static omit<T>(from: any[], by: any[]) {
+    return this.pick<T>(by, from); // from.filter(f => !by.includes(f));
   }
 
   public static pick<T>(from: any[], by: any[]): T[] {

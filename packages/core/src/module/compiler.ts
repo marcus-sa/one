@@ -15,7 +15,9 @@ export class ModuleCompiler {
     module: Partial<ModuleImport>,
     scope: Type<any>[],
   ): Promise<ModuleFactory> {
-    const { target, dynamicMetadata } = await this.extractMetadata(module);
+    const { target, dynamicMetadata } = await ModuleCompiler.extractMetadata(
+      module,
+    );
     const token = this.moduleTokenFactory.create(
       target,
       scope,
@@ -24,9 +26,9 @@ export class ModuleCompiler {
     return { target, dynamicMetadata, token };
   }
 
-  public async extractMetadata(
+  public static async extractMetadata(
     module: Partial<ModuleImport>,
-  ): Promise<ModuleFactory> {
+  ): Promise<Partial<ModuleFactory>> {
     const moduleRef = await Utils.getDeferred<Type<any> | DynamicModule>(
       module,
     );

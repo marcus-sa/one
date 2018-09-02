@@ -1,3 +1,12 @@
 import { injectable } from 'inversify';
+import 'reflect-metadata';
 
-export const Injectable = injectable;
+import { INJECTABLE_METADATA } from '../constants';
+
+export function Injectable(): ClassDecorator {
+  return (target: object) => {
+    Reflect.defineMetadata(INJECTABLE_METADATA, true, target);
+
+    return injectable()(target);
+  };
+}

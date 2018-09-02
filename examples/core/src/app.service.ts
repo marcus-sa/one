@@ -7,10 +7,10 @@ export class AppService {
   constructor(
     // private readonly nest: NestService,
     // @TODO: Fix hierarchy export of modules and providers
-    private readonly injector: Injector,
+    private readonly nest: NestService,
   ) {}
 
   public start() {
-    console.log(this.injector.get<NestService>(NestService));
+    console.log(this.nest);
   }
 }
