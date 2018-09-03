@@ -5,18 +5,17 @@ import { UnknownExportException } from '../errors';
 import { ModuleContainer } from './container';
 import { Reflector } from '../reflector';
 import { Registry } from '../registry';
-import { Utils } from '../util';
 import {
   ClassProvider,
-  DynamicModule,
   FactoryProvider,
-  ForwardRef,
   ModuleExport,
   ModuleImport,
   OnModuleInit,
   Provider,
   Type,
+  Token,
   ValueProvider,
+  Dependency,
 } from '../interfaces';
 import {
   Injector,
@@ -25,8 +24,6 @@ import {
   SCOPE_METADATA,
   SCOPES,
 } from '../constants';
-
-type Token = Type<any> | symbol;
 
 export class Module {
   private readonly imports = new Set<Module>();
@@ -52,10 +49,7 @@ export class Module {
   private validateExported(token: Token, exported: ModuleExport) {
     if (this.providerContainer.has(exported)) return token;
 
-    const imported = [
-      ...this.imports.values(),
-      // ...this.relatedProviders.values(),
-    ];
+    const imported = [...this.imports.values()];
     const importedRefNames = <any[]>imported
       .filter(item => item)
       .map(({ target }) => target)
@@ -106,18 +100,18 @@ export class Module {
   private getRelatedProviders() {
     const providerScope = new Set<Token>();
 
-    const find = (module: Module) => {
-      module = <any>Registry.getForwardRef(<any>module);
+    const find = (module: Module | Dependency) => {
+      module = <any>Registry.getForwardRef(<Dependency>module);
 
       if (Reflector.isProvider(<any>module)) {
-        providerScope.add(<any>module);
+        providerScope.add(<Token>module);
       } else {
-        for (const related of module.exports.values()) {
+        for (const related of (<Module>module).exports.values()) {
           if (this.container.hasModuleRef(<Type<Module>>related)) {
             const ref = this.container.getModuleRef(<Type<Module>>related);
             find(ref!);
           } else {
-            providerScope.add(related);
+            providerScope.add(<Token>related);
           }
         }
       }
@@ -215,7 +209,7 @@ export class Module {
     );
   }
 
-  private async bindFactoryProvider(provider: FactoryProvider<Type<any>>) {
+  private async bindFactoryProvider(provider: FactoryProvider<any>) {
     const deps = await this.getDependencies(provider.deps);
 
     // const factory = await provider.useFactory(...deps);
@@ -230,20 +224,20 @@ export class Module {
       .toProvider(() => <any>provider.useFactory(...deps));
   }
 
-  private resolveProviderScope(provider: Type<any>) {
+  private resolveProviderScope(provider: Type<Provider>) {
     return Reflect.getMetadata(SCOPE_METADATA, provider);
   }
 
   private async bind(type: string, provider: Provider) {
     // @TODO: Add useExisting binding
     if (type === PROVIDER_TYPES.DEFAULT) {
-      const scope = this.resolveProviderScope(<Type<any>>provider);
-      const lazyInjects = Registry.getLazyInjects(<Type<any>>provider);
+      const scope = this.resolveProviderScope(<Type<Provider>>provider);
+      const lazyInjects = Registry.getLazyInjects(<Type<Provider>>provider);
       lazyInjects.forEach(({ lazyInject, forwardRef }) => {
         const token = Registry.getForwardRef(forwardRef);
         lazyInject(this.lazyInject, <any>token);
       });
-      this.bindProvider(scope, <Type<any>>provider);
+      this.bindProvider(scope, <Type<Provider>>provider);
     } else if (type === PROVIDER_TYPES.FACTORY) {
       await this.bindFactoryProvider(<FactoryProvider<any>>provider);
     } else if (type === PROVIDER_TYPES.VALUE) {

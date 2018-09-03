@@ -1,7 +1,8 @@
 import 'reflect-metadata';
 
 import { INJECTABLE_METADATA } from './constants';
-import { Type } from './interfaces';
+import { Type, Injectable } from './interfaces';
+import { Module } from './module';
 
 export class Reflector {
   public static defineByKeys<T = object>(
@@ -18,11 +19,14 @@ export class Reflector {
     return target;
   }
 
-  public static get(target: Type<any>, metadataKey: string) {
-    return Reflect.getMetadata(metadataKey, <any>target) || [];
+  public static get(
+    target: Type<Injectable | Module>,
+    metadataKey: string | symbol,
+  ) {
+    return Reflect.getMetadata(metadataKey, <Injectable>target) || [];
   }
 
-  public static isProvider(target: Type<any>) {
-    return Reflect.hasMetadata(INJECTABLE_METADATA, <any>target);
+  public static isProvider(target: Type<Injectable | Module>) {
+    return Reflect.hasMetadata(INJECTABLE_METADATA, <Injectable>target);
   }
 }

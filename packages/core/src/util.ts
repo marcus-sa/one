@@ -1,4 +1,6 @@
 import { Observable } from 'rxjs';
+import { Type } from 'packages/core/src/interfaces';
+import { Module } from 'packages/core/src/module';
 
 export class Utils {
   public static async getDeferred<T>(value: any): Promise<T> {
@@ -51,7 +53,7 @@ export class Utils {
     };
   }
 
-  public static getValues<S, T>(
+  public static getValues<T, S = string>(
     entries: IterableIterator<[S, T]> | Array<[S, T]>,
   ): T[] {
     const iterable = this.isIterable(entries);
@@ -61,7 +63,7 @@ export class Utils {
     );
   }
 
-  public static concat<T>(...props: any[]): T[] {
+  public static concat<T = Type<Module>>(...props: any[]): T[] {
     return [].concat(...props);
   }
 

@@ -1,6 +1,8 @@
 import { Type } from './type.interface';
 import { ForwardRef } from './forward-ref.interface';
 import { Token } from './token.interface';
+import { Dependency } from './module';
+import { Injectable } from './injectable.interface';
 
 export type Provider =
   | ProvideToken
@@ -8,20 +10,19 @@ export type Provider =
   | FactoryProvider
   | ExistingProvider
   | ClassProvider
-  | ForwardRef
-  | Token;
+  | Dependency;
 
 export interface ClassProvider {
   provide: symbol;
-  useClass: Type<any>;
+  useClass: Type<Provider>;
 }
 
 export interface ProvideToken {
-  provide: symbol;
+  provide: Token;
 }
 
 export interface DepsProvider {
-  deps: Array<Token | ForwardRef>;
+  deps: Dependency[];
 }
 
 export interface MultiDepsProvider extends DepsProvider {

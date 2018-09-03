@@ -1,5 +1,6 @@
 import { ModuleTokenFactory } from './module-token-factory';
 import { Registry } from '../registry';
+import { Module } from './module';
 import { Utils } from '../util';
 import {
   ModuleImport,
@@ -13,11 +14,9 @@ export class ModuleCompiler {
 
   public async compile(
     module: Partial<ModuleImport>,
-    scope: Type<any>[],
+    scope: Type<Module>[],
   ): Promise<ModuleFactory> {
-    const { target, dynamicMetadata } = await ModuleCompiler.extractMetadata(
-      module,
-    );
+    const { target, dynamicMetadata } = await this.extractMetadata(module);
     const token = this.moduleTokenFactory.create(
       target,
       scope,
@@ -26,15 +25,15 @@ export class ModuleCompiler {
     return { target, dynamicMetadata, token };
   }
 
-  public static async extractMetadata(
+  private async extractMetadata(
     module: Partial<ModuleImport>,
   ): Promise<Partial<ModuleFactory>> {
-    const moduleRef = await Utils.getDeferred<Type<any> | DynamicModule>(
+    const moduleRef = await Utils.getDeferred<Type<Module> | DynamicModule>(
       module,
     );
 
     if (!Registry.isDynamicModule(moduleRef)) {
-      return { target: <Type<any>>module };
+      return { target: <Type<Module>>module };
     }
 
     const { module: target, ...dynamicMetadata } = <DynamicModule>moduleRef;

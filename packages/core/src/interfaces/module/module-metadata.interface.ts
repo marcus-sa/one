@@ -3,14 +3,9 @@ import { ForwardRef } from '../forward-ref.interface';
 import { Provider } from '../provider.interface';
 import { Token } from '../token.interface';
 
-export type Dependency = Token | ForwardRef;
-
-export type ModuleImport =
-  | Token
-  | DynamicModule
-  | ForwardRef
-  | Promise<DynamicModule>;
 export type ModuleExport = Provider | DynamicModule;
+export type Dependency = Token | ForwardRef;
+export type ModuleImport = Promise<DynamicModule> | DynamicModule | Dependency;
 
 export interface ModuleMetadata {
   imports?: ModuleImport[];

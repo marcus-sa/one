@@ -17,7 +17,7 @@ import {
 export class Scanner {
   constructor(private readonly container: ModuleContainer) {}
 
-  public async scan(module: Type<any>) {
+  public async scan(module: Type<Module>) {
     await this.scanForModules(module);
     await this.scanModulesForDependencies();
     await this.container.createModules();
@@ -35,14 +35,14 @@ export class Scanner {
       module = (<ForwardRef>module).forwardRef();
     }
 
-    const imports = Reflector.get(<Type<any>>module, METADATA.IMPORTS);
+    const imports = Reflector.get(<Type<Module>>module, METADATA.IMPORTS);
     const modules = Registry.isDynamicModule(module)
       ? [...imports, ...(module.imports || [])]
       : imports;
 
     for (const innerModule of modules) {
       if (ctxRegistry.includes(innerModule)) continue;
-      const scopedModules = Utils.concat<Type<Module>>(scope, module);
+      const scopedModules = Utils.concat(scope, module);
       await this.scanForModules(innerModule, scopedModules);
     }
   }
@@ -75,7 +75,10 @@ export class Scanner {
       );
     }
 
-    await this.container.addImport(<Type<any> | DynamicModule>related, token);
+    await this.container.addImport(
+      <Type<Module> | DynamicModule>related,
+      token,
+    );
   }
 
   public async scanModulesForDependencies() {

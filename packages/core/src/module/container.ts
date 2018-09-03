@@ -32,7 +32,7 @@ export class ModuleContainer {
   public getAllProviders(provider: Provider, target?: Type<Module>) {
     const token = Registry.getProviderToken(provider);
     const modules = this.getReversedModules();
-    const values = Utils.getValues<string, Module>(modules);
+    const values = Utils.getValues<Module>(modules);
 
     return Utils.flatten(
       values
@@ -45,14 +45,14 @@ export class ModuleContainer {
   }
 
   public getModuleValues() {
-    return Utils.getValues<string, Module>(this.modules.entries());
+    return Utils.getValues<Module>(this.modules.entries());
   }
 
-  public hasModuleRef(module: Type<any>) {
+  public hasModuleRef(module: Type<Module>) {
     return this.getModuleValues().some(({ target }) => target === module);
   }
 
-  public getModuleRef(module: Type<any>) {
+  public getModuleRef(module: Type<Module>) {
     return this.getModuleValues().find(({ target }) => target === module);
   }
 
@@ -74,11 +74,9 @@ export class ModuleContainer {
 
   public async createModules() {
     await Promise.all(
-      Utils.getValues<string, Module>(this.getReversedModules()).map(
-        async module => {
-          await module.create();
-        },
-      ),
+      Utils.getValues<Module>(this.getReversedModules()).map(async module => {
+        await module.create();
+      }),
     );
   }
 
@@ -106,14 +104,14 @@ export class ModuleContainer {
     moduleRef.addGlobalProviders();
     this.modules.set(token, moduleRef);
 
-    const modules = Utils.concat<Type<Module>>(scope, target);
+    const modules = Utils.concat(scope, target);
     this.addDynamicMetadata(token, dynamicMetadata!, modules);
   }
 
   private addDynamicMetadata(
     token: string,
     dynamicModuleMetadata: Partial<DynamicModule>,
-    scope: Type<any>[],
+    scope: Type<Module>[],
   ) {
     if (!dynamicModuleMetadata) return;
 
@@ -121,7 +119,10 @@ export class ModuleContainer {
     this.addDynamicModules(dynamicModuleMetadata.imports, scope);
   }
 
-  private addDynamicModules(modules: ModuleImport[] = [], scope: Type<any>[]) {
+  private addDynamicModules(
+    modules: ModuleImport[] = [],
+    scope: Type<Module>[],
+  ) {
     modules.forEach(module => this.addModule(module, scope));
   }
 
@@ -129,7 +130,7 @@ export class ModuleContainer {
     // if (!this.modules.has(token)) return;
 
     const module = this.getModule(token);
-    const scope = Utils.concat<Type<Module>>(module.scope, module.target);
+    const scope = Utils.concat(module.scope, module.target);
 
     const { token: relatedModuleToken } = await this.moduleCompiler.compile(
       relatedModule,

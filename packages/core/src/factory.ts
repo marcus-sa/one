@@ -2,13 +2,14 @@ import { Scanner, ModuleContainer } from './module';
 import { APP_INITIALIZER } from './constants';
 import { ExceptionsZone } from './errors';
 import { Type } from './interfaces';
+import { Module } from './module';
 
 // @TODO: Figure out why <https://github.com/inversify/InversifyJS/blob/master/wiki/hierarchical_di.md> doesn't work
 export class Factory {
   private readonly container = new ModuleContainer();
   private readonly scanner = new Scanner(this.container);
 
-  constructor(private readonly module: Type<any>) {}
+  constructor(private readonly module: Type<Module>) {}
 
   public async start() {
     await ExceptionsZone.run(async () => {

@@ -25,7 +25,6 @@ import { Container } from 'inversify';
 export const APP_INITIALIZER = Symbol.for('APP_INITIALIZER');
 export const MODULE_INITIALIZER = Symbol.for('MODULE_INITIALIZER');
 
-export const MODULE_METADATA = Symbol.for('__module__');
 export const SCOPE_METADATA = Symbol.for('__scope__');
 export const INJECTABLE_METADATA = Symbol.for('__injectable__');
 
