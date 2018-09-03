@@ -1,10 +1,13 @@
 import { APP_INITIALIZER, Module, ModuleWithProviders, Type } from '@one/core';
 
 import { DsRpcService } from './rpc.service';
+import { RpcProvider } from './interfaces';
 
 @Module()
 export class DsRpcModule {
-  public static forFeature(providers: Type<any>[]): ModuleWithProviders {
+  public static forFeature(
+    providers: Type<RpcProvider>[],
+  ): ModuleWithProviders {
     return {
       module: DsRpcModule,
       providers: [

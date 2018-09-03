@@ -21,6 +21,7 @@ import {
 import {
   Injector,
   MODULE_INITIALIZER,
+  MODULE_REF,
   PROVIDER_TYPES,
   SCOPE_METADATA,
   SCOPES,
@@ -221,6 +222,7 @@ export class Module {
 
   private async bindFactoryProvider(provider: FactoryProvider<any>) {
     const deps = await this.getDependencies(provider.deps);
+    console.log(provider, deps);
 
     // const factory = await provider.useFactory(...deps);
     if (provider.scope === SCOPES.TRANSIENT) {
@@ -238,7 +240,7 @@ export class Module {
     return Reflect.getMetadata(SCOPE_METADATA, provider);
   }
 
-  private async bind(type: string, provider: Provider) {
+  public async bind(type: string, provider: Provider) {
     // @TODO: Add useExisting binding
     if (type === PROVIDER_TYPES.DEFAULT) {
       const scope = this.resolveProviderScope(<Type<Provider>>provider);
@@ -260,6 +262,7 @@ export class Module {
   public addGlobalProviders() {
     this.providers.bind(Injector).toConstantValue(this.providers);
     this.providers.bind(ModuleContainer).toConstantValue(this.container);
+    this.providers.bind(MODULE_REF).toConstantValue(this);
 
     this.providers
       .bind(Injector)

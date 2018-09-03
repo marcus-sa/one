@@ -1,6 +1,6 @@
 import { inject } from 'inversify';
 
-import { ForwardRef, Token, TLazyInject } from '../interfaces';
+import { ForwardRef, Token, Dependency, TLazyInject } from '../interfaces';
 import { Registry } from '../registry';
 
 function createLazyInjection(target: object, property: string) {
@@ -8,16 +8,16 @@ function createLazyInjection(target: object, property: string) {
     lazyInject(provider)(target, property);
 }
 
-export function Inject(provider: Token | ForwardRef): PropertyDecorator {
-  return (target, property) => {
+export function Inject(provider: Dependency) {
+  return (target: object, property: string): any => {
     if (!Registry.hasForwardRef(provider)) {
-      return inject(<Token>provider)(target, <string>property);
+      return inject(<Token>provider)(target, property);
     }
 
     Registry.lazyInjects.add({
       target: target.constructor,
       forwardRef: <ForwardRef>provider,
-      lazyInject: createLazyInjection(target, <string>property),
+      lazyInject: createLazyInjection(target, property),
     });
   };
 }

@@ -35,7 +35,7 @@ export class ConfigService {
     );
   }
 
-  public get<T>(path: string = '', def?: any): T {
+  public get<T>(key: string = '', def?: any): T {
     return get(this.config, path) || def;
   }
 

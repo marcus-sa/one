@@ -6,6 +6,7 @@ import { DsClient } from '../ds-client.interface';
 import { DEEPSTREAM_CLIENT } from '../symbols';
 import { RpcStorage } from './rpc.storage';
 import { RPCResponse } from '../deepstream';
+import { RpcProvider } from './interfaces';
 
 export type ProvideCallback = <T>(
   data: any,
@@ -57,7 +58,7 @@ export class DsRpcService {
     }
   }
 
-  public async add(providers: Type<any>[]) {
+  public async add(providers: Type<RpcProvider>[]) {
     providers.forEach(provider => {
       const rpcProvider = this.injector.get(provider);
 

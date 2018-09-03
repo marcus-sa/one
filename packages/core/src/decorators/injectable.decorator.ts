@@ -7,6 +7,6 @@ export function Injectable(): ClassDecorator {
   return (target: object) => {
     Reflect.defineMetadata(INJECTABLE_METADATA, true, target);
 
-    return injectable()(target);
+    injectable()(target);
   };
 }

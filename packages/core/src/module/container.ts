@@ -31,6 +31,7 @@ export class ModuleContainer {
   }
 
   public getProvider(provider: Token, modules = this.modules.values()) {
+    console.log(this.providerTokens);
     for (const { providers } of modules) {
       if (providers.isBound(provider)) {
         return providers.get(provider);

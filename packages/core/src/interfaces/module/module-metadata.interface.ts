@@ -5,7 +5,11 @@ import { Token } from '../token.interface';
 
 export type ModuleExport = Provider | DynamicModule;
 export type Dependency = Token | ForwardRef;
-export type ModuleImport = Promise<DynamicModule> | DynamicModule | Dependency;
+export type ModuleImport =
+  | Provider
+  | Promise<DynamicModule>
+  | DynamicModule
+  | Dependency;
 
 export interface ModuleMetadata {
   imports?: ModuleImport[];
