@@ -84,14 +84,6 @@ export class ModuleContainer {
     return this.modules;
   }
 
-  public async createModules() {
-    await Promise.all(
-      Utils.getValues<Module>(this.getReversedModules()).map(async module => {
-        await module.create();
-      }),
-    );
-  }
-
   public async addProvider(provider: Provider, token: string) {
     const module = this.getModule(token);
     await module.addProvider(provider);

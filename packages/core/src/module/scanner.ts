@@ -20,7 +20,17 @@ export class Scanner {
   public async scan(module: Type<Module>) {
     await this.scanForModules(module);
     await this.scanModulesForDependencies();
-    await this.container.createModules();
+    await this.createModules();
+  }
+
+  private async createModules() {
+    await Promise.all(
+      Utils.getValues<Module>(this.container.getReversedModules()).map(
+        async module => {
+          await module.create();
+        },
+      ),
+    );
   }
 
   private async scanForModules(
@@ -42,6 +52,7 @@ export class Scanner {
 
     for (const innerModule of modules) {
       if (ctxRegistry.includes(innerModule)) continue;
+
       const scopedModules = Utils.concat(scope, module);
       await this.scanForModules(innerModule, scopedModules);
     }
@@ -88,7 +99,6 @@ export class Scanner {
       await this.reflectImports(module.target, token, module.target.name);
       await this.reflectProviders(module.target, token);
       this.reflectExports(module.target, token);
-      await module.create();
     }
   }
 
