@@ -2,7 +2,8 @@ import { RuntimeException } from './exceptions';
 
 export class ExceptionHandler {
   public handle(exception: RuntimeException | Error) {
-    console.error(exception.message, exception.stack);
+    // console.error(exception.message, exception.stack);
+    console.error(exception.stack);
   }
 
   /*private static readonly logger = new Logger(ExceptionHandler.name);

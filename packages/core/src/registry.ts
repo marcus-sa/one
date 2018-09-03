@@ -32,10 +32,10 @@ export class Registry {
       : provider;
   }
 
-  public static getProviderName(provider: ProvideToken | Type<Provider>) {
+  public static getProviderName(provider: Provider) {
     return this.isProvideToken(provider)
       ? (<ProvideToken>provider).provide.toString()
-      : (<Type<any>>provider).name;
+      : (<Type<Provider>>provider).name;
   }
 
   public static getProviderToken(provider: Provider): Token {

@@ -1,3 +1,12 @@
+import { ModuleCompiler } from './compiler';
+import { Registry } from '../registry';
+import { Module } from './module';
+import { Utils } from '../util';
+import {
+  UnknownModuleException,
+  InvalidModuleException,
+  UnknownProviderException,
+} from '../errors';
 import {
   DynamicModule,
   ModuleImport,
@@ -5,19 +14,21 @@ import {
   Token,
   Type,
 } from '../interfaces';
-import { UnknownModuleException, InvalidModuleException } from '../errors';
-import { ModuleCompiler } from './compiler';
-import { Registry } from '../registry';
-import { Module } from './module';
-import { Utils } from '../util';
 
 export class ModuleContainer {
   private readonly moduleCompiler = new ModuleCompiler();
+  public readonly providerTokens: Token[] = [];
   private readonly modules = new Map<string, Module>();
   private readonly dynamicModulesMetadata = new Map<
     string,
     Partial<DynamicModule>
   >();
+
+  public isProviderBound(provider: Token) {
+    return this.getModuleValues().some(({ providers }) =>
+      providers.isBound(provider),
+    );
+  }
 
   public getProvider(provider: Token, modules = this.modules.values()) {
     for (const { providers } of modules) {
@@ -26,21 +37,22 @@ export class ModuleContainer {
       }
     }
 
-    throw new Error(provider.toString() + ' could not be found');
+    throw new UnknownProviderException(provider);
   }
 
   public getAllProviders(provider: Provider, target?: Type<Module>) {
     const token = Registry.getProviderToken(provider);
-    const modules = this.getReversedModules();
-    const values = Utils.getValues<Module>(modules);
+    const modules = this.getModuleValues();
 
-    return Utils.flatten(
-      values
-        .filter(module => !target || module.target === target)
-        .map(
-          ({ providers }) =>
-            providers.isBound(token) ? providers.getAll(token) : [],
-        ),
+    return Utils.flatten<Type<Provider>>(
+      Utils.filterWhen<Module>(
+        modules,
+        !!target,
+        module => module.target === target,
+      ).map(
+        ({ providers }) =>
+          providers.isBound(token) ? providers.getAll(token) : [],
+      ),
     );
   }
 

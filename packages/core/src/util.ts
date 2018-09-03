@@ -82,6 +82,14 @@ export class Utils {
     return from;
   }
 
+  public static filterWhen<T>(
+    arr: any[],
+    statement: any,
+    filter: (value: T, index: number, array: T[]) => boolean,
+  ) {
+    return !!statement ? arr.filter(filter) : arr;
+  }
+
   public static pick<T>(from: any[], by: any[]): T[] {
     return from.filter(f => by.includes(f));
   }

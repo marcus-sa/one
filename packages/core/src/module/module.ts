@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 import getDecorators from 'inversify-inject-decorators';
 
-import { UnknownExportException } from '../errors';
+import { MultiProviderException, UnknownExportException } from '../errors';
 import { ModuleContainer } from './container';
 import { Reflector } from '../reflector';
 import { Registry } from '../registry';
@@ -16,6 +16,7 @@ import {
   Token,
   ValueProvider,
   Dependency,
+  MultiDepsProvider,
 } from '../interfaces';
 import {
   Injector,
@@ -131,6 +132,15 @@ export class Module {
 
     await Promise.all(
       providers.map(async provider => {
+        const isMulti = (<MultiDepsProvider>provider).multi;
+        const token = Registry.getProviderToken(provider);
+
+        // @TODO: Fix multi providers properly
+        if (!isMulti && this.container.providerTokens.includes(token)) {
+          throw new MultiProviderException(provider);
+        }
+
+        this.container.providerTokens.push(token);
         const type = this.getProviderType(provider);
         await this.bind(type, provider);
       }),
