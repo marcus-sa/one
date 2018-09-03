@@ -16,7 +16,7 @@ export class NestModule {
           providers: [NestService],
           exports: [MoreNestModule, NestService],
         });
-      }, 2000);
+      }, 5000);
     });
   }
 }
