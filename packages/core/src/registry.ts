@@ -33,7 +33,7 @@ export class Registry {
   }
 
   public static getProviderName(provider: Provider) {
-    return this.isProvideToken(provider)
+    return this.hasProvideToken(provider)
       ? (<ProvideToken>provider).provide.toString()
       : (<Type<Provider>>provider).name;
   }
@@ -58,7 +58,9 @@ export class Registry {
     return !!(<ValueProvider<T>>provider).useValue;
   }
 
-  public static isClassProvider(provider: Provider): provider is ClassProvider {
+  public static isClassProvider(
+    provider: Provider,
+  ): provider is ClassProvider {
     return !!(<ClassProvider>provider).useClass;
   }
 
@@ -68,7 +70,9 @@ export class Registry {
     return !!(<ExistingProvider>provider).useExisting;
   }
 
-  public static isProvideToken(provider: Provider): provider is ProvideToken {
+  public static hasProvideToken(
+    provider: Provider,
+  ): provider is ProvideToken {
     return !!(<ProvideToken>provider).provide;
   }
 }

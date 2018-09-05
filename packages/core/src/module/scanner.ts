@@ -24,13 +24,13 @@ export class Scanner {
   }
 
   private async createModules() {
-    await Promise.all(
-      Utils.getValues<Module>(this.container.getReversedModules()).map(
-        async module => {
-          await module.create();
-        },
-      ),
+    const modules = Utils.getValues<Module>(
+      this.container.getReversedModules(),
     );
+
+    for (const module of modules) {
+      await module.create();
+    }
   }
 
   private async scanForModules(
@@ -49,6 +49,8 @@ export class Scanner {
     const modules = Registry.isDynamicModule(module)
       ? [...imports, ...(module.imports || [])]
       : imports;
+
+    console.log(modules);
 
     for (const innerModule of modules) {
       if (ctxRegistry.includes(innerModule)) continue;

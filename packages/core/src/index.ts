@@ -3,7 +3,7 @@ export * from './decorators';
 export * from './bootstrap';
 export * from './forward-ref';
 export * from './reflector';
-export { Module as ModuleRef } from './module';
+export * from './errors';
 export * from './constants';
 export * from './metadata-storage';
 export * from './registry';

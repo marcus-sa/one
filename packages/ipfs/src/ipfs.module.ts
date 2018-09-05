@@ -11,10 +11,9 @@ import { IPFS_PROVIDERS, IPFS_CLIENT_PROVIDER } from './providers';
 import { IpfsConfig } from './interfaces';
 import { IPFS_CONFIG } from './symbols';
 
-console.log(IPFS_CONFIG);
-
 @Module({
   providers: [IpfsService],
+  exports: [IpfsService],
 })
 export class IpfsModule {
   public static forRoot(options: IpfsConfig): ModuleWithProviders {

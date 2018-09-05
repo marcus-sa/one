@@ -42,7 +42,7 @@ export class Utils {
   public static promisify<F extends Function>(fn: F) {
     return <T>(...args: any[]): Promise<T> => {
       if (!this.isFunction(fn))
-        throw new Error(`Can't promisify a non function: ${fn}`);
+        throw new Error(`Can't promisify a non function: ${JSON.stringify(fn)}`);
 
       return new Promise((resolve, reject) => {
         fn(...args, (err: Error, ...rest: any[]) => {
@@ -80,6 +80,12 @@ export class Utils {
     }
 
     return from;
+  }
+
+  public static async series<T>(promises: Promise<T>[]) {
+    for (const promise of promises) {
+      await promise;
+    }
   }
 
   public static filterWhen<T>(

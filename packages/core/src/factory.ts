@@ -3,6 +3,7 @@ import { APP_INITIALIZER } from './constants';
 import { ExceptionsZone } from './errors';
 import { Type } from './interfaces';
 import { Module } from './module';
+import { Utils } from './util';
 
 // @TODO: Figure out why <https://github.com/inversify/InversifyJS/blob/master/wiki/hierarchical_di.md> doesn't work
 export class Factory {
@@ -19,6 +20,8 @@ export class Factory {
   }
 
   private async initialize() {
-    await Promise.all(this.container.getAllProviders(APP_INITIALIZER));
+    await Utils.series(
+      this.container.getAllProviders(APP_INITIALIZER),
+    );
   }
 }

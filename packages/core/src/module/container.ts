@@ -31,7 +31,6 @@ export class ModuleContainer {
   }
 
   public getProvider(provider: Token, modules = this.modules.values()) {
-    console.log(this.providerTokens);
     for (const { providers } of modules) {
       if (providers.isBound(provider)) {
         return providers.get(provider);
@@ -41,11 +40,11 @@ export class ModuleContainer {
     throw new UnknownProviderException(provider);
   }
 
-  public getAllProviders(provider: Provider, target?: Type<Module>) {
+  public getAllProviders<T>(provider: Provider, target?: Type<Module>) {
     const token = Registry.getProviderToken(provider);
     const modules = this.getModuleValues();
 
-    return Utils.flatten<Type<Provider>>(
+    return Utils.flatten<T | Promise<Type<Provider>>>(
       Utils.filterWhen<Module>(
         modules,
         !!target,

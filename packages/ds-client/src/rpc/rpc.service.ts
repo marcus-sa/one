@@ -1,4 +1,4 @@
-import { Inject, Injectable, Injector, Type, Utils } from '@one/core';
+import { Inject, Injectable, Injector, Type, Utils, UNHANDLED_RUNTIME_EXCEPTION } from '@one/core';
 import { Observable } from 'rxjs';
 
 import { RpcResponseError, RpcResponseReject } from './exceptions';
@@ -20,13 +20,8 @@ export class DsRpcService {
 
   constructor(private readonly injector: Injector) {}
 
-  public emit<T = any>(event: string, data?: any): Promise<T> {
-    return new Promise((resolve, reject) => {
-      this.client.rpc.make(event, data, async (err, res) => {
-        if (err) return reject(err);
-        resolve(res);
-      });
-    });
+  public emit<T>(event: string, data?: any): Promise<T> {
+    return Utils.promisify(this.client.rpc.make)(event, data);
   }
 
   public on(event: string, callback: ProvideCallback) {
@@ -42,10 +37,10 @@ export class DsRpcService {
 
   private async rpcResponseZone(
     response: RPCResponse,
-    promise: () => Promise<any>,
+    run: () => Promise<any>,
   ) {
     try {
-      const result = await promise();
+      const result = await run();
       return result ? response.send(result) : response.ack();
     } catch (error) {
       if (error instanceof RpcResponseError) {
@@ -55,6 +50,7 @@ export class DsRpcService {
       }
 
       response.error(`Unhandled error: ${error.message}`);
+      throw UNHANDLED_RUNTIME_EXCEPTION;
     }
   }
 

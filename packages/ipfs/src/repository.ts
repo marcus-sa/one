@@ -1,7 +1,7 @@
 import { Type } from '@one/core';
-import { transformAndValidate } from 'class-transformer-validator';
+import { ClassType, transformAndValidate } from 'class-transformer-validator';
 
-export class Repository<C> {
+export class Repository<C extends object> {
   constructor(
     private readonly ipfs: any,
     private readonly collection: Type<C>,
@@ -9,7 +9,7 @@ export class Repository<C> {
 
   public async save(...collections: C[]) {
     const collection = await transformAndValidate(
-      <any>this.collection,
+      <ClassType<C>>this.collection,
       collections,
     );
     console.log(collection);

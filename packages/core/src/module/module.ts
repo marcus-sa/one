@@ -5,6 +5,7 @@ import { MultiProviderException, UnknownExportException } from '../errors';
 import { ModuleContainer } from './container';
 import { Reflector } from '../reflector';
 import { Registry } from '../registry';
+import { Utils } from '../util';
 import {
   ClassProvider,
   FactoryProvider,
@@ -131,21 +132,19 @@ export class Module {
 
     this.linkRelatedProviders();
 
-    await Promise.all(
-      providers.map(async provider => {
-        const isMulti = (<MultiDepsProvider>provider).multi;
-        const token = Registry.getProviderToken(provider);
+    for (const provider of providers) {
+      const isMulti = (<MultiDepsProvider>provider).multi;
+      const token = Registry.getProviderToken(provider);
 
-        // @TODO: Fix multi providers properly
-        if (!isMulti && this.container.providerTokens.includes(token)) {
-          throw new MultiProviderException(provider);
-        }
+      // @TODO: Fix multi providers properly
+      if (!isMulti && this.container.providerTokens.includes(token)) {
+        throw new MultiProviderException(provider);
+      }
 
-        this.container.providerTokens.push(token);
-        const type = this.getProviderType(provider);
-        await this.bind(type, provider);
-      }),
-    );
+      this.container.providerTokens.push(token);
+      const type = this.getProviderType(provider);
+      await this.bind(type, provider);
+    }
   }
 
   public async create() {
@@ -159,8 +158,11 @@ export class Module {
     (<OnModuleInit>module).onModuleInit &&
       (await (<OnModuleInit>module).onModuleInit());
 
-    await Promise.all(
-      this.container.getAllProviders(MODULE_INITIALIZER, this.target),
+    await Utils.series(
+      this.container.getAllProviders<Promise<any>>(
+        MODULE_INITIALIZER,
+        this.target,
+      ),
     );
 
     console.log(this.target.name, 'created');
@@ -222,7 +224,6 @@ export class Module {
 
   private async bindFactoryProvider(provider: FactoryProvider<any>) {
     const deps = await this.getDependencies(provider.deps);
-    console.log(provider, deps);
 
     // const factory = await provider.useFactory(...deps);
     if (provider.scope === SCOPES.TRANSIENT) {
@@ -247,7 +248,7 @@ export class Module {
       const lazyInjects = Registry.getLazyInjects(<Type<Provider>>provider);
       lazyInjects.forEach(({ lazyInject, forwardRef }) => {
         const token = Registry.getForwardRef(forwardRef);
-        lazyInject(this.lazyInject, <any>token);
+        lazyInject(this.lazyInject, <Token>token);
       });
       this.bindProvider(scope, <Type<Provider>>provider);
     } else if (type === PROVIDER_TYPES.FACTORY) {

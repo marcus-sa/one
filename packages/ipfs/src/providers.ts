@@ -8,7 +8,7 @@ import { IpfsService } from 'packages/ipfs/src/ipfs.service';
 export const IPFS_CLIENT_PROVIDER: Provider = {
   provide: MODULE_INITIALIZER,
   useFactory: (ipfs: IpfsService) => ipfs.start(),
-  deps: [forwardRef(() => IpfsService)],
+  deps: [IpfsService],
   multi: true,
 };
 
