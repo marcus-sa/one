@@ -1,7 +1,5 @@
-import { Constructor } from '../interfaces';
 import {
   postConstruct,
-  injectable,
   targetName,
   unmanaged,
   decorate,
@@ -13,10 +11,6 @@ import {
 // Doesn't mark the font color as blue for functions
 // in the import statements when using the below
 // export const Injectable = injectable;
-
-export function Injectable(): ClassDecorator {
-  return injectable();
-}
 
 export function Optional() {
   return optional();

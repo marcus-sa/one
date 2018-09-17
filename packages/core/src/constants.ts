@@ -22,12 +22,12 @@ import { Container } from 'inversify';
 }
  */
 
-export const APP_INITIALIZER = Symbol.for('APP_INITIALIZER');
-export const MODULE_INITIALIZER = Symbol.for('MODULE_INITIALIZER');
-export const MODULE_REF = Symbol.for('MODULE_REF');
+export const APP_INITIALIZER = Symbol.for('Initialize<App>');
+export const MODULE_INITIALIZER = Symbol.for('Initialize<Module>');
+export const MODULE_REF = Symbol.for('Ref<Module>');
 
-export const SCOPE_METADATA = Symbol.for('__scope__');
-export const INJECTABLE_METADATA = Symbol.for('__injectable__');
+export const SCOPE_METADATA = Symbol.for('Metadata<Scope>');
+export const INJECTABLE_METADATA = Symbol.for('Metadata<Injectable>');
 
 export class Injector extends Container {}
 
