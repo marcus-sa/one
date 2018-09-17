@@ -1,2 +1,2 @@
 export * from './windows.module';
-export * from './symbols';
+export * from './tokens';

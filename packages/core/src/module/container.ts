@@ -131,7 +131,7 @@ export class ModuleContainer {
   }
 
   public async addImport(relatedModule: ModuleImport, token: string) {
-    // if (!this.modules.has(token)) return;
+    if (!this.modules.has(token)) return;
 
     const module = this.getModule(token);
     const scope = Utils.concat(module.scope, module.target);

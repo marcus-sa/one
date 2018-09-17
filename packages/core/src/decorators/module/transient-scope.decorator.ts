@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { SCOPES, SCOPE_METADATA } from '../../constants';
 
 export function TransientScope(): ClassDecorator {

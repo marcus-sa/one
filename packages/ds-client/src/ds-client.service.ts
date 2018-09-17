@@ -1,11 +1,11 @@
 import { forwardRef, Inject, Injectable } from '@one/core';
 
 import { DsClient } from './ds-client.interface';
-import { DEEPSTREAM_CLIENT } from './symbols';
+import { DEEPSTREAM_CLIENT } from './tokens';
 
 @Injectable()
 export class DsClientService {
-  @Inject(forwardRef(() => DEEPSTREAM_CLIENT))
+  @Inject(DEEPSTREAM_CLIENT)
   private readonly client: DsClient;
 
   public async login(authParams?) {

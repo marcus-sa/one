@@ -1,3 +1,4 @@
+import { InjectionToken } from './module';
 import {
   ProvideToken,
   ILazyInject,
@@ -34,12 +35,18 @@ export class Registry {
 
   public static getProviderName(provider: Provider) {
     return this.hasProvideToken(provider)
-      ? (<ProvideToken>provider).provide.toString()
+      ? (<ProvideToken>provider).provide.get().toString()
       : (<Type<Provider>>provider).name;
   }
 
+  public static getInjectionToken(provider: Token): Token {
+    return provider instanceof InjectionToken
+      ? (<InjectionToken<any>>provider).get()
+      : <Type<any>>provider;
+  }
+
   public static getProviderToken(provider: Provider): Token {
-    return (<ProvideToken>provider).provide || <Type<Provider>>provider;
+    return this.getInjectionToken((<ProvideToken>provider).provide || provider);
   }
 
   public static isDynamicModule(module: any): module is DynamicModule {
@@ -58,9 +65,7 @@ export class Registry {
     return !!(<ValueProvider<T>>provider).useValue;
   }
 
-  public static isClassProvider(
-    provider: Provider,
-  ): provider is ClassProvider {
+  public static isClassProvider(provider: Provider): provider is ClassProvider {
     return !!(<ClassProvider>provider).useClass;
   }
 
@@ -70,9 +75,9 @@ export class Registry {
     return !!(<ExistingProvider>provider).useExisting;
   }
 
-  public static hasProvideToken(
-    provider: Provider,
-  ): provider is ProvideToken {
-    return !!(<ProvideToken>provider).provide;
+  public static hasProvideToken(provider: Provider): provider is ProvideToken {
+    return !!(<ProvideToken>provider)
+      .provide /* &&
+      typeof (<ProvideToken>provider).provide.name === 'symbol'*/;
   }
 }

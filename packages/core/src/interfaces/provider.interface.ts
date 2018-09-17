@@ -3,6 +3,7 @@ import { ForwardRef } from './forward-ref.interface';
 import { Token } from './token.interface';
 import { Dependency } from './module';
 import { Injectable } from './injectable.interface';
+import { InjectionToken } from '../module';
 
 export type Provider =
   | ProvideToken
@@ -18,7 +19,7 @@ export interface ClassProvider {
 }
 
 export interface ProvideToken {
-  provide: Token;
+  provide: InjectionToken<any>;
 }
 
 export interface DepsProvider {

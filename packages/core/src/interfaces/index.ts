@@ -1,6 +1,7 @@
 export * from './target-ref.interface';
 export * from './lazy-inject.interface';
 export * from './forward-ref.interface';
+export * from './constructor.interface';
 export * from './type.interface';
 export * from './token.interface';
 export * from './method-decorator-metadata.interface';

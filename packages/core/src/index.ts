@@ -1,3 +1,4 @@
+export { InjectionToken } from './module';
 export * from './interfaces';
 export * from './decorators';
 export * from './bootstrap';

@@ -50,8 +50,6 @@ export class Scanner {
       ? [...imports, ...(module.imports || [])]
       : imports;
 
-    console.log(modules);
-
     for (const innerModule of modules) {
       if (ctxRegistry.includes(innerModule)) continue;
 

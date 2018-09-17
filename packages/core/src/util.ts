@@ -7,15 +7,15 @@ export class Utils {
     return this.isPromise(value) ? await value : value;
   }
 
-  public static isIterable<T>(val: any): val is Iterable<T> {
+  public static isIterable(val: any): val is Iterable<any> {
     return val && this.isFunction(val[Symbol.iterator]);
   }
 
-  public static isPromise<T>(val: any): val is Promise<T> {
+  public static isPromise(val: any): val is Promise<any> {
     return val && this.isFunction(val.then);
   }
 
-  public static isObservable<T>(val: any): val is Observable<T> {
+  public static isObservable(val: any): val is Observable<any> {
     return val && this.isFunction(val.subscribe);
   }
 
@@ -35,6 +35,10 @@ export class Utils {
     return typeof val === 'string';
   }
 
+  public static isNil(val: any): val is undefined | null {
+    return this.isUndefined(val) || val === null;
+  }
+
   public static isUndefined(val: any): val is undefined {
     return typeof val === 'undefined';
   }
@@ -42,7 +46,9 @@ export class Utils {
   public static promisify<F extends Function>(fn: F) {
     return <T>(...args: any[]): Promise<T> => {
       if (!this.isFunction(fn))
-        throw new Error(`Can't promisify a non function: ${JSON.stringify(fn)}`);
+        throw new Error(
+          `Can't promisify a non function: ${JSON.stringify(fn)}`,
+        );
 
       return new Promise((resolve, reject) => {
         fn(...args, (err: Error, ...rest: any[]) => {
@@ -56,11 +62,9 @@ export class Utils {
   public static getValues<T, S = string>(
     entries: IterableIterator<[S, T]> | Array<[S, T]>,
   ): T[] {
-    const iterable = this.isIterable(entries);
+    // const iterable = this.isIterable(entries);
 
-    return (<Array<[S, T]>>(iterable ? [...entries] : entries)).map<T>(
-      ([_, value]) => value,
-    );
+    return (<Array<[S, T]>>[...entries]).map<T>(([_, value]) => value);
   }
 
   public static concat<T = Type<Module>>(...props: any[]): T[] {

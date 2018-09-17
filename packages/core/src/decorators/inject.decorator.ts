@@ -9,9 +9,10 @@ function createLazyInjection(target: object, property: string) {
 }
 
 export function Inject(provider: Dependency) {
-  return (target: object, property: string): any => {
+  return (target: object, property: string) => {
     if (!Registry.hasForwardRef(provider)) {
-      return inject(<Token>provider)(target, property);
+      const token = Registry.getInjectionToken(<Token>provider);
+      return inject(<any>token)(target, property);
     }
 
     Registry.lazyInjects.add({

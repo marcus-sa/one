@@ -96,7 +96,7 @@ export class Module {
     providers.forEach(provider => {
       const ref = this.container.getProvider(provider);
 
-      this.providers.bind(provider).toConstantValue(ref);
+      this.providers.bind(<any>provider).toConstantValue(ref);
     });
   }
 
@@ -143,7 +143,7 @@ export class Module {
 
       this.container.providerTokens.push(token);
       const type = this.getProviderType(provider);
-      await this.bind(type, provider);
+      await this.bind(token, type, provider);
     }
   }
 
@@ -198,14 +198,12 @@ export class Module {
     }
   }
 
-  private bindClassProvider(provider: ClassProvider) {
-    return this.providers.bind(provider.provide).to(provider.useClass);
+  private bindClassProvider(token: Token, provider: ClassProvider) {
+    return this.providers.bind(token).to(provider.useClass);
   }
 
-  private bindValueProvider(provider: ValueProvider<any>) {
-    return this.providers
-      .bind(provider.provide)
-      .toConstantValue(provider.useValue);
+  private bindValueProvider(token: Token, provider: ValueProvider<any>) {
+    return this.providers.bind(token).toConstantValue(provider.useValue);
   }
 
   private async getDependencies(dependencies: ModuleImport[]) {
@@ -222,18 +220,21 @@ export class Module {
     );
   }
 
-  private async bindFactoryProvider(provider: FactoryProvider<any>) {
+  private async bindFactoryProvider(
+    token: Token,
+    provider: FactoryProvider<any>,
+  ) {
     const deps = await this.getDependencies(provider.deps);
 
     // const factory = await provider.useFactory(...deps);
     if (provider.scope === SCOPES.TRANSIENT) {
       return this.providers
-        .bind(provider.provide)
+        .bind(token)
         .toDynamicValue(() => <any>provider.useFactory(...deps));
     }
 
     return this.providers
-      .bind(provider.provide)
+      .bind(token)
       .toProvider(() => <any>provider.useFactory(...deps));
   }
 
@@ -241,7 +242,7 @@ export class Module {
     return Reflect.getMetadata(SCOPE_METADATA, provider);
   }
 
-  public async bind(type: string, provider: Provider) {
+  public async bind(token: Token, type: string, provider: Provider) {
     // @TODO: Add useExisting binding
     if (type === PROVIDER_TYPES.DEFAULT) {
       const scope = this.resolveProviderScope(<Type<Provider>>provider);
@@ -252,11 +253,11 @@ export class Module {
       });
       this.bindProvider(scope, <Type<Provider>>provider);
     } else if (type === PROVIDER_TYPES.FACTORY) {
-      await this.bindFactoryProvider(<FactoryProvider<any>>provider);
+      await this.bindFactoryProvider(token, <FactoryProvider<any>>provider);
     } else if (type === PROVIDER_TYPES.VALUE) {
-      this.bindValueProvider(<ValueProvider<any>>provider);
+      this.bindValueProvider(token, <ValueProvider<any>>provider);
     } else if (type === PROVIDER_TYPES.CLASS) {
-      this.bindClassProvider(<ClassProvider>provider);
+      this.bindClassProvider(token, <ClassProvider>provider);
     }
   }
 
