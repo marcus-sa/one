@@ -22,7 +22,7 @@
  */
 export const SHARED_MODULE_METADATA = Symbol.for('Metadata<SharedModule>');
 export const SCOPE_METADATA = Symbol.for('Metadata<Scope>');
-export const INJECTABLE_METADATA = Symbol.for('Metadata<Injectable>');
+export const PROVIDER_METADATA = Symbol.for('Metadata<Provider>');
 
 export const METADATA = {
   IMPORTS: 'imports',

@@ -61,7 +61,7 @@
       }
     },
     "testMatch": [
-      "<rootDir>/packages/*/__tests__/**/*.(spec|test).+(ts|tsx|js)"
+      "<rootDir>/packages/*/__tests__/**/*.(spec|test).+(ts|tsx)"
     ]
   }
 }

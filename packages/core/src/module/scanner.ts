@@ -6,6 +6,7 @@ import { Registry } from '../registry';
 import { Module } from './module';
 import { Utils } from '../util';
 import {
+  Dependency,
   DynamicModule,
   ForwardRef,
   ModuleImport,
@@ -24,14 +25,28 @@ export class Scanner {
     await this.createModules();
   }
 
-  // @TODO: Fix creation order
   private async createModules() {
-    const modules = this.container.getModules().values();
+    const traverse = async (module: Module) => {
+      const imports = module.imports.values();
+      for (const innerModule of imports) {
+        await traverse(innerModule);
+      }
 
-    for (const module of modules) {
-      console.log('createModule', module.target);
+      await Promise.all([...imports].map(({ done$ }) => done$));
       await module.create();
+    };
+
+    const rootModule = this.container
+      .getModules()
+      .values()
+      .next().value;
+    const imports = rootModule.imports.values();
+
+    for (const innerModule of imports) {
+      await traverse(innerModule);
     }
+
+    await rootModule.create();
   }
 
   private async scanForModules(

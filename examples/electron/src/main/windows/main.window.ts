@@ -5,7 +5,7 @@ import { Inject } from '@one/core';
 @Window()
 export class MainWindow {
   @Inject(WindowRef)
-  public readonly windowRef: BrowserWindow;
+  public readonly windowRef!: BrowserWindow;
 
   @Event('closed')
   public onClosed() {

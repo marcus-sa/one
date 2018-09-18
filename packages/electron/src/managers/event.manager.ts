@@ -6,7 +6,6 @@ import { MetadataStorage } from '../storage';
 import { METADATA } from '../metadata';
 
 export class EventManager {
-
   constructor(
     private readonly injector: Injector,
     private readonly provider: Type<any>,
@@ -24,7 +23,7 @@ export class EventManager {
     return Reflect.getMetadata(METADATA.TYPE, this.provider);
   }*/
 
-  public async bindWindowEvents(windowRef: BrowserWindow) {
+  public bindWindowEvents(windowRef: BrowserWindow) {
     const provider = this.getProvider();
     const events = this.getEvents();
 
@@ -34,5 +33,4 @@ export class EventManager {
       });
     });
   }
-
 }

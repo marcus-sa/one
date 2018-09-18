@@ -1,4 +1,10 @@
-import { DynamicModule, Module, MODULE_INITIALIZER, APP_INITIALIZER, Type } from '@one/core';
+import {
+  DynamicModule,
+  Module,
+  MODULE_INITIALIZER,
+  APP_INITIALIZER,
+  Type,
+} from '@one/core';
 
 import { WindowsService } from './windows.service';
 
@@ -7,10 +13,7 @@ export class ElectronWindowsModule {
   public static register(windows: Type<any>[]): DynamicModule {
     return {
       module: ElectronWindowsModule,
-      exports: [
-        WindowsService,
-        windows,
-      ],
+      exports: [WindowsService, ...windows],
       providers: [
         WindowsService,
         ...windows,

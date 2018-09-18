@@ -1,7 +1,7 @@
 import { MetadataStorage } from '../storage';
 
 export function Event(name: string): MethodDecorator {
-   return (target: object, method: string) => {
+   return (target, method) => {
      MetadataStorage.events.add({
       target: target.constructor,
       method,

@@ -4,8 +4,8 @@ import { Dependency } from './module';
 
 export type Provider =
   | ProvideToken
-  | ValueProvider
-  | FactoryProvider
+  | ValueProvider<any>
+  | FactoryProvider<any>
   | ExistingProvider
   | ClassProvider
   | Dependency;

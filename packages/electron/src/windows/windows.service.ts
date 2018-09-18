@@ -3,7 +3,7 @@ import { BrowserWindow } from 'electron';
 
 import { MetadataStorage } from '../storage';
 import { EventManager } from '../managers';
-import { WindowRef } from './symbols';
+import { WindowRef } from './tokens';
 
 @Injectable()
 export class WindowsService {
@@ -19,11 +19,11 @@ export class WindowsService {
     });
   }
 
-  public async start() {
+  public start() {
     this.bindWindowEvents();
   }
 
-  public async add(windows: Type<any>[]) {
+  public add(windows: Type<any>[]) {
     windows.forEach(window => {
       const metadata = MetadataStorage.getWindowByType(window.constructor);
       const browserWindow = new BrowserWindow(metadata);

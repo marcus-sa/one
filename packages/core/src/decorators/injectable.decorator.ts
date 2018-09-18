@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 import { injectable } from 'inversify';
 
-import { INJECTABLE_METADATA } from '../constants';
+import { PROVIDER_METADATA } from '../constants';
 
 export function Injectable(): ClassDecorator {
   return (target: object) => {
-    Reflect.defineMetadata(INJECTABLE_METADATA, true, target);
+    Reflect.defineMetadata(PROVIDER_METADATA, true, target);
 
     injectable()(<any>target);
   };

@@ -1,9 +1,9 @@
 import { Injectable, Utils } from '@one/core';
+import get = require('lodash.get');
+import set = require('lodash.set');
 import * as fs from 'fs-extra';
 import * as glob from 'glob';
 import * as path from 'path';
-import get from 'lodash.get';
-import set from 'lodash.set';
 import YAML from 'yaml';
 
 @Injectable()

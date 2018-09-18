@@ -26,6 +26,15 @@ export class Registry {
     );
   }
 
+  public static isModule(target: any) {
+    return (
+      this.isDynamicModule(target) ||
+      (!this.hasProvideToken(target) &&
+        !Reflector.isProvider(target) &&
+        !this.isInjectionToken(target))
+    );
+  }
+
   public static hasForwardRef(provider: any) {
     return provider && (<ForwardRef>provider).forwardRef;
   }
@@ -42,14 +51,26 @@ export class Registry {
       : (<Type<Provider>>provider).name;
   }
 
+  public static isInjectionToken(
+    provider: any,
+  ): provider is InjectionToken<any> {
+    return provider instanceof InjectionToken;
+  }
+
   public static getInjectionToken(provider: any): Token {
-    return provider instanceof InjectionToken
+    return this.isInjectionToken(provider)
       ? (<InjectionToken<any>>provider).get()
       : <Type<any>>provider;
   }
 
   public static assertProvider(val: any): Type<any> | InjectionToken<any> {
-    if (/*!Reflector.isProvider(val) && */!(val && !Utils.isNil(val.name) && (Utils.isFunction(val) || Utils.isFunction(val.constructor)))) {
+    if (
+      !(
+        val &&
+        !Utils.isNil(val.name) &&
+        (Utils.isFunction(val) || Utils.isFunction(val.constructor))
+      )
+    ) {
       throw new InvalidProviderException(val);
     }
 
@@ -64,16 +85,16 @@ export class Registry {
     return !!(<DynamicModule>module).module;
   }
 
-  public static isFactoryProvider<T = any>(
+  public static isFactoryProvider(
     provider: Provider,
-  ): provider is FactoryProvider<T> {
-    return !!(<FactoryProvider<T>>provider).useFactory;
+  ): provider is FactoryProvider<any> {
+    return !!(<FactoryProvider<any>>provider).useFactory;
   }
 
-  public static isValueProvider<T = any>(
+  public static isValueProvider(
     provider: Provider,
-  ): provider is ValueProvider<T> {
-    return !!(<ValueProvider<T>>provider).useValue;
+  ): provider is ValueProvider<any> {
+    return !!(<ValueProvider<any>>provider).useValue;
   }
 
   public static isClassProvider(provider: Provider): provider is ClassProvider {

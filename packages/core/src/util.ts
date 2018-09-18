@@ -3,6 +3,11 @@ import { Observable } from 'rxjs';
 import { InjectionToken, Module } from './module';
 import { Type } from './interfaces';
 
+export interface DeferredPromise<T> extends Promise<T> {
+  resolve: () => void;
+  reject: () => void;
+}
+
 export class Utils {
   public static async getDeferred<T>(value: any): Promise<T> {
     return this.isPromise(value) ? await value : value;
@@ -24,9 +29,14 @@ export class Utils {
     return typeof val === 'symbol';
   }
 
-  public static isNamedFunction(val: any): val is Type<any> | InjectionToken<any> {
-    return val && !this.isNil(val.name) &&
-      (this.isFunction(val) || this.isFunction(val.constructor));
+  public static isNamedFunction(
+    val: any,
+  ): val is Type<any> | InjectionToken<any> {
+    return (
+      val &&
+      !this.isNil(val.name) &&
+      (this.isFunction(val) || this.isFunction(val.constructor))
+    );
   }
 
   public static isFunction(val: any): val is Function {
@@ -112,6 +122,21 @@ export class Utils {
 
   public static pick<T>(from: any[], by: any[]): T[] {
     return from.filter(f => by.includes(f));
+  }
+
+  public static createDeferredPromise(): DeferredPromise<any> {
+    let resolve!: () => void;
+    let reject!: () => void;
+
+    const deferred: any = new Promise((_resolve, _reject) => {
+      resolve = _resolve;
+      reject = _reject;
+    });
+
+    deferred.resolve = resolve;
+    deferred.reject = reject;
+
+    return deferred;
   }
 
   public static async transformResult<T>(
