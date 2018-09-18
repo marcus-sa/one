@@ -12,11 +12,8 @@ import {
 // in the import statements when using the below
 // export const Injectable = injectable;
 
-export function Optional() {
-  return optional();
-}
-
-// Dunno what to do with this yet
+// Export them like this for convenience sake
+export const Optional = optional;
 export const PostConstruct = postConstruct;
 export const TargetName = targetName;
 export const Unmanaged = unmanaged;

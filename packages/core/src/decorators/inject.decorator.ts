@@ -1,16 +1,22 @@
 import { inject } from 'inversify';
+import 'reflect-metadata';
 
 import { ForwardRef, Token, Dependency, TLazyInject } from '../interfaces';
 import { Registry } from '../registry';
 
 function createLazyInjection(target: object, property: string) {
-  return (lazyInject: TLazyInject, provider: Token) =>
+  return (lazyInject: TLazyInject, provider: Token) => {
+    Registry.assertProvider(provider);
+
     lazyInject(provider)(target, property);
+  }
 }
 
 export function Inject(provider: Dependency) {
   return (target: object, property: string) => {
     if (!Registry.hasForwardRef(provider)) {
+      Registry.assertProvider(provider);
+
       const token = Registry.getInjectionToken(<Token>provider);
       return inject(<any>token)(target, property);
     }

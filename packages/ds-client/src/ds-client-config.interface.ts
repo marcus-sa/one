@@ -1,5 +1,5 @@
 export interface DsClientConfig {
-  url?: string;
+  url: string;
   username: string;
   password: string;
 }

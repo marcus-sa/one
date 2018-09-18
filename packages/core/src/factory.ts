@@ -1,5 +1,5 @@
 import { Scanner, ModuleContainer } from './module';
-import { APP_INITIALIZER } from './constants';
+import { APP_INITIALIZER } from './tokens';
 import { ExceptionsZone } from './errors';
 import { Type } from './interfaces';
 import { Module } from './module';

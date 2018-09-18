@@ -8,7 +8,7 @@ import {
 
 import { DEEPSTREAM_PROVIDERS, DEEPSTREAM_EXPORTS } from './providers';
 import { DsClientConfig } from './ds-client-config.interface';
-import { DEEPSTREAM_CLIENT_CONFIG } from './symbols';
+import { DEEPSTREAM_CLIENT_CONFIG } from './tokens';
 
 @Module()
 export class DsClientModule {
@@ -18,7 +18,7 @@ export class DsClientModule {
     return {
       module: DsClientModule,
       exports: DEEPSTREAM_EXPORTS,
-      imports: metadata.imports,
+      imports: metadata.imports || [],
       providers: [
         {
           provide: DEEPSTREAM_CLIENT_CONFIG,

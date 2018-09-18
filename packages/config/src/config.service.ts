@@ -1,14 +1,14 @@
 import { Injectable, Utils } from '@one/core';
-import * as get from 'lodash.get';
-import * as set from 'lodash.set';
 import * as fs from 'fs-extra';
 import * as glob from 'glob';
 import * as path from 'path';
+import get from 'lodash.get';
+import set from 'lodash.set';
 import YAML from 'yaml';
 
 @Injectable()
 export class ConfigService {
-  private config!: any;
+  private config: any;
 
   private parseContent({ ext }: path.ParsedPath, content: string) {
     switch (ext) {
@@ -36,10 +36,10 @@ export class ConfigService {
   }
 
   public get<T>(key: string = '', def?: any): T {
-    return get(this.config, path) || def;
+    return get(this.config, key) || def;
   }
 
-  public set(path: string = '', value: any) {
-    set(this.config, path, value);
+  public set(key: string = '', value: any) {
+    set(this.config, key, value);
   }
 }

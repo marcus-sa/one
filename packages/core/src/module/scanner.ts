@@ -20,15 +20,16 @@ export class Scanner {
   public async scan(module: Type<Module>) {
     await this.scanForModules(module);
     await this.scanModulesForDependencies();
+    this.container.bindGlobalScope();
     await this.createModules();
   }
 
+  // @TODO: Fix creation order
   private async createModules() {
-    const modules = Utils.getValues<Module>(
-      this.container.getReversedModules(),
-    );
+    const modules = this.container.getModules().values();
 
     for (const module of modules) {
+      console.log('createModule', module.target);
       await module.create();
     }
   }
@@ -54,7 +55,7 @@ export class Scanner {
       if (ctxRegistry.includes(innerModule)) continue;
 
       const scopedModules = Utils.concat(scope, module);
-      await this.scanForModules(innerModule, scopedModules);
+      await this.scanForModules(innerModule, scopedModules, ctxRegistry);
     }
   }
 

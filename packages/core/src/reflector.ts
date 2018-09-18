@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { INJECTABLE_METADATA } from './constants';
+import { SCOPE_METADATA, INJECTABLE_METADATA, SHARED_MODULE_METADATA } from './constants';
 import { Type, Provider } from './interfaces';
 import { Module } from './module';
 
@@ -26,7 +26,15 @@ export class Reflector {
     return Reflect.getMetadata(metadataKey, <Provider>target) || [];
   }
 
-  public static isProvider(target: Type<Provider | Module>) {
-    return Reflect.hasMetadata(INJECTABLE_METADATA, <Provider>target);
+  public static isGlobalModule(target: Type<Module>) {
+    return !!Reflect.getMetadata(SHARED_MODULE_METADATA, target);
+  }
+
+  public static isProvider(target: any) {
+    return !!Reflect.getMetadata(INJECTABLE_METADATA, target);
+  }
+
+  public static resolveProviderScope(provider: Type<Provider>) {
+    return Reflect.getMetadata(SCOPE_METADATA, provider);
   }
 }

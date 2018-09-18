@@ -1,7 +1,7 @@
 import { Provider, MODULE_INITIALIZER, Utils } from '@one/core';
 import deepstream = require('deepstream.io-client-js');
 
-import { DEEPSTREAM_CLIENT, DEEPSTREAM_CLIENT_CONFIG } from './symbols';
+import { DEEPSTREAM_CLIENT, DEEPSTREAM_CLIENT_CONFIG } from './tokens';
 import { DsClientConfig } from './ds-client-config.interface';
 import { DsClientService } from './ds-client.service';
 

@@ -1,4 +1,5 @@
 import { ModuleCompiler } from './compiler';
+import { Reflector } from '../reflector';
 import { Registry } from '../registry';
 import { Module } from './module';
 import { Utils } from '../util';
@@ -17,8 +18,9 @@ import {
 
 export class ModuleContainer {
   private readonly moduleCompiler = new ModuleCompiler();
-  public readonly providerTokens: Token[] = [];
+  private readonly globalModules = new Set<Module>();
   private readonly modules = new Map<string, Module>();
+  public readonly providerTokens: Token[] = [];
   private readonly dynamicModulesMetadata = new Map<
     string,
     Partial<DynamicModule>
@@ -94,6 +96,10 @@ export class ModuleContainer {
     module.addExported(component);
   }
 
+  public addGlobalModule(module: Module) {
+    this.globalModules.add(module);
+  }
+
   public async addModule(module: Partial<ModuleImport>, scope: Type<Module>[]) {
     if (!module) throw new InvalidModuleException(scope);
 
@@ -110,6 +116,7 @@ export class ModuleContainer {
 
     const modules = Utils.concat(scope, target);
     this.addDynamicMetadata(token, dynamicMetadata!, modules);
+    Reflector.isGlobalModule(target) && this.addGlobalModule(moduleRef);
   }
 
   private addDynamicMetadata(
@@ -128,6 +135,22 @@ export class ModuleContainer {
     scope: Type<Module>[],
   ) {
     modules.forEach(module => this.addModule(module, scope));
+  }
+
+
+  public bindGlobalScope() {
+    this.modules.forEach(module => this.bindGlobalsToImports(module));
+  }
+
+  private bindGlobalsToImports(module: Module) {
+    this.globalModules.forEach(globalModule =>
+      this.bindGlobalModuleToModule(module, globalModule),
+    );
+  }
+
+  private bindGlobalModuleToModule(module: Module, globalModule: Module) {
+    if (module === globalModule) return;
+    module.addImport(globalModule);
   }
 
   public async addImport(relatedModule: ModuleImport, token: string) {

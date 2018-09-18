@@ -15,6 +15,10 @@ import { THIRD_SERVICE } from './tokens';
       useValue: 'test',
     },
     {
+      provide: 'INVALID_TOKEN',
+      useValue: 'lol',
+    },
+    {
       provide: APP_INITIALIZER,
       useFactory: (first: FirstService) => console.log(first),
       // forwardRef(() => FirstService)

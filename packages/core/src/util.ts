@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
-import { Type } from 'packages/core/src/interfaces';
-import { Module } from 'packages/core/src/module';
+
+import { InjectionToken, Module } from './module';
+import { Type } from './interfaces';
 
 export class Utils {
   public static async getDeferred<T>(value: any): Promise<T> {
@@ -17,6 +18,15 @@ export class Utils {
 
   public static isObservable(val: any): val is Observable<any> {
     return val && this.isFunction(val.subscribe);
+  }
+
+  public static isSymbol(val: any): val is symbol {
+    return typeof val === 'symbol';
+  }
+
+  public static isNamedFunction(val: any): val is Type<any> | InjectionToken<any> {
+    return val && !this.isNil(val.name) &&
+      (this.isFunction(val) || this.isFunction(val.constructor));
   }
 
   public static isFunction(val: any): val is Function {

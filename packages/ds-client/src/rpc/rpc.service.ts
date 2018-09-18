@@ -3,9 +3,9 @@ import { Observable } from 'rxjs';
 
 import { RpcResponseError, RpcResponseReject } from './exceptions';
 import { DsClient } from '../ds-client.interface';
-import { DEEPSTREAM_CLIENT } from '../symbols';
-import { RpcStorage } from './rpc.storage';
+import { DEEPSTREAM_CLIENT } from '../tokens';
 import { RPCResponse } from '../deepstream';
+import { RpcStorage } from './rpc.storage';
 import { RpcProvider } from './interfaces';
 
 export type ProvideCallback = <T>(
@@ -16,7 +16,7 @@ export type ProvideCallback = <T>(
 @Injectable()
 export class DsRpcService {
   @Inject(DEEPSTREAM_CLIENT)
-  private readonly client: DsClient;
+  private readonly client!: DsClient;
 
   constructor(private readonly injector: Injector) {}
 

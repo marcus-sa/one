@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 import getDecorators from 'inversify-inject-decorators';
 
-import { MultiProviderException, UnknownExportException } from '../errors';
+import { PROVIDER_TYPES, SCOPES } from '../constants';
 import { ModuleContainer } from './container';
 import { Reflector } from '../reflector';
 import { Registry } from '../registry';
@@ -20,13 +20,14 @@ import {
   MultiDepsProvider,
 } from '../interfaces';
 import {
-  Injector,
-  MODULE_INITIALIZER,
   MODULE_REF,
-  PROVIDER_TYPES,
-  SCOPE_METADATA,
-  SCOPES,
-} from '../constants';
+  MODULE_INITIALIZER,
+  Injector,
+} from '../tokens';
+import {
+  MultiProviderException,
+  UnknownExportException,
+} from '../errors';
 
 export class Module {
   private readonly imports = new Set<Module>();
@@ -49,8 +50,14 @@ export class Module {
     this.providerContainer.add(provider);
   }
 
+  private providerContainerHasToken(token: Token) {
+    return [...this.providerContainer.values()].some(
+      provider => Registry.getProviderToken(provider) === token,
+    );
+  }
+
   private validateExported(token: Token, exported: ModuleExport) {
-    if (this.providerContainer.has(exported)) return token;
+    if (this.providerContainerHasToken(token)) return token;
 
     const imported = [...this.imports.values()];
     const importedRefNames = <any[]>imported
@@ -211,8 +218,10 @@ export class Module {
     // Shouldn't resolve dependencies before the actual binding happens
 
     return await Promise.all(
-      dependencies.map(dep => {
-        const token = Registry.getForwardRef(dep);
+      dependencies.map(dependency => {
+        const token = Registry.getForwardRef(dependency);
+        Registry.assertProvider(token);
+
         return this.container.getProvider(
           providers.find(provider => provider === token),
         );
@@ -238,14 +247,10 @@ export class Module {
       .toProvider(() => <any>provider.useFactory(...deps));
   }
 
-  private resolveProviderScope(provider: Type<Provider>) {
-    return Reflect.getMetadata(SCOPE_METADATA, provider);
-  }
-
   public async bind(token: Token, type: string, provider: Provider) {
     // @TODO: Add useExisting binding
     if (type === PROVIDER_TYPES.DEFAULT) {
-      const scope = this.resolveProviderScope(<Type<Provider>>provider);
+      const scope = Reflector.resolveProviderScope(<Type<Provider>>provider);
       const lazyInjects = Registry.getLazyInjects(<Type<Provider>>provider);
       lazyInjects.forEach(({ lazyInject, forwardRef }) => {
         const token = Registry.getForwardRef(forwardRef);
@@ -264,7 +269,7 @@ export class Module {
   public addGlobalProviders() {
     this.providers.bind(Injector).toConstantValue(this.providers);
     this.providers.bind(ModuleContainer).toConstantValue(this.container);
-    this.providers.bind(MODULE_REF).toConstantValue(this);
+    this.providers.bind(MODULE_REF.get()).toConstantValue(this);
 
     this.providers
       .bind(Injector)

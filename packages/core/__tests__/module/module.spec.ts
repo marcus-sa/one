@@ -1,5 +1,7 @@
 import { Container } from 'inversify';
-import { Registry, Module as ModuleDecorator } from '@one/core';
+import { Module as ModuleDecorator } from '@one/core';
+import { Registry } from '@one/core/registry';
+import { Module } from '@one/core/module';
 
 import { Module } from '../../src/module';
 
@@ -14,7 +16,7 @@ describe('Module', () => {
 
     const registry = new Registry();
 
-    @ModuleDecorator({})
+    @ModuleDecorator()
     class AppModule {}
 
     module = new Module(moduleRefs, registry, AppModule);

@@ -1,4 +1,7 @@
+import { InvalidProviderException } from './errors';
 import { InjectionToken } from './module';
+import { Reflector } from './reflector';
+import { Utils } from './util';
 import {
   ProvideToken,
   ILazyInject,
@@ -39,10 +42,18 @@ export class Registry {
       : (<Type<Provider>>provider).name;
   }
 
-  public static getInjectionToken(provider: Token): Token {
+  public static getInjectionToken(provider: any): Token {
     return provider instanceof InjectionToken
       ? (<InjectionToken<any>>provider).get()
       : <Type<any>>provider;
+  }
+
+  public static assertProvider(val: any): Type<any> | InjectionToken<any> {
+    if (/*!Reflector.isProvider(val) && */!(val && !Utils.isNil(val.name) && (Utils.isFunction(val) || Utils.isFunction(val.constructor)))) {
+      throw new InvalidProviderException(val);
+    }
+
+    return val;
   }
 
   public static getProviderToken(provider: Provider): Token {
@@ -76,8 +87,6 @@ export class Registry {
   }
 
   public static hasProvideToken(provider: Provider): provider is ProvideToken {
-    return !!(<ProvideToken>provider)
-      .provide /* &&
-      typeof (<ProvideToken>provider).provide.name === 'symbol'*/;
+    return !!(<ProvideToken>provider).provide;
   }
 }

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
+      "@one/core/*": ["./packages/core/src/*"],
       "@one/*": ["./packages/*/src"]
     }
   },

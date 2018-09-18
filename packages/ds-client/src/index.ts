@@ -1,4 +1,4 @@
-export { DEEPSTREAM_CLIENT } from './symbols';
+export { DEEPSTREAM_CLIENT } from './tokens';
 export * from './ds-client-config.interface';
 export * from './ds-client.interface';
 export * from './ds-client.module';

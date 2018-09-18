@@ -1,5 +1,4 @@
 // No enum support for ts-jest
-import { Container } from 'inversify';
 
 /**
  export enum METADATA {
@@ -21,15 +20,9 @@ import { Container } from 'inversify';
   DEFAULT = 'provider',
 }
  */
-
-export const APP_INITIALIZER = Symbol.for('Initialize<App>');
-export const MODULE_INITIALIZER = Symbol.for('Initialize<Module>');
-export const MODULE_REF = Symbol.for('Ref<Module>');
-
+export const SHARED_MODULE_METADATA = Symbol.for('Metadata<SharedModule>');
 export const SCOPE_METADATA = Symbol.for('Metadata<Scope>');
 export const INJECTABLE_METADATA = Symbol.for('Metadata<Injectable>');
-
-export class Injector extends Container {}
 
 export const METADATA = {
   IMPORTS: 'imports',
