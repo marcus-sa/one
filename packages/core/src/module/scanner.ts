@@ -40,13 +40,7 @@ export class Scanner {
       .getModules()
       .values()
       .next().value;
-    const imports = rootModule.imports.values();
-
-    for (const innerModule of imports) {
-      await traverse(innerModule);
-    }
-
-    await rootModule.create();
+    await traverse(rootModule);
   }
 
   private async scanForModules(
@@ -166,7 +160,7 @@ export class Scanner {
     token: string,
     context: string,
   ) {
-    const modules = this.getDynamicMetadata(
+    const modules = this.getDynamicMetadata<ModuleImport>(
       module,
       token,
       METADATA.IMPORTS as 'imports',

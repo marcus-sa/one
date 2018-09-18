@@ -208,9 +208,12 @@ export class Module {
     return this.providers.bind(token).toConstantValue(provider.useValue);
   }
 
-  public getProvider(token: Token) {
-    const provider = this.getProviders().find(provider => provider === token);
-    if (!provider) throw new UnknownProviderException(token);
+  public getProvider(ref: ModuleImport): Token {
+    const token = Registry.getProviderToken(<Provider>ref);
+    const provider = <any>(
+      this.getProviders().find(provider => provider === token)
+    );
+    if (!provider) throw new UnknownProviderException(ref);
     return provider;
   }
 
@@ -220,7 +223,7 @@ export class Module {
         const ref = Registry.getForwardRef(dependency);
         Registry.assertProvider(ref);
 
-        const provider = this.getProvider(ref);
+        const provider = this.getProvider(<any>ref);
         return this.container.getProvider(provider);
       }),
     );

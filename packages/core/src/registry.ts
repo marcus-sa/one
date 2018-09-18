@@ -77,7 +77,7 @@ export class Registry {
     return val;
   }
 
-  public static getProviderToken(provider: Provider): Token {
+  public static getProviderToken(provider: ModuleImport): Token {
     return this.getInjectionToken((<ProvideToken>provider).provide || provider);
   }
 
