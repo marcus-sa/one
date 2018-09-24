@@ -9,7 +9,7 @@ import {
   UnknownProviderException,
 } from '../errors';
 import {
-  DynamicModule,
+  DynamicModule, ModuleExport,
   ModuleImport,
   Provider,
   Token,
@@ -32,14 +32,14 @@ export class ModuleContainer {
     );
   }
 
-  public getProvider(provider: Token, modules = this.modules.values()) {
-    for (const { providers } of modules) {
+  public getProvider(provider: Token, scope: Type<Module>) {
+    for (const { providers } of this.modules.values()) {
       if (providers.isBound(provider)) {
         return providers.get(provider);
       }
     }
 
-    throw new UnknownProviderException(provider);
+    throw new UnknownProviderException(provider, scope);
   }
 
   public getAllProviders<T>(provider: Provider, target?: Type<Module>) {
@@ -66,7 +66,7 @@ export class ModuleContainer {
     return this.getModuleValues().some(({ target }) => target === module);
   }
 
-  public getModuleRef(module: Type<Module>) {
+  public getModuleRef(module: Type<Module>): Module | undefined {
     return this.getModuleValues().find(({ target }) => target === module);
   }
 
@@ -91,7 +91,7 @@ export class ModuleContainer {
     await module.addProvider(provider);
   }
 
-  public addExported(component: Token, token: string) {
+  public addExported(component: ModuleExport, token: string) {
     const module = this.getModule(token);
     module.addExported(component);
   }

@@ -1,4 +1,4 @@
-import { Module } from '@one/core';
+import { Module } from '@nest/core';
 
 import { LessNestService } from './less-nest.service';
 

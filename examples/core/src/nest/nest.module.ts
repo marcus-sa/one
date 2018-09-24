@@ -1,4 +1,4 @@
-import { DynamicModule, Module } from '@one/core';
+import { DynamicModule, Module } from '@nest/core';
 
 import { MoreNestModule } from './more-nest';
 import { LessNestModule } from './less-nest';

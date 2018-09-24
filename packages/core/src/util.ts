@@ -59,6 +59,10 @@ export class Utils {
     return this.isUndefined(val) || val === null;
   }
 
+  public static isObject(val: any): val is Object {
+    return typeof val === 'object';
+  }
+
   public static isUndefined(val: any): val is undefined {
     return typeof val === 'undefined';
   }

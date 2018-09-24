@@ -1,4 +1,4 @@
-import { Injectable, Inject, forwardRef } from '@one/core';
+import { Injectable, Inject, forwardRef } from '@nest/core';
 
 import { FirstService } from './first.service';
 

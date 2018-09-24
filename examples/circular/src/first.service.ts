@@ -1,4 +1,4 @@
-import { Injectable, Inject, forwardRef } from '@one/core';
+import { Injectable, Inject, forwardRef } from '@nest/core';
 
 import { SecondService } from './second.service';
 import { THIRD_SERVICE } from './tokens';

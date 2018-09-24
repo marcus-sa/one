@@ -24,10 +24,19 @@ export class Reflector {
   }
 
   public static get(
-    target: Type<Provider | Module>,
+    target: Type<any>,
     metadataKey: string | symbol,
   ) {
     return Reflect.getMetadata(metadataKey, target) || [];
+  }
+
+  public static set(
+    target: Type<any>,
+    metadataKey: string | symbol,
+    metadataValue: any,
+    propertyKey?: string | symbol
+  ) {
+    Reflect.defineMetadata(metadataKey, metadataValue, target, propertyKey);
   }
 
   public static isGlobalModule(target: Type<Module>) {

@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Module, MODULE_INITIALIZER } from '@one/core';
+import { APP_INITIALIZER, Module, MODULE_INITIALIZER } from '@nest/core';
 
 import { NestModule } from './nest';
 import { AppService } from './app.service';

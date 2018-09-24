@@ -29,8 +29,11 @@
     "nodemon": "^1.18.4",
     "prettier": "^1.14.2",
     "pretty-quick": "^1.6.0",
-    "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
+    "rollup": "^0.66.2",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-typescript2": "^0.17.0",
     "ts-jest": "22.4.6",
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.5.0",
@@ -41,7 +44,8 @@
   ],
   "jest": {
     "moduleNameMapper": {
-      "@one/(.*)": "<rootDir>/packages/$1/src"
+      "@nest/core/(.*)": "<rootDir>/packages/core/src/$1",
+      "@nest/(.*)": "<rootDir>/packages/$1/src"
     },
     "moduleFileExtensions": [
       "js",

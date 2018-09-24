@@ -26,8 +26,8 @@ export interface MultiDepsProvider extends DepsProvider {
   multi?: boolean;
 }
 
-export interface ExistingProvider {
-  useExisting: Dependency;
+export interface ExistingProvider<T> {
+  useExisting: Type<T> | InjectionToken<T>;
 }
 
 export interface ValueProvider<T> extends ProvideToken {

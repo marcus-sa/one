@@ -1,5 +1,5 @@
-import { forwardRef, Inject, Injectable } from '@one/core';
-import { TestBed } from '@one/testing';
+import { forwardRef, Inject, Injectable } from '@nest/core';
+import { TestBed } from '@nest/testing';
 
 describe('@Inject()', () => {
   /*it('should create circular dependencies', async () => {

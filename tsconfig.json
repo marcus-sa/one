@@ -1,10 +1,10 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./packages",
     "paths": {
-      "@one/core/*": ["./packages/core/src/*"],
-      "@one/*": ["./packages/*/src"]
+      "@nest/core/*": ["./core/src/*"],
+      "@nest/*": ["./*/src"]
     }
   },
   "exclude": [

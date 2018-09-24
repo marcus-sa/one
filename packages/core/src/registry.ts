@@ -14,7 +14,7 @@ import {
   ExistingProvider,
   DynamicModule,
   ModuleImport,
-  Token,
+  Token, ModuleExport,
 } from './interfaces';
 
 export class Registry {
@@ -46,9 +46,11 @@ export class Registry {
   }
 
   public static getProviderName(provider: Provider) {
-    return this.hasProvideToken(provider)
-      ? (<ProvideToken>provider).provide.get().toString()
-      : (<Type<Provider>>provider).name;
+    const token = this.getProviderToken(provider);
+
+    return Utils.isSymbol(token)
+      ? token.toString()
+      : token.name;
   }
 
   public static isInjectionToken(
@@ -59,7 +61,7 @@ export class Registry {
 
   public static getInjectionToken(provider: any): Token {
     return this.isInjectionToken(provider)
-      ? (<InjectionToken<any>>provider).get()
+      ? (<InjectionToken<any>>provider).name
       : <Type<any>>provider;
   }
 
@@ -77,7 +79,7 @@ export class Registry {
     return val;
   }
 
-  public static getProviderToken(provider: ModuleImport): Token {
+  public static getProviderToken(provider: ModuleImport | ModuleExport): Token {
     return this.getInjectionToken((<ProvideToken>provider).provide || provider);
   }
 

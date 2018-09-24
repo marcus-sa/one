@@ -1,6 +1,6 @@
-import { Module } from '@one/core';
-import { DsClientConfig, DsClientModule } from '@one/ds-client';
-import { ConfigModule, ConfigService } from '@one/config';
+import { Module } from '@nest/core';
+import { DsClientConfig, DsClientModule } from '@nest/ds-client';
+import { ConfigModule, ConfigService } from '@nest/config';
 import * as path from 'path';
 
 @Module({

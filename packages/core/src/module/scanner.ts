@@ -32,7 +32,7 @@ export class Scanner {
         await traverse(innerModule);
       }
 
-      await Promise.all([...imports].map(({ done$ }) => done$));
+      await Promise.all([...imports].map(({ created }) => created));
       await module.create();
     };
 

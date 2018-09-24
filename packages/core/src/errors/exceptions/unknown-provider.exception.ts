@@ -1,9 +1,11 @@
 import { RuntimeException } from './runtime.exception';
+import { Type, Provider } from '../../interfaces';
 import { Registry } from '../../registry';
+import { Module } from '../../module';
 
 export class UnknownProviderException extends RuntimeException {
-  constructor(provider: any) {
+  constructor(provider: Provider, module: Type<Module>) {
     const name = Registry.getProviderName(provider);
-    super(`${name} could not be found`);
+    super(`${name} could not be found in ${module.name}`);
   }
 }

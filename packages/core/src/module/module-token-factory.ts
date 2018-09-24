@@ -1,4 +1,4 @@
-import * as hash from 'object-hash';
+import hash from 'object-hash';
 
 import { SHARED_MODULE_METADATA } from '../constants';
 import { Type, DynamicModule } from '../interfaces';

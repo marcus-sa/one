@@ -17,7 +17,7 @@ import {
   Token,
   ValueProvider,
   Dependency,
-  MultiDepsProvider,
+  MultiDepsProvider, ExistingProvider,
 } from '../interfaces';
 import { MODULE_REF, MODULE_INITIALIZER, Injector } from '../tokens';
 import {
@@ -32,7 +32,7 @@ export class Module {
   public readonly providers = new Container();
   public readonly lazyInject = getDecorators(this.providers).lazyInject;
   public readonly exports = new Set<Token>();
-  public readonly done$ = Utils.createDeferredPromise();
+  public readonly created = Utils.createDeferredPromise();
 
   constructor(
     public readonly target: Type<any>,
@@ -73,15 +73,16 @@ export class Module {
     return token;
   }
 
-  public addExported(exported: ModuleImport) {
-    const addExportedUnit = (token: Token) =>
-      this.exports.add(this.validateExported(token, <any>exported));
+  public addExported(exported: ModuleExport) {
+    const addExportedUnit = (token: Token) => {
+      this.exports.add(this.validateExported(token, exported));
+    };
 
     if (Registry.isDynamicModule(exported)) {
       return addExportedUnit(exported.module);
     }
 
-    addExportedUnit(Registry.getProviderToken(<Type<any>>exported));
+    addExportedUnit(Registry.getProviderToken(exported));
   }
 
   public getProviders() {
@@ -92,10 +93,10 @@ export class Module {
   }
 
   private linkRelatedProviders() {
-    const providers = [...this.getRelatedProviders().values()];
+    const providers = this.getRelatedProviders();
 
     providers.forEach(provider => {
-      const ref = this.container.getProvider(provider);
+      const ref = this.container.getProvider(provider, this.target);
 
       this.providers.bind(<any>provider).toConstantValue(ref);
     });
@@ -110,7 +111,7 @@ export class Module {
       if (Reflector.isProvider(<any>module)) {
         providerScope.add(<Token>module);
       } else {
-        for (const related of (<Module>module).exports.values()) {
+        for (const related of (<Module>module).exports) {
           if (this.container.hasModuleRef(<Type<Module>>related)) {
             const ref = this.container.getModuleRef(<Type<Module>>related);
             find(ref!);
@@ -121,7 +122,7 @@ export class Module {
       }
     };
 
-    for (const related of this.imports.values()) {
+    for (const related of this.imports) {
       find(related);
     }
 
@@ -129,11 +130,9 @@ export class Module {
   }
 
   private async bindProviders() {
-    const providers = [...this.injectables.values()];
-
     this.linkRelatedProviders();
 
-    for (const provider of providers) {
+    for (const provider of this.injectables) {
       const isMulti = (<MultiDepsProvider>provider).multi;
       const token = Registry.getProviderToken(provider);
 
@@ -166,7 +165,7 @@ export class Module {
       ),
     );
 
-    this.done$.resolve();
+    this.created.resolve();
     console.log(this.target.name, 'created');
   }
 
@@ -184,7 +183,46 @@ export class Module {
     return PROVIDER_TYPES.DEFAULT;
   }
 
-  private bindProvider(scope: string, provider: Type<any>) {
+  public getProvider(ref: ModuleImport): Token {
+    const token = Registry.getProviderToken(<Provider>ref);
+    const provider = <any>(
+      this.getProviders().find(provider => provider === token)
+    );
+    if (!provider) throw new UnknownProviderException(ref, this.target);
+    return provider;
+  }
+
+  private async getDependencies(dependencies: ModuleImport[]) {
+    return await Promise.all(
+      dependencies.map(dependency => {
+        const ref = Registry.getForwardRef(dependency);
+        Registry.assertProvider(ref);
+
+        const provider = this.getProvider(<any>ref);
+        return this.container.getProvider(provider, this.target);
+      }),
+    );
+  }
+
+  private async bindFactoryProvider(
+    token: Token,
+    provider: FactoryProvider<any>,
+  ) {
+    const deps = await this.getDependencies(provider.deps);
+
+    // const factory = await provider.useFactory(...deps);
+    if (provider.scope === SCOPES.TRANSIENT) {
+      return this.providers
+        .bind(token)
+        .toDynamicValue(() => <any>provider.useFactory(...deps));
+    }
+
+    return this.providers
+      .bind(token)
+      .toProvider(() => <any>provider.useFactory(...deps));
+  }
+
+  private bindProvider(scope: string, provider: Type<Provider>) {
     const binding = this.providers.bind(provider).toSelf();
 
     switch (scope) {
@@ -208,47 +246,13 @@ export class Module {
     return this.providers.bind(token).toConstantValue(provider.useValue);
   }
 
-  public getProvider(ref: ModuleImport): Token {
-    const token = Registry.getProviderToken(<Provider>ref);
-    const provider = <any>(
-      this.getProviders().find(provider => provider === token)
-    );
-    if (!provider) throw new UnknownProviderException(ref);
-    return provider;
-  }
-
-  private async getDependencies(dependencies: ModuleImport[]) {
-    return await Promise.all(
-      dependencies.map(dependency => {
-        const ref = Registry.getForwardRef(dependency);
-        Registry.assertProvider(ref);
-
-        const provider = this.getProvider(<any>ref);
-        return this.container.getProvider(provider);
-      }),
-    );
-  }
-
-  private async bindFactoryProvider(
-    token: Token,
-    provider: FactoryProvider<any>,
-  ) {
-    const deps = await this.getDependencies(provider.deps);
-
-    // const factory = await provider.useFactory(...deps);
-    if (provider.scope === SCOPES.TRANSIENT) {
-      return this.providers
-        .bind(token)
-        .toDynamicValue(() => <any>provider.useFactory(...deps));
-    }
-
-    return this.providers
-      .bind(token)
-      .toProvider(() => <any>provider.useFactory(...deps));
+  private bindExistingProvider(token: Token, provider: ExistingProvider<any>) {
+    const existingToken = Registry.getInjectionToken(provider.useExisting);
+    const existing = this.providers.get(existingToken);
+    return this.providers.bind(token).toConstantValue(existing);
   }
 
   public async bind(token: Token, type: string, provider: Provider) {
-    // @TODO: Add useExisting binding
     if (type === PROVIDER_TYPES.DEFAULT) {
       const scope = Reflector.resolveProviderScope(<Type<Provider>>provider);
       const lazyInjects = Registry.getLazyInjects(<Type<Provider>>provider);
@@ -263,13 +267,16 @@ export class Module {
       this.bindValueProvider(token, <ValueProvider<any>>provider);
     } else if (type === PROVIDER_TYPES.CLASS) {
       this.bindClassProvider(token, <ClassProvider>provider);
+    } else if (type === PROVIDER_TYPES.EXISTING) {
+      // @TODO: Test useExisting binding
+      this.bindExistingProvider(token, <ExistingProvider<any>>provider);
     }
   }
 
   public addGlobalProviders() {
     this.providers.bind(Injector).toConstantValue(this.providers);
     this.providers.bind(ModuleContainer).toConstantValue(this.container);
-    this.providers.bind(MODULE_REF.get()).toConstantValue(this);
+    this.providers.bind(MODULE_REF.name).toConstantValue(this);
 
     this.providers
       .bind(Injector)

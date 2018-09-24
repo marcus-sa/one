@@ -1,5 +1,5 @@
 {
-  "name": "@one/core",
+  "name": "@nest/core",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -17,5 +17,31 @@
     "object-hash": "^1.3.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.2.2"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "@nest/core/(.*)": "<rootDir>/src/$1",
+      "@nest/(.*)": "<rootDir>/../$1/src"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx",
+      "json",
+      "node"
+    ],
+    "collectCoverage": true,
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "<rootDir>/__tests__/**/*.(spec|test).+(ts|tsx)"
+    ]
   }
 }
