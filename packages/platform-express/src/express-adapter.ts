@@ -1,12 +1,53 @@
-import * as express from 'express';
-import { Utils } from '@nest/core';
+import { Inject, Injectable, Utils } from '@nest/core';
+import { default as express, Express } from 'express';
+import { ServeStaticOptions } from 'serve-static';
+import * as https from 'https';
+import * as http from 'http';
 
-import { RouterMethodFactory, RequestMethod, HttpServer, RequestHandler } from '@nest/server';
+import {
+  RouterMethodFactory,
+  RequestMethod,
+  HTTP_SERVER_OPTIONS,
+  HttpServer,
+  RequestHandler,
+  HttpServerOptions,
+} from '@nest/server';
 
+@Injectable()
 export class ExpressAdapter implements HttpServer {
   private readonly routerMethodFactory = new RouterMethodFactory();
   private readonly instance = express();
-  private httpServer?: any;
+  private httpServer: Express;
+
+  @Inject(HTTP_SERVER_OPTIONS)
+  private readonly options: HttpServerOptions;
+
+  async registerParserMiddleware() {
+    const bodyParser = await Utils.loadPackage(
+    'body-parser',
+      'ExpressAdapter#registerParserMiddleware'
+    );
+
+    const jsonParser = bodyParser.json();
+    const urlencodedParser = bodyParser.urlencoded({
+      extended: true,
+    });
+
+    this.instance.use(jsonParser);
+    this.instance.use(urlencodedParser);
+  }
+
+  create() {
+    const { httpsOptions } = this.options;
+    const instance = this.getInstance();
+
+    const server = Utils.isObject(httpsOptions)
+      ? https.createServer(httpsOptions, instance)
+      : http.createServer(instance);
+
+    this.setHttpServer(server);
+    return server;
+  }
 
   use(...args: any[]) {
     return this.instance.use(...args);
@@ -92,7 +133,6 @@ export class ExpressAdapter implements HttpServer {
   setHttpServer(httpServer) {
     this.httpServer = httpServer;
   }
-
 
   getInstance() {
     return this.instance;

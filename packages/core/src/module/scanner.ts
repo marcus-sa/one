@@ -1,9 +1,9 @@
 import { CircularDependencyException } from '../errors';
-import { ModuleContainer } from './container';
+import { NestContainer } from './container';
 import { Reflector } from '../reflector';
 import { METADATA } from '../constants';
 import { Registry } from '../registry';
-import { Module } from './module';
+import { NestModule } from './module';
 import { Utils } from '../util';
 import {
   Dependency,
@@ -16,9 +16,9 @@ import {
 } from '../interfaces';
 
 export class Scanner {
-  constructor(private readonly container: ModuleContainer) {}
+  constructor(private readonly container: NestContainer) {}
 
-  public async scan(module: Type<Module>) {
+  public async scan(module: Type<NestModule>) {
     await this.scanForModules(module);
     await this.scanModulesForDependencies();
     this.container.bindGlobalScope();
@@ -26,7 +26,7 @@ export class Scanner {
   }
 
   private async createModules() {
-    const traverse = async (module: Module) => {
+    const traverse = async (module: NestModule) => {
       const imports = module.imports.values();
       for (const innerModule of imports) {
         await traverse(innerModule);
@@ -45,7 +45,7 @@ export class Scanner {
 
   private async scanForModules(
     module: ModuleImport,
-    scope: Type<Module>[] = [],
+    scope: Type<NestModule>[] = [],
     ctxRegistry: ModuleImport[] = [],
   ) {
     await this.storeModule(module, scope);
@@ -55,7 +55,7 @@ export class Scanner {
       module = (<ForwardRef>module).forwardRef();
     }
 
-    const imports = Reflector.get(<Type<Module>>module, METADATA.IMPORTS);
+    const imports = Reflector.get(<Type<NestModule>>module, METADATA.IMPORTS);
     const modules = Registry.isDynamicModule(module)
       ? [...imports, ...(module.imports || [])]
       : imports;

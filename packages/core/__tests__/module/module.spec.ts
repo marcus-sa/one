@@ -1,10 +1,10 @@
 import { Injectable, InjectionToken, Module, ModuleMetadata, Type } from '@nest/core';
 import { Registry } from '@nest/core/registry';
-import { Module as ModuleRef, ModuleContainer, Scanner } from '@nest/core/module';
+import { Module as ModuleRef, NestContainer, Scanner } from '@nest/core/module';
 import { TestService } from '../community-examples/ipfs/src/test.service';
 
 describe('Module', () => {
-  let container: ModuleContainer;
+  let container: NestContainer;
   let scanner: Scanner;
 
   const TEST_TOKEN = new InjectionToken<any>('TEST_TOKEN');
@@ -13,7 +13,7 @@ describe('Module', () => {
   class TestService {}
 
   beforeEach(() => {
-    container = new ModuleContainer();
+    container = new NestContainer();
     scanner = new Scanner(container);
   });
 

@@ -5,7 +5,11 @@ import { CatsController } from './cats.controller';
 
 @Module({
   imports: [
-    ServerModule.forFeature([CatsController]),
+    ServerModule.forFeature([
+      CatsController,
+    ], {
+      configure: () => {},
+    }),
   ],
 })
-export class V1Module {}
+export class CatsModule {}

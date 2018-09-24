@@ -2,7 +2,7 @@ import { Container } from 'inversify';
 import getDecorators from 'inversify-inject-decorators';
 
 import { PROVIDER_TYPES, SCOPES } from '../constants';
-import { ModuleContainer } from './container';
+import { NestContainer } from './container';
 import { Reflector } from '../reflector';
 import { Registry } from '../registry';
 import { Utils } from '../util';
@@ -26,8 +26,8 @@ import {
   UnknownExportException,
 } from '../errors';
 
-export class Module {
-  public readonly imports = new Set<Module>();
+export class NestModule {
+  public readonly imports = new Set<NestModule>();
   public readonly injectables = new Set<Provider>();
   public readonly providers = new Container();
   public readonly lazyInject = getDecorators(this.providers).lazyInject;
@@ -37,10 +37,10 @@ export class Module {
   constructor(
     public readonly target: Type<any>,
     public readonly scope: Type<any>[],
-    private readonly container: ModuleContainer,
+    private readonly container: NestContainer,
   ) {}
 
-  public addImport(relatedModule: Module) {
+  public addImport(relatedModule: NestModule) {
     this.imports.add(relatedModule);
   }
 
@@ -105,15 +105,15 @@ export class Module {
   private getRelatedProviders() {
     const providerScope = new Set<Token>();
 
-    const find = (module: Module | Dependency) => {
+    const find = (module: NestModule | Dependency) => {
       module = <any>Registry.getForwardRef(<Dependency>module);
 
       if (Reflector.isProvider(<any>module)) {
         providerScope.add(<Token>module);
       } else {
-        for (const related of (<Module>module).exports) {
-          if (this.container.hasModuleRef(<Type<Module>>related)) {
-            const ref = this.container.getModuleRef(<Type<Module>>related);
+        for (const related of (<NestModule>module).exports) {
+          if (this.container.hasModuleRef(<Type<NestModule>>related)) {
+            const ref = this.container.getModuleRef(<Type<NestModule>>related);
             find(ref!);
           } else {
             providerScope.add(<Token>related);
@@ -151,7 +151,7 @@ export class Module {
     if (this.providers.isBound(this.target)) return;
 
     this.providers.bind(this.target).toSelf();
-    const module = this.providers.get<Type<Module>>(this.target);
+    const module = this.providers.get<Type<NestModule>>(this.target);
 
     await this.bindProviders();
 
@@ -275,7 +275,7 @@ export class Module {
 
   public addGlobalProviders() {
     this.providers.bind(Injector).toConstantValue(this.providers);
-    this.providers.bind(ModuleContainer).toConstantValue(this.container);
+    this.providers.bind(NestContainer).toConstantValue(this.container);
     this.providers.bind(MODULE_REF.name).toConstantValue(this);
 
     this.providers
@@ -284,7 +284,7 @@ export class Module {
       .whenInjectedInto(this.target);
 
     this.providers
-      .bind(ModuleContainer)
+      .bind(NestContainer)
       .toConstantValue(this.container)
       .whenInjectedInto(this.target);
   }

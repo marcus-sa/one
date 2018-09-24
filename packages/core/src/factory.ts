@@ -1,16 +1,16 @@
-import { Scanner, ModuleContainer } from './module';
+import { Scanner, NestContainer } from './module';
 import { APP_INITIALIZER } from './tokens';
 import { ExceptionsZone } from './errors';
 import { Type } from './interfaces';
-import { Module } from './module';
+import { NestModule } from './module';
 import { Utils } from './util';
 
 // @TODO: Figure out why <https://github.com/inversify/InversifyJS/blob/master/wiki/hierarchical_di.md> doesn't work
 export class Factory {
-  private readonly container = new ModuleContainer();
+  private readonly container = new NestContainer();
   private readonly scanner = new Scanner(this.container);
 
-  constructor(private readonly module: Type<Module>) {}
+  constructor(private readonly module: Type<NestModule>) {}
 
   public async start() {
     await ExceptionsZone.run(async () => {

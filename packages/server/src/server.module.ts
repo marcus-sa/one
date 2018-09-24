@@ -1,14 +1,20 @@
-import { APP_INITIALIZER, DynamicModule, Module, MODULE_INITIALIZER, ModuleWithProviders, Type } from '@nest/core';
+import { APP_INITIALIZER, DynamicModule, Module, MODULE_INITIALIZER, Type } from '@nest/core';
 
 import { HttpServer, HttpServerOptions, ServerFeatureOptions } from './interfaces';
-import { ServerService } from './server.service';
 import { HTTP_SERVER, HTTP_SERVER_OPTIONS } from './tokens';
+import { MiddlewareModule } from './middleware';
+import { ServerService } from './server.service';
+import { RouterModule } from './router';
 
 @Module()
 export class ServerModule {
-  static forRoot(adapter: HttpServer, options: HttpServerOptions = {}): ModuleWithProviders {
+  static forRoot(adapter: HttpServer, options: HttpServerOptions = {}): DynamicModule {
     return {
       module: ServerModule,
+      imports: [
+        MiddlewareModule,
+        RouterModule,
+      ],
       providers: [
         ServerService,
         {

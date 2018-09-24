@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from 'http';
+import { Server, IncomingMessage, ServerResponse } from 'http';
 import { RequestMethod } from '../enums';
 
 export type ErrorHandler = (
@@ -15,6 +15,7 @@ export type RequestHandler = (
 ) => any;
 
 export interface HttpServer {
+  create(): Server | any;
   use(handler: RequestHandler | ErrorHandler): any;
   use(path, handler: RequestHandler | ErrorHandler): any;
   get(handler: RequestHandler): any;
@@ -38,9 +39,10 @@ export interface HttpServer {
   setHeader(response: any, name: string, value: string);
   setErrorHandler?(handler: Function);
   setNotFoundHandler?(handler: Function);
-  useStaticAssets?(...args: any[]): this;
-  setBaseViewsDir?(path: string): this;
-  setViewEngine?(engineOrOptions: any): this;
+  useStaticAssets?(...args: any[]): Promise<this>;
+  setBaseViewsDir?(path: string): Promise<this>;
+  setViewEngine?(engineOrOptions: any): Promise<this>;
+  registerParserMiddleware(): Promise<this>;
   createMiddlewareFactory(
     method: keyof RequestMethod,
   ): (path: string, callback: Function) => any;

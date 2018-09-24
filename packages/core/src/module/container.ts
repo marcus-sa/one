@@ -16,7 +16,7 @@ import {
   Type,
 } from '../interfaces';
 
-export class ModuleContainer {
+export class NestContainer {
   private readonly moduleCompiler = new ModuleCompiler();
   private readonly globalModules = new Set<Module>();
   private readonly modules = new Map<string, Module>();

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { InjectionToken, Module } from './module';
+import { InjectionToken, NestModule } from './module';
 import { Type } from './interfaces';
 
 export interface DeferredPromise<T> extends Promise<T> {
@@ -9,6 +9,37 @@ export interface DeferredPromise<T> extends Promise<T> {
 }
 
 export class Utils {
+  public static isNode() {
+    return !this.isNil(process) && process.release.name === 'node';
+  }
+
+  public static isElectron() {
+    // Renderer process
+    if (!this.isNil(window) && this.isObject(window.process) && window.process.type === 'renderer') {
+      return true;
+    }
+
+    // Main process
+    if (!this.isNil(process) && this.isObject(process.versions) && !this.isNil(process.versions.electron)) {
+      return true;
+    }
+
+    // Detect the user agent when the `nodeIntegration` option is set to true
+    return this.isObject(navigator) && this.isString(navigator.userAgent) && (<any>navigator.userAgent).includes('Electron');
+  }
+
+  public static async loadPackage(packageName: string, context: string) {
+    const MISSING_REQUIRED_DEPENDENCY = (name: string, reason: string) =>
+      `The "${name}" package is missing. Please, make sure to install this library ($ npm install ${name}) to take advantage of ${reason}.`;
+
+    try {
+      return await import(packageName);
+    } catch (e) {
+      console.error(MISSING_REQUIRED_DEPENDENCY(packageName, context));
+      // process.exit(1);
+    }
+  }
+
   public static async getDeferred<T>(value: any): Promise<T> {
     return this.isPromise(value) ? await value : value;
   }
@@ -91,7 +122,7 @@ export class Utils {
     return (<Array<[S, T]>>[...entries]).map<T>(([_, value]) => value);
   }
 
-  public static concat<T = Type<Module>>(...props: any[]): T[] {
+  public static concat<T = Type<NestModule>>(...props: any[]): T[] {
     return [].concat(...props);
   }
 
