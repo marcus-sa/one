@@ -8,7 +8,7 @@ import { RouterModule } from './router';
 
 @Module()
 export class ServerModule {
-  static forRoot(adapter: HttpServer, options: HttpServerOptions = {}): DynamicModule {
+  static forRoot(adapter: HttpServer, options: HttpServerOptions): DynamicModule {
     return {
       module: ServerModule,
       imports: [
@@ -44,9 +44,11 @@ export class ServerModule {
       imports: [ServerService],
       providers: [
         ...controllers,
+        // Support dependency injection?
+        options.configure,
         {
           provide: MODULE_INITIALIZER,
-          useFactory: (server: ServerService) => server.add(controllers, options),
+          useFactory: (server: ServerService) => server.resolve(controllers, options),
           deps: [ServerService],
           multi: true,
         },

@@ -1,6 +1,6 @@
 import { Type } from '../type.interface';
-import { Module } from '../../module';
+import { NestModule } from '../../module';
 
-export interface OnModuleInit extends Type<Module> {
+export interface OnModuleInit extends Type<NestModule> {
   onModuleInit(): any;
 }

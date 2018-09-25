@@ -11,6 +11,23 @@ export class BaseMetadataStorage {
     return [...metadata.values()].find(value => value.target === target);
   }
 
+  protected static findByTargetProperty<T extends TargetPropertyRef>(
+    metadata: Set<T>,
+    target: Target,
+    propertyKey?: string | symbol,
+  ): T | undefined {
+    const findByProperty = () => {
+      console.log('findByProperty', target, [...metadata.values()]);
+      return [...metadata.values()].find(value =>
+        value.target === target && value.propertyKey === propertyKey,
+      );
+    };
+
+    return Utils.isNil(propertyKey)
+      ? this.findByTarget(metadata, target)
+      : findByProperty();
+  }
+
   protected static filterByTargetProperty<T extends TargetPropertyRef>(
     metadata: Set<T>,
     target: Target,

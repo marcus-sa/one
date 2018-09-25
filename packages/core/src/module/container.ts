@@ -1,7 +1,7 @@
 import { ModuleCompiler } from './compiler';
 import { Reflector } from '../reflector';
 import { Registry } from '../registry';
-import { Module } from './module';
+import { NestModule } from './module';
 import { Utils } from '../util';
 import {
   UnknownModuleException,
@@ -18,8 +18,8 @@ import {
 
 export class NestContainer {
   private readonly moduleCompiler = new ModuleCompiler();
-  private readonly globalModules = new Set<Module>();
-  private readonly modules = new Map<string, Module>();
+  private readonly globalModules = new Set<NestModule>();
+  private readonly modules = new Map<string, NestModule>();
   public readonly providerTokens: Token[] = [];
   private readonly dynamicModulesMetadata = new Map<
     string,
@@ -32,22 +32,22 @@ export class NestContainer {
     );
   }
 
-  public getProvider(provider: Token, scope: Type<Module>) {
+  public getProvider(provider: Token, scope: Type<NestModule>) {
     for (const { providers } of this.modules.values()) {
       if (providers.isBound(provider)) {
         return providers.get(provider);
       }
     }
 
-    throw new UnknownProviderException(provider, scope);
+    throw new UnknownProviderException(<any>provider, scope);
   }
 
-  public getAllProviders<T>(provider: Provider, target?: Type<Module>) {
+  public getAllProviders<T>(provider: Provider, target?: Type<NestModule>) {
     const token = Registry.getProviderToken(provider);
     const modules = this.getModuleValues();
 
     return Utils.flatten<T | Promise<Type<Provider>>>(
-      Utils.filterWhen<Module>(
+      Utils.filterWhen<NestModule>(
         modules,
         !!target,
         module => module.target === target,
@@ -59,14 +59,14 @@ export class NestContainer {
   }
 
   public getModuleValues() {
-    return Utils.getValues<Module>(this.modules.entries());
+    return Utils.getValues<NestModule>(this.modules.entries());
   }
 
-  public hasModuleRef(module: Type<Module>) {
+  public hasModuleRef(module: Type<NestModule>) {
     return this.getModuleValues().some(({ target }) => target === module);
   }
 
-  public getModuleRef(module: Type<Module>): Module | undefined {
+  public getModuleRef(module: Type<NestModule>): NestModule | undefined {
     return this.getModuleValues().find(({ target }) => target === module);
   }
 
@@ -75,7 +75,7 @@ export class NestContainer {
       throw new UnknownModuleException([]);
     }
 
-    return <Module>this.modules.get(token);
+    return <NestModule>this.modules.get(token);
   }
 
   public getReversedModules() {
@@ -96,11 +96,11 @@ export class NestContainer {
     module.addExported(component);
   }
 
-  public addGlobalModule(module: Module) {
+  public addGlobalModule(module: NestModule) {
     this.globalModules.add(module);
   }
 
-  public async addModule(module: Partial<ModuleImport>, scope: Type<Module>[]) {
+  public async addModule(module: Partial<ModuleImport>, scope: Type<NestModule>[]) {
     if (!module) throw new InvalidModuleException(scope);
 
     const {
@@ -110,7 +110,7 @@ export class NestContainer {
     } = await this.moduleCompiler.compile(module, scope);
     if (this.modules.has(token)) return;
 
-    const moduleRef = new Module(target, scope, this);
+    const moduleRef = new NestModule(target, scope, this);
     moduleRef.addGlobalProviders();
     this.modules.set(token, moduleRef);
 
@@ -122,7 +122,7 @@ export class NestContainer {
   private addDynamicMetadata(
     token: string,
     dynamicModuleMetadata: Partial<DynamicModule>,
-    scope: Type<Module>[],
+    scope: Type<NestModule>[],
   ) {
     if (!dynamicModuleMetadata) return;
 
@@ -132,7 +132,7 @@ export class NestContainer {
 
   private addDynamicModules(
     modules: ModuleImport[] = [],
-    scope: Type<Module>[],
+    scope: Type<NestModule>[],
   ) {
     modules.forEach(module => this.addModule(module, scope));
   }
@@ -142,13 +142,13 @@ export class NestContainer {
     this.modules.forEach(module => this.bindGlobalsToImports(module));
   }
 
-  private bindGlobalsToImports(module: Module) {
+  private bindGlobalsToImports(module: NestModule) {
     this.globalModules.forEach(globalModule =>
       this.bindGlobalModuleToModule(module, globalModule),
     );
   }
 
-  private bindGlobalModuleToModule(module: Module, globalModule: Module) {
+  private bindGlobalModuleToModule(module: NestModule, globalModule: NestModule) {
     if (module === globalModule) return;
     module.addImport(globalModule);
   }

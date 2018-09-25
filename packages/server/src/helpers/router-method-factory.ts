@@ -1,4 +1,4 @@
-import { RequestMethod } from './enums';
+import { RequestMethod } from '../enums';
 
 export class RouterMethodFactory {
   public get(target: any, requestMethod: keyof RequestMethod) {

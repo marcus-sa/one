@@ -1,12 +1,12 @@
 import 'reflect-metadata';
 
+import { Type, Provider } from './interfaces';
+import { NestModule } from './module';
 import {
   SCOPE_METADATA,
   PROVIDER_METADATA,
   SHARED_MODULE_METADATA,
 } from './constants';
-import { Type, Provider } from './interfaces';
-import { Module } from './module';
 
 export class Reflector {
   public static defineByKeys<T = object>(
@@ -36,14 +36,14 @@ export class Reflector {
     metadataValue: any,
     propertyKey?: string | symbol
   ) {
-    Reflect.defineMetadata(metadataKey, metadataValue, target, propertyKey);
+    Reflect.defineMetadata(metadataKey, metadataValue, target, propertyKey!);
   }
 
-  public static isGlobalModule(target: Type<Module>) {
+  public static isGlobalModule(target: Type<NestModule>) {
     return !!Reflect.getMetadata(SHARED_MODULE_METADATA, target);
   }
 
-  public static isProvider(target: Type<Provider | Module>) {
+  public static isProvider(target: Type<Provider | NestModule>) {
     return !!Reflect.getMetadata(PROVIDER_METADATA, target);
   }
 

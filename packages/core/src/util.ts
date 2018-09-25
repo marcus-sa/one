@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 
+import { MissingRequiredDependencyException } from './errors';
 import { InjectionToken, NestModule } from './module';
 import { Type } from './interfaces';
 
@@ -10,33 +11,39 @@ export interface DeferredPromise<T> extends Promise<T> {
 
 export class Utils {
   public static isNode() {
-    return !this.isNil(process) && process.release.name === 'node';
+    return !this.isNil(process) &&
+      this.isObject((<any>process).release) &&
+      (<any>process).release.name === 'node';
+  }
+
+  public static processExit(code: number = 0) {
+    if (this.isNode()) {
+      process.exit(code);
+    }
   }
 
   public static isElectron() {
     // Renderer process
-    if (!this.isNil(window) && this.isObject(window.process) && window.process.type === 'renderer') {
-      return true;
-    }
+    if (!this.isNil(window) &&
+      this.isObject((<any>window).process) &&
+      (<any>window).process.type === 'renderer'
+    ) return true;
 
     // Main process
-    if (!this.isNil(process) && this.isObject(process.versions) && !this.isNil(process.versions.electron)) {
-      return true;
-    }
+    if (!this.isNil(process) &&
+      this.isObject(process.versions) &&
+      !this.isNil((<any>process.versions).electron)
+    ) return true;
 
     // Detect the user agent when the `nodeIntegration` option is set to true
     return this.isObject(navigator) && this.isString(navigator.userAgent) && (<any>navigator.userAgent).includes('Electron');
   }
 
-  public static async loadPackage(packageName: string, context: string) {
-    const MISSING_REQUIRED_DEPENDENCY = (name: string, reason: string) =>
-      `The "${name}" package is missing. Please, make sure to install this library ($ npm install ${name}) to take advantage of ${reason}.`;
-
+  public static async loadPackage<T>(name: string, context: string): Promise<T> {
     try {
-      return await import(packageName);
+      return await require(name);
     } catch (e) {
-      console.error(MISSING_REQUIRED_DEPENDENCY(packageName, context));
-      // process.exit(1);
+      throw new MissingRequiredDependencyException(name, context);
     }
   }
 
@@ -66,7 +73,8 @@ export class Utils {
     return (
       val &&
       !this.isNil(val.name) &&
-      (this.isFunction(val) || this.isFunction(val.constructor))
+      (this.isFunction(val) ||
+        this.isFunction(val.constructor))
     );
   }
 
@@ -159,7 +167,7 @@ export class Utils {
     return from.filter(f => by.includes(f));
   }
 
-  public static createDeferredPromise(): DeferredPromise<any> {
+  public static createDeferredPromise<T>(): DeferredPromise<T> {
     let resolve!: () => void;
     let reject!: () => void;
 

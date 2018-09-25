@@ -105,8 +105,8 @@ export class Registry {
 
   public static isExistingProvider(
     provider: Provider,
-  ): provider is ExistingProvider {
-    return !!(<ExistingProvider>provider).useExisting;
+  ): provider is ExistingProvider<any> {
+    return !!(<ExistingProvider<any>>provider).useExisting;
   }
 
   public static hasProvideToken(provider: Provider): provider is ProvideToken {

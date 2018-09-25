@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
+      "@nest/server/*": ["./server/src/*"],
       "@nest/core/*": ["./core/src/*"],
       "@nest/*": ["./*/src"]
     }

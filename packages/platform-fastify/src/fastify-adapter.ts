@@ -130,7 +130,7 @@ export class FastifyAdapter implements HttpServer {
 
   async registerParserMiddleware() {
     const fastifyFormBody = await Utils.loadPackage(
-    'fastify-formbody',
+      'fastify-formbody',
       'FastifyAdapter#registerParserMiddleware',
     );
 

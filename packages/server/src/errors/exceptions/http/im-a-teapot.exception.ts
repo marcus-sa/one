@@ -1,6 +1,6 @@
-import { createHttpExceptionBody } from '../helpers';
+import { createHttpExceptionBody } from '../../../helpers';
 import { HttpException } from './http.exception';
-import { HttpStatus } from '../enums';
+import { HttpStatus } from '../../../enums';
 
 /**
  * Any attempt to brew coffee with a teapot should result in the error code "418 I'm a teapot".

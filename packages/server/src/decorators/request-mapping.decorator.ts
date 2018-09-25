@@ -2,20 +2,20 @@ import { MetadataStorage } from '../metadata-storage';
 import { RequestMethod } from '../enums'
 
 export function RequestMapping(
-  method: keyof RequestMethod = RequestMethod.GET,
   path: string = '/',
+  requestMethod: keyof RequestMethod = RequestMethod.GET,
 ): MethodDecorator {
   return (target, propertyKey) => {
     MetadataStorage.requestMapping.add({
       propertyKey,
-      method,
-      target,
+      requestMethod,
+      target: target.constructor,
       path,
     });
   };
 }
 
-const createMappingDecorator = (method: keyof RequestMethod) => (path?: string) => RequestMapping(method, path);
+const createMappingDecorator = (method: keyof RequestMethod) => (path?: string) => RequestMapping(path, method);
 
 export const Post = createMappingDecorator(RequestMethod.POST);
 export const Get = createMappingDecorator(RequestMethod.GET);

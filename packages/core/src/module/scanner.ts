@@ -6,7 +6,7 @@ import { Registry } from '../registry';
 import { NestModule } from './module';
 import { Utils } from '../util';
 import {
-  Dependency,
+  ModuleExport,
   DynamicModule,
   ForwardRef,
   ModuleImport,
@@ -70,7 +70,7 @@ export class Scanner {
 
   private async storeModule(
     module: Partial<ModuleImport>,
-    scope: Type<Module>[],
+    scope: Type<NestModule>[],
   ) {
     if (Registry.hasForwardRef(module)) {
       return await this.container.addModule(
@@ -97,7 +97,7 @@ export class Scanner {
     }
 
     await this.container.addImport(
-      <Type<Module> | DynamicModule>related,
+      <Type<NestModule> | DynamicModule>related,
       token,
     );
   }
@@ -112,7 +112,7 @@ export class Scanner {
     }
   }
 
-  private async reflectProviders(module: Type<Module>, token: string) {
+  private async reflectProviders(module: Type<NestModule>, token: string) {
     const providers = this.getDynamicMetadata<Provider>(
       module,
       token,
@@ -129,7 +129,7 @@ export class Scanner {
   }
 
   private getDynamicMetadata<T = Token>(
-    module: Type<Module>,
+    module: Type<NestModule>,
     token: string,
     metadataKey: keyof DynamicModule,
   ): T[] {
@@ -139,8 +139,8 @@ export class Scanner {
     ];
   }
 
-  private reflectExports(module: Type<Module>, token: string) {
-    const exports = this.getDynamicMetadata(
+  private reflectExports(module: Type<NestModule>, token: string) {
+    const exports = this.getDynamicMetadata<ModuleExport>(
       module,
       token,
       METADATA.EXPORTS as 'exports',
@@ -151,12 +151,12 @@ export class Scanner {
     );
   }
 
-  private storeExported(component: Token, token: string) {
+  private storeExported(component: ModuleExport, token: string) {
     this.container.addExported(component, token);
   }
 
   private async reflectImports(
-    module: Type<Module>,
+    module: Type<NestModule>,
     token: string,
     context: string,
   ) {

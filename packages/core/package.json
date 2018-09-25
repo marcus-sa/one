@@ -2,7 +2,7 @@
   "name": "@nest/core",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "test": "jest"
@@ -27,7 +27,6 @@
       "ts",
       "json"
     ],
-    "collectCoverage": true,
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },

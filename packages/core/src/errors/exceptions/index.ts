@@ -1,4 +1,5 @@
 export * from './circular-dependency.exception';
+export * from './missing-required-dependency.exception';
 export * from './invalid-module.exception';
 export * from './multi-provider.exception';
 export * from './unknown-provider.exception';

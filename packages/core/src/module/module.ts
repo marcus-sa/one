@@ -188,7 +188,7 @@ export class NestModule {
     const provider = <any>(
       this.getProviders().find(provider => provider === token)
     );
-    if (!provider) throw new UnknownProviderException(ref, this.target);
+    if (!provider) throw new UnknownProviderException(<any>ref, this.target);
     return provider;
   }
 

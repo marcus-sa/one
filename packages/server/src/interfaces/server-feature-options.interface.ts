@@ -1,4 +1,6 @@
-import { MiddlewareConsumer } from './middleware';
+import { Type } from '@nest/core';
+
+import { MiddlewareConfigure } from './middleware';
 
 export interface ServerFeatureOptions {
   prefix?: string;
@@ -6,6 +8,5 @@ export interface ServerFeatureOptions {
   interceptors?: any[],
   middleware?: any[],
   pipes?: any[],
-  // @TODO: Recode this
-  configure: (consumer: MiddlewareConsumer) => MiddlewareConsumer | void;
+  configure?: MiddlewareConfigure;
 }

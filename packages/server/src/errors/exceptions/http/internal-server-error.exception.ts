@@ -1,6 +1,6 @@
-import { createHttpExceptionBody } from '../helpers';
+import { createHttpExceptionBody } from '../../../helpers';
 import { HttpException } from './http.exception';
-import { HttpStatus } from '../enums';
+import { HttpStatus } from '../../../enums';
 
 export class InternalServerErrorException extends HttpException {
   constructor(message?: any, error = 'Internal Server Error') {

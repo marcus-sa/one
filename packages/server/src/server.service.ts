@@ -5,10 +5,11 @@ import * as http from 'http';
 import { HttpServer, HttpServerOptions, ServerFeatureOptions } from './interfaces';
 import { HTTP_SERVER, HTTP_SERVER_OPTIONS } from './tokens';
 import { Middleware } from './middleware';
+import { RoutesResolver } from './router';
 
 @Injectable()
 export class ServerService {
-  private readonly controllers = new Set<Type<any>>();
+  // private readonly controllers = new Set<Type<any>>();
   private httpServer: http.Server | https.Server;
 
   @Inject(HTTP_SERVER_OPTIONS)
@@ -18,19 +19,36 @@ export class ServerService {
   private readonly httpAdapter: HttpServer;
 
   constructor(
+    private readonly routesResolver: RoutesResolver,
     private readonly middleware: Middleware,
     private readonly injector: Injector,
   ) {}
 
-  public add(controllers: Type<any>[], options: ServerFeatureOptions) {
-    controllers.forEach(ref => {
+  // Resolve once feature module has been initialized
+  // which means every controller and configuration middleware will be available
+  public async resolve(controllers: Type<any>[], options: ServerFeatureOptions) {
+    await this.middleware.resolveMiddleware(
+      controllers,
+      options,
+      this.injector,
+    );
+
+    /*controllers.forEach(ref => {
+      const configuration = this.injector.get(options.configure);
       const controller = this.injector.get(ref);
-      this.controllers.add(ref);
-    });
+      // this.controllers.add(ref);
+    });*/
   }
 
   public async registerMiddleware() {
     await this.middleware.register();
+  }
+
+  public async registerRouter() {
+    const basePath = '';
+    this.routesResolver.resolve(basePath);
+    this.routesResolver.registerNotFoundHandler();
+    this.routesResolver.registerExceptionHandler();
   }
 
   public registerHttpServer() {
@@ -44,10 +62,12 @@ export class ServerService {
     );
   }
 
+  // Fires once entire application has initialized
   public async start() {
     try {
       this.registerHttpServer();
       await this.registerMiddleware();
+      await this.registerRouter();
       await this.listen();
     } catch (e) {
 

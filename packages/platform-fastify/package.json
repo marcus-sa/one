@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@nest/core": "*",
+    "@nest/server": "*",
     "fastify": "^1.12.0",
     "fastify-formbody": "^2.0.1"
   }

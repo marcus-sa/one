@@ -24,7 +24,7 @@ export class ExpressAdapter implements HttpServer {
 
   async registerParserMiddleware() {
     const bodyParser = await Utils.loadPackage(
-    'body-parser',
+      'body-parser',
       'ExpressAdapter#registerParserMiddleware'
     );
 

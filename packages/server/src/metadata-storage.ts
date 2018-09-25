@@ -1,4 +1,4 @@
-import { BaseMetadataStorage, Provider, Type } from '@nest/core';
+import { BaseMetadataStorage, Provider, Type, Utils } from '@nest/core';
 
 import {
   ControllerMetadata,
@@ -23,8 +23,13 @@ export class MetadataStorage extends BaseMetadataStorage {
     return this.filterByTargetProperty(this.httpCodes, target, propertyKey);
   }
 
-  static getRequestMapping(target: Target, propertyKey?: string | symbol) {
-    return this.filterByTargetProperty(this.requestMapping, target, propertyKey);
+  static getRequestMapping(
+    target: Target,
+    methodName?: string,
+  ): RequestMappingMetadata | RequestMappingMetadata[] {
+    return !Utils.isNil(methodName)
+      ? this.findByTargetProperty(this.requestMapping, target, methodName)
+      : this.filterByTarget(this.requestMapping, target);
   }
 
   static getController(target: Target) {

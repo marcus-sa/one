@@ -6,7 +6,7 @@ export type Provider =
   | ProvideToken
   | ValueProvider<any>
   | FactoryProvider<any>
-  | ExistingProvider
+  | ExistingProvider<any>
   | ClassProvider
   | Dependency;
 
