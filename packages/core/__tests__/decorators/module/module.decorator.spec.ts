@@ -1,18 +1,24 @@
 import 'reflect-metadata';
-import { TestBed } from '@nest/testing';
-import { bootstrap, Injectable, Module, ModuleWithProviders, Registry } from '@nest/core';
+import { Injectable, Module, ModuleWithProviders } from '@nest/core';
+import { Testing } from '@nest/testing';
 
 describe('@Module()', () => {
   it('should accept module import', async () => {
     @Module()
     class TestModule {}
 
-    const module = await TestBed.create({
+    const fixture = await Testing.create({
       imports: [TestModule],
-    });
+    }).compile();
 
-    expect(module.registry.modules.size).toStrictEqual(2);
-    expect([...module.registry.modules.values()][1].imports).toContain(TestModule);
+    const testModule = fixture.container.getModule(TestModule);
+
+    expect(testModule.target).toStrictEqual(TestModule);
+    expect(fixture.container.modules.size).toStrictEqual(2);
+
+    const modules = fixture.container.getModules().values();
+    const imports = modules.next().value.imports.values();
+    expect(imports.next().value.target).toStrictEqual(TestModule);
   });
   /*it('should accept module with providers', async () => {
     @Injectable()
@@ -33,6 +39,7 @@ describe('@Module()', () => {
     expect(module.target).toStrictEqual(TestModule);
     expect(module.providers.get(TestService)).toBeTruthy();
   });*/
+
   it('should accept module with providers', async () => {
     @Injectable()
     class TestService {}
@@ -47,14 +54,16 @@ describe('@Module()', () => {
       }
     }
 
-    const appModule = await TestBed.create({
+    const fixture = await Testing.create({
       imports: [TestModule.forRoot()],
-    });
+    }).compile();
 
-    const testModule = appModule.registry.modules.get(TestModule);
+    const testModule = fixture.container.getModule(TestModule);
+    const appModule = fixture.container.getModuleValues()[0];
+
     expect(testModule.target).toStrictEqual(TestModule);
-    expect(appModule.registry.isProviderBound(TestService)).toBeTruthy();
-    expect(appModule.registry.getProvider(TestService)).toBeInstanceOf(TestService);
+    expect(fixture.container.isProviderBound(TestService)).toBeTruthy();
+    expect(fixture.container.getProvider(TestService, testModule.target)).toBeInstanceOf(TestService);
     expect(testModule.providers.get(TestService)).toBeInstanceOf(TestService);
     expect(() => appModule.providers.get(TestService)).toThrowError();
   });

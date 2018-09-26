@@ -7,7 +7,7 @@
     "docs:build": "vuepress build docs",
     "lint": "ts-lint -p tsconfig.json -c tslint.json",
     "bootstrap": "lerna bootstrap",
-    "test": "jest",
+    "test": "lerna run test",
     "build": "lerna run build",
     "prepublish": "yarn test && yarn build",
     "clean": "rimraf packages/**/lib",
@@ -41,31 +41,5 @@
   },
   "workspaces": [
     "packages/*"
-  ],
-  "jest": {
-    "moduleNameMapper": {
-      "@nest/core/(.*)": "<rootDir>/packages/core/src/$1",
-      "@nest/(.*)": "<rootDir>/packages/$1/src"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "ts",
-      "tsx",
-      "json",
-      "node"
-    ],
-    "collectCoverage": true,
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "tsconfig.json"
-      }
-    },
-    "testMatch": [
-      "<rootDir>/packages/*/__tests__/**/*.(spec|test).+(ts|tsx)"
-    ]
-  }
+  ]
 }

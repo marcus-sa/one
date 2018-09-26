@@ -38,7 +38,7 @@ export class NestContainer {
   }
 
   public isProviderBound(provider: Token, module?: Type<NestModule>) {
-    return this.getModules(module).some(({ providers }) =>
+    return this.getModuleValues().some(({ providers }) =>
       providers.isBound(provider),
     );
   }
@@ -91,11 +91,11 @@ export class NestContainer {
     return Utils.getValues<NestModule>(this.modules.entries());
   }
 
-  public hasModule(module: Type<NestModule>) {
+  public hasModule(module: Type<any>) {
     return this.getModuleValues().some(({ target }) => target === module);
   }
 
-  public getModule(module: Type<NestModule>): NestModule | undefined {
+  public getModule(module: Type<any>): NestModule | undefined {
     return this.getModuleValues().find(({ target }) => target === module);
   }
 

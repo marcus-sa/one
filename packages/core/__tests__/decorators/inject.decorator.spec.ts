@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { CircularDependencyMessage, forwardRef, Inject, Injectable } from '@nest/core';
 import { Testing } from '@nest/testing';
 

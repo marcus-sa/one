@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { bootstrap } from '@nest/core';
 
 import { AppModule } from './app.module';

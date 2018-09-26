@@ -1,5 +1,4 @@
 import { inject } from 'inversify';
-import 'reflect-metadata';
 
 import { ForwardRef, Token, Dependency, TLazyInject } from '../interfaces';
 import { Registry } from '../registry';

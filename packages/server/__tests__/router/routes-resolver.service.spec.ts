@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { RouterProxy } from '@nest/server/router/router-proxy.service';
 import { BadRequestException } from '@nest/server/errors';
 import { RoutesResolver } from '@nest/server/router';

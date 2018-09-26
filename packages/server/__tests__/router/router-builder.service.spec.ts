@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { INVALID_MIDDLEWARE_CONFIGURATION } from '@nest/server/errors/messages';
 import { Controller, RequestMapping, RequestMethod } from '@nest/server';
 import { RouterBuilder } from '@nest/server/router';

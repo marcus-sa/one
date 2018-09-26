@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { Injectable, InjectionToken, MissingInjectionTokenMessage, MultiInject } from '@nest/core';
 import { Testing } from '@nest/testing';
 
