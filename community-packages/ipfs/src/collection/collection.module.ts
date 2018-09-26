@@ -1,7 +1,7 @@
 import {
   DynamicModule,
   Module,
-  MODULE_INITIALIZER,
+  MODULE_INIT,
   ModuleWithProviders,
   Type,
 } from '@nest/core';

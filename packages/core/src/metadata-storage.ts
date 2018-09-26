@@ -17,7 +17,6 @@ export class BaseMetadataStorage {
     propertyKey?: string | symbol,
   ): T | undefined {
     const findByProperty = () => {
-      console.log('findByProperty', target, [...metadata.values()]);
       return [...metadata.values()].find(value =>
         value.target === target && value.propertyKey === propertyKey,
       );

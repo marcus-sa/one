@@ -19,7 +19,7 @@ import {
   Dependency,
   MultiDepsProvider, ExistingProvider,
 } from '../interfaces';
-import { MODULE_REF, MODULE_INITIALIZER, Injector } from '../tokens';
+import { MODULE_INIT, Injector, NEST_MODULE } from '../tokens';
 import {
   UnknownProviderException,
   MultiProviderException,
@@ -37,7 +37,7 @@ export class NestModule {
   constructor(
     public readonly target: Type<any>,
     public readonly scope: Type<any>[],
-    private readonly container: NestContainer,
+    public readonly container: NestContainer,
   ) {}
 
   public addImport(relatedModule: NestModule) {
@@ -112,8 +112,8 @@ export class NestModule {
         providerScope.add(<Token>module);
       } else {
         for (const related of (<NestModule>module).exports) {
-          if (this.container.hasModuleRef(<Type<NestModule>>related)) {
-            const ref = this.container.getModuleRef(<Type<NestModule>>related);
+          if (this.container.hasModule(<Type<NestModule>>related)) {
+            const ref = this.container.getModule(<Type<NestModule>>related);
             find(ref!);
           } else {
             providerScope.add(<Token>related);
@@ -138,7 +138,8 @@ export class NestModule {
 
       // @TODO: Fix multi providers properly
       if (!isMulti && this.container.providerTokens.includes(token)) {
-        throw new MultiProviderException(provider);
+        const name = Registry.getProviderName(provider);
+        throw new MultiProviderException(name);
       }
 
       this.container.providerTokens.push(token);
@@ -160,7 +161,7 @@ export class NestModule {
 
     await Utils.series(
       this.container.getAllProviders<Promise<any>>(
-        MODULE_INITIALIZER,
+        MODULE_INIT,
         this.target,
       ),
     );
@@ -276,7 +277,7 @@ export class NestModule {
   public addGlobalProviders() {
     this.providers.bind(Injector).toConstantValue(this.providers);
     this.providers.bind(NestContainer).toConstantValue(this.container);
-    this.providers.bind(MODULE_REF.name).toConstantValue(this);
+    this.providers.bind(NEST_MODULE.name).toConstantValue(this);
 
     this.providers
       .bind(Injector)

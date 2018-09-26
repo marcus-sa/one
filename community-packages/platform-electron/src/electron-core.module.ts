@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Module, DynamicModule } from '@nest/core';
+import { APP_INIT, Module, DynamicModule } from '@nest/core';
 
 import { ElectronService } from './electron.service';
 
@@ -10,7 +10,7 @@ export class ElectronCoreModule {
       providers: [
         ElectronService,
         {
-          provide: APP_INITIALIZER,
+          provide: APP_INIT,
           useFactory: (electron: ElectronService) => electron.start(),
           deps: [ElectronService],
           multi: true,

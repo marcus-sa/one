@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Module, ModuleWithProviders, Type } from '@nest/core';
+import { APP_INIT, Module, ModuleWithProviders, Type } from '@nest/core';
 
 import { DsRpcService } from './rpc.service';
 import { RpcProvider } from './interfaces';
@@ -14,7 +14,7 @@ export class DsRpcModule {
         ...providers,
         DsRpcService,
         {
-          provide: APP_INITIALIZER,
+          provide: APP_INIT,
           useFactory: (rpc: DsRpcService) => rpc.add(providers),
           deps: [DsRpcService],
           multi: true,

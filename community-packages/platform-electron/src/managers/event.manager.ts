@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { Injector, Type } from '@nest/core';
 import { BrowserWindow } from 'electron';
 

@@ -1,7 +1,10 @@
-import { Injectable, Injector, Type } from '@nest/core';
+import { Injectable, Injector, Type, Utils } from '@nest/core';
 
+import { UnknownRequestMappingException } from '../errors';
 import { MetadataStorage } from '../metadata-storage';
+import { RoutePathProperties } from '../interfaces';
 import { RouterMethodFactory } from '../helpers';
+import { RequestMethod } from '../enums';
 
 @Injectable()
 export class RouterBuilder {
@@ -14,28 +17,31 @@ export class RouterBuilder {
   }
 
   public validateRoutePath(path: string) {
-    if (!path) throw new Error('test');
+    if (Utils.isNil(path)) {
+      throw new UnknownRequestMappingException();
+    }
 
     return this.validatePath(path);
   }
 
-  public getRequestMappings(
-    controller: Type<any>,
-  ) {
-    const metadata = MetadataStorage.getRequestMapping(controller);
+  public scanForPaths(
+    metatype: Type<any>,
+  ): RoutePathProperties[] {
+    const controller = this.injector.get(metatype);
+    const paths = MetadataStorage.getRequestMapping(metatype);
+
+    return paths.map(({ methodName, path, requestMethod }) =>
+      this.createRoutePathProps(controller, methodName, path, requestMethod),
+    );
   }
 
-  public exploreMethodMetadata(
+  private createRoutePathProps(
     controller: Type<any>,
     methodName: string,
-  ) {
-    const instance = this.injector.get(controller);
-    const targetCallback = instance[methodName];
-
-    const {
-      path,
-      requestMethod,
-    } = MetadataStorage.getRequestMapping(controller, methodName);
+    path: string,
+    requestMethod: keyof RequestMethod,
+  ): RoutePathProperties {
+    const targetCallback = controller[methodName];
 
     return {
       path: this.validateRoutePath(path),
@@ -43,6 +49,20 @@ export class RouterBuilder {
       targetCallback,
       methodName,
     };
+  }
+
+  public exploreMethodMetadata(
+    metatype: Type<any>,
+    methodName: string,
+  ) {
+    const controller = this.injector.get(metatype);
+
+    const {
+      path,
+      requestMethod,
+    } = MetadataStorage.getRequestMapping(metatype, methodName);
+
+    return this.createRoutePathProps(controller, methodName, path, requestMethod);
   }
 
   public extractRouterPath(

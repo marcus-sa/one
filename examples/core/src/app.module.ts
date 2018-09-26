@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Module, MODULE_INITIALIZER } from '@nest/core';
+import { APP_INIT, Module, MODULE_INIT } from '@nest/core';
 
 import { NestModule } from './nest';
 import { AppService } from './app.service';
@@ -9,13 +9,13 @@ import { MoreNestService } from './nest/more-nest';
   providers: [
     AppService,
     {
-      provide: APP_INITIALIZER,
+      provide: APP_INIT,
       useFactory: (app: AppService) => app.start(),
       deps: [AppService],
       multi: true,
     },
     {
-      provide: MODULE_INITIALIZER,
+      provide: MODULE_INIT,
       useFactory: (moreNest: MoreNestService) => moreNest.hello(),
       deps: [MoreNestService],
       multi: true,

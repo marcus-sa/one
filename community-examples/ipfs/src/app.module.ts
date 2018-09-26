@@ -1,4 +1,4 @@
-import { Module, APP_INITIALIZER } from '@nest/core';
+import { Module, APP_INIT } from '@nest/core';
 import { ConfigModule, ConfigService } from '@nest/config';
 import { CollectionModule, IpfsModule } from '@nest/ipfs';
 import * as path from 'path';
@@ -20,7 +20,7 @@ import { TestService } from './test.service';
   providers: [
     TestService,
     {
-      provide: APP_INITIALIZER,
+      provide: APP_INIT,
       useFactory: (test: TestService) => test.start(),
       deps: [TestService],
       multi: true,

@@ -1,11 +1,8 @@
-import { Registry } from '../../registry';
-import { Provider } from '../../interfaces';
+import { RuntimeException } from './runtime.exception';
+import { MultiProviderMessage } from '../messages';
 
-export class MultiProviderException extends Error {
-  constructor(provider: Provider) {
-    const name = Registry.getProviderName(provider);
-    super(
-      `Provider ${name} is already bound. Set the multi property to true, to allow multiple providers being bound to this token`,
-    );
+export class MultiProviderException extends RuntimeException {
+  constructor(name: string) {
+    super(MultiProviderMessage(name));
   }
 }

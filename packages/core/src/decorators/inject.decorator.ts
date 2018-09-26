@@ -15,7 +15,7 @@ function createLazyInjection(target: object, property: string) {
 export function Inject(provider: Dependency) {
   return (target: object, property: string) => {
     if (!Registry.hasForwardRef(provider)) {
-      Registry.assertProvider(provider);
+      Registry.assertProvider(provider, target.constructor.name);
 
       const token = Registry.getInjectionToken(<Token>provider);
       return inject(<any>token)(target, property);

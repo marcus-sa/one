@@ -34,7 +34,7 @@ export class RoutesResolver {
   private mapExternalException(err: any) {
     switch (true) {
       case err instanceof SyntaxError:
-        return new BadRequestException((<Error>err).message);
+        return new BadRequestException((<SyntaxError>err).message);
       default:
         return err;
     }

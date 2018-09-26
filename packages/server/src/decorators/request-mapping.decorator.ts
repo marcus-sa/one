@@ -7,9 +7,9 @@ export function RequestMapping(
 ): MethodDecorator {
   return (target, propertyKey) => {
     MetadataStorage.requestMapping.add({
+      target: target.constructor,
       propertyKey,
       requestMethod,
-      target: target.constructor,
       path,
     });
   };

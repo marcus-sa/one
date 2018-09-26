@@ -1,8 +1,8 @@
 import {
   DynamicModule,
   Module,
-  MODULE_INITIALIZER,
-  APP_INITIALIZER,
+  MODULE_INIT,
+  APP_INIT,
   Type,
 } from '@nest/core';
 
@@ -18,13 +18,13 @@ export class ElectronWindowsModule {
         WindowsService,
         ...windows,
         {
-          provide: MODULE_INITIALIZER,
+          provide: MODULE_INIT,
           useFactory: (winService: WindowsService) => winService.add(windows),
           deps: [WindowsService],
           multi: true,
         },
         {
-          provide: APP_INITIALIZER,
+          provide: APP_INIT,
           useFactory: (winService: WindowsService) => winService.start(),
           deps: [WindowsService],
           multi: true,

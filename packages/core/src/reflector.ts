@@ -40,11 +40,11 @@ export class Reflector {
   }
 
   public static isGlobalModule(target: Type<NestModule>) {
-    return !!Reflect.getMetadata(SHARED_MODULE_METADATA, target);
+    return Reflect.hasMetadata(SHARED_MODULE_METADATA, target);
   }
 
   public static isProvider(target: Type<Provider | NestModule>) {
-    return !!Reflect.getMetadata(PROVIDER_METADATA, target);
+    return Reflect.hasMetadata(PROVIDER_METADATA, target);
   }
 
   public static resolveProviderScope(provider: Type<Provider>) {

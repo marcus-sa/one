@@ -1,8 +1,8 @@
-import { ExceptionHandler } from './exception-handler';
+import { ExceptionsHandler } from './exceptions-handler';
 import { UNHANDLED_RUNTIME_EXCEPTION } from './messages';
 
 export class ExceptionsZone {
-  private static readonly exceptionHandler = new ExceptionHandler();
+  private static readonly exceptionHandler = new ExceptionsHandler();
 
   public static async run(zone: () => Promise<void>) {
     try {

@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Module } from '@nest/core';
+import { APP_INIT, Module } from '@nest/core';
 import { DsClientModule, DsRpcModule } from '@nest/ds-client';
 
 import { AppService } from './app.service';

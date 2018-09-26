@@ -1,4 +1,4 @@
-import { Module, MODULE_INITIALIZER, Global } from '@nest/core';
+import { Module, MODULE_INIT, Global } from '@nest/core';
 
 import { ConfigService } from './config.service';
 
@@ -13,7 +13,7 @@ export class ConfigModule {
       module: ConfigModule,
       providers: [
         {
-          provide: MODULE_INITIALIZER,
+          provide: MODULE_INIT,
           useFactory: (config: ConfigService) => config.load(path),
           deps: [ConfigService],
           multi: true,

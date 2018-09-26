@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Module } from '@nest/core';
+import { APP_INIT, Module } from '@nest/core';
 import { DsServerModule } from '@nest/ds-server';
 
 import { AppService } from './app.service';
@@ -8,7 +8,7 @@ import { AppService } from './app.service';
   providers: [
     AppService,
     {
-      provide: APP_INITIALIZER,
+      provide: APP_INIT,
       useFactory: (app: AppService) => console.log(app),
       deps: [AppService],
       multi: true,

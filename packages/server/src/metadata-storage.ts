@@ -26,7 +26,7 @@ export class MetadataStorage extends BaseMetadataStorage {
   static getRequestMapping(
     target: Target,
     methodName?: string,
-  ): RequestMappingMetadata | RequestMappingMetadata[] {
+  ): RequestMappingMetadata & RequestMappingMetadata[] {
     return !Utils.isNil(methodName)
       ? this.findByTargetProperty(this.requestMapping, target, methodName)
       : this.filterByTarget(this.requestMapping, target);

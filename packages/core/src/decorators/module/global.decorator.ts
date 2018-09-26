@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-
 import { SHARED_MODULE_METADATA } from '../../constants';
 
 export function Global(): ClassDecorator {

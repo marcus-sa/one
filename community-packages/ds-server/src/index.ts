@@ -1,4 +1,4 @@
-import { Module, APP_INITIALIZER, DynamicModule } from '@nest/core';
+import { Module, APP_INIT, DynamicModule } from '@nest/core';
 import Deepstream = require('deepstream.io');
 
 export const DEEPSTREAM_SERVER = Symbol.for('DEEPSTREAM_SERVER');
@@ -17,7 +17,7 @@ export class DsServerModule {
           useValue: server,
         },
         {
-          provide: APP_INITIALIZER,
+          provide: APP_INIT,
           useFactory: () => server.start(),
           multi: true,
         },

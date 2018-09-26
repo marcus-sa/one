@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, DynamicModule, Module, MODULE_INITIALIZER, Type } from '@nest/core';
+import { APP_INIT, DynamicModule, Module, MODULE_INIT, Type } from '@nest/core';
 
 import { HttpServer, HttpServerOptions, ServerFeatureOptions } from './interfaces';
 import { HTTP_SERVER, HTTP_SERVER_OPTIONS } from './tokens';
@@ -26,7 +26,7 @@ export class ServerModule {
           useClass: adapter,
         },
         {
-          provide: APP_INITIALIZER,
+          provide: APP_INIT,
           useFactory: (server: ServerService) => server.start(),
           deps: [ServerService],
           multi: true,
@@ -47,7 +47,7 @@ export class ServerModule {
         // Support dependency injection?
         options.configure,
         {
-          provide: MODULE_INITIALIZER,
+          provide: MODULE_INIT,
           useFactory: (server: ServerService) => server.resolve(controllers, options),
           deps: [ServerService],
           multi: true,

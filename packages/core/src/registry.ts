@@ -1,4 +1,4 @@
-import { InvalidProviderException } from './errors';
+import { CircularDependencyException, InvalidProviderException } from './errors';
 import { InjectionToken } from './module';
 import { Reflector } from './reflector';
 import { Utils } from './util';
@@ -65,10 +65,12 @@ export class Registry {
       : <Type<any>>provider;
   }
 
-  public static assertProvider(val: any): Type<any> | InjectionToken<any> {
+  public static assertProvider(val: any, context?: string): Type<any> | InjectionToken<any> {
+    if (!val) throw new CircularDependencyException(context!);
+
     if (
       !(
-        val &&
+        Utils.isObject(val) ||
         !Utils.isNil(val.name) &&
         (Utils.isFunction(val) || Utils.isFunction(val.constructor))
       )

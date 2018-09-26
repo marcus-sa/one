@@ -1,3 +1,4 @@
+import { InjectionToken } from './injection-token';
 import { ModuleCompiler } from './compiler';
 import { Reflector } from '../reflector';
 import { Registry } from '../registry';
@@ -6,7 +7,7 @@ import { Utils } from '../util';
 import {
   UnknownModuleException,
   InvalidModuleException,
-  UnknownProviderException,
+  UnknownProviderException, MissingInjectionTokenException,
 } from '../errors';
 import {
   DynamicModule, ModuleExport,
@@ -15,6 +16,10 @@ import {
   Token,
   Type,
 } from '../interfaces';
+
+export interface StrictSelect {
+  strict?: boolean;
+}
 
 export class NestContainer {
   private readonly moduleCompiler = new ModuleCompiler();
@@ -26,23 +31,47 @@ export class NestContainer {
     Partial<DynamicModule>
   >();
 
-  public isProviderBound(provider: Token) {
-    return this.getModuleValues().some(({ providers }) =>
+  private getModules(module?: Type<NestModule>) {
+    return !Utils.isNil(module)
+      ? [this.getModule(module)]
+      : this.getModuleValues();
+  }
+
+  public isProviderBound(provider: Token, module?: Type<NestModule>) {
+    return this.getModules(module).some(({ providers }) =>
       providers.isBound(provider),
     );
   }
 
-  public getProvider(provider: Token, scope: Type<NestModule>) {
+  public getProvider<T>(
+    provider: Type<T> | InjectionToken<T>,
+    scope: Type<NestModule>,
+    { strict }: StrictSelect = {},
+  ): T {
+    const token = Registry.getProviderToken(provider);
+
+    if (strict) {
+      const module = this.getModule(scope);
+      return module.providers.get(token);
+    }
+
     for (const { providers } of this.modules.values()) {
-      if (providers.isBound(provider)) {
-        return providers.get(provider);
+      if (providers.isBound(token)) {
+        return providers.get<T>(token);
       }
     }
 
     throw new UnknownProviderException(<any>provider, scope);
   }
 
-  public getAllProviders<T>(provider: Provider, target?: Type<NestModule>) {
+  public getAllProviders<T>(
+    provider: InjectionToken<T>,
+    target?: Type<NestModule>,
+  ) {
+    if (!Registry.isInjectionToken(provider)) {
+      throw new MissingInjectionTokenException('Container.getAllProviders()');
+    }
+
     const token = Registry.getProviderToken(provider);
     const modules = this.getModuleValues();
 
@@ -62,15 +91,15 @@ export class NestContainer {
     return Utils.getValues<NestModule>(this.modules.entries());
   }
 
-  public hasModuleRef(module: Type<NestModule>) {
+  public hasModule(module: Type<NestModule>) {
     return this.getModuleValues().some(({ target }) => target === module);
   }
 
-  public getModuleRef(module: Type<NestModule>): NestModule | undefined {
+  public getModule(module: Type<NestModule>): NestModule | undefined {
     return this.getModuleValues().find(({ target }) => target === module);
   }
 
-  public getModule(token: string) {
+  public getModuleByToken(token: string) {
     if (!this.modules.has(token)) {
       throw new UnknownModuleException([]);
     }
@@ -87,12 +116,12 @@ export class NestContainer {
   }
 
   public async addProvider(provider: Provider, token: string) {
-    const module = this.getModule(token);
+    const module = this.getModuleByToken(token);
     await module.addProvider(provider);
   }
 
   public addExported(component: ModuleExport, token: string) {
-    const module = this.getModule(token);
+    const module = this.getModuleByToken(token);
     module.addExported(component);
   }
 
@@ -110,13 +139,13 @@ export class NestContainer {
     } = await this.moduleCompiler.compile(module, scope);
     if (this.modules.has(token)) return;
 
-    const moduleRef = new NestModule(target, scope, this);
-    moduleRef.addGlobalProviders();
-    this.modules.set(token, moduleRef);
+    const nestModule = new NestModule(target, scope, this);
+    nestModule.addGlobalProviders();
+    this.modules.set(token, nestModule);
 
     const modules = Utils.concat(scope, target);
     this.addDynamicMetadata(token, dynamicMetadata!, modules);
-    Reflector.isGlobalModule(target) && this.addGlobalModule(moduleRef);
+    Reflector.isGlobalModule(target) && this.addGlobalModule(nestModule);
   }
 
   private addDynamicMetadata(
@@ -156,7 +185,7 @@ export class NestContainer {
   public async addImport(relatedModule: ModuleImport, token: string) {
     if (!this.modules.has(token)) return;
 
-    const module = this.getModule(token);
+    const module = this.getModuleByToken(token);
     const scope = Utils.concat(module.scope, module.target);
 
     const { token: relatedModuleToken } = await this.moduleCompiler.compile(
@@ -164,7 +193,7 @@ export class NestContainer {
       scope,
     );
 
-    const related = this.getModule(relatedModuleToken);
+    const related = this.getModuleByToken(relatedModuleToken);
     module.addImport(related);
   }
 

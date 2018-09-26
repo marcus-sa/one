@@ -12,6 +12,5 @@ export class Repository<C extends object> {
       <ClassType<C>>this.collection,
       collections,
     );
-    console.log(collection);
   }
 }

@@ -2,6 +2,7 @@ export * from './module';
 export * from './interfaces';
 export * from './decorators';
 export * from './bootstrap';
+export * from './factory';
 export * from './forward-ref';
 export * from './reflector';
 export * from './errors';

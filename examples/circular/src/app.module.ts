@@ -1,4 +1,4 @@
-import { Module, APP_INITIALIZER } from '@nest/core';
+import { Module, APP_INIT } from '@nest/core';
 
 import { FirstService } from './first.service';
 import { SecondService } from './second.service';
@@ -19,7 +19,7 @@ import { THIRD_SERVICE } from './tokens';
       useValue: 'lol',
     },
     {
-      provide: APP_INITIALIZER,
+      provide: APP_INIT,
       useFactory: (first: FirstService) => console.log(first),
       // forwardRef(() => FirstService)
       deps: [FirstService],
