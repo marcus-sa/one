@@ -1,5 +1,11 @@
 import 'reflect-metadata';
-import { CircularDependencyMessage, forwardRef, Inject, Injectable, Registry } from '@nest/core';
+import {
+  CircularDependencyMessage,
+  forwardRef,
+  Inject,
+  Injectable,
+  Registry,
+} from '@nest/core';
 import { Test } from '@nest/testing';
 import { Register } from 'ts-node';
 
@@ -38,15 +44,11 @@ describe('@Inject()', () => {
     }
 
     const test = await Test.createTestingModule({
-      providers: [
-        Test1,
-        Test2,
-      ],
+      providers: [Test1, Test2],
     }).compile();
 
     expect(spy).toHaveBeenCalledTimes(2);
     expect(test.get<Test2>(Test2).test1).toBeInstanceOf(Test1);
     expect(test.get<Test1>(Test1).test2).toBeInstanceOf(Test2);
   });
-
 });

@@ -9,7 +9,7 @@ import { CatsModule } from './cats';
     ServerModule.forRoot(ExpressAdapter, {
       port: 3030,
     }),
-    CatsModule
+    CatsModule,
   ],
 })
 export class AppModule {}

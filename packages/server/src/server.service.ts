@@ -2,7 +2,11 @@ import { Inject, Injectable, Injector, Type, Utils } from '@nest/core';
 import * as https from 'https';
 import * as http from 'http';
 
-import { HttpServer, HttpServerOptions, ServerFeatureOptions } from './interfaces';
+import {
+  HttpServer,
+  HttpServerOptions,
+  ServerFeatureOptions,
+} from './interfaces';
 import { HTTP_SERVER, HTTP_SERVER_OPTIONS } from './tokens';
 import { Middleware } from './middleware';
 import { RoutesResolver } from './router';
@@ -26,7 +30,10 @@ export class ServerService {
 
   // Resolve once feature module has been initialized
   // which means every controller and configuration middleware will be available
-  public async resolve(controllers: Type<any>[], options: ServerFeatureOptions) {
+  public async resolve(
+    controllers: Type<any>[],
+    options: ServerFeatureOptions,
+  ) {
     await this.middleware.resolveMiddleware(
       controllers,
       options,
@@ -69,8 +76,6 @@ export class ServerService {
       await this.registerMiddleware();
       await this.registerRouterHandlers();
       await this.listen();
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
 }

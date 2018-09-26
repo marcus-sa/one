@@ -1,5 +1,5 @@
 import { MetadataStorage } from '../metadata-storage';
-import { RequestMethod } from '../enums'
+import { RequestMethod } from '../enums';
 
 export function RequestMapping(
   path: string = '/',
@@ -15,7 +15,9 @@ export function RequestMapping(
   };
 }
 
-const createMappingDecorator = (method: keyof RequestMethod) => (path?: string) => RequestMapping(path, method);
+const createMappingDecorator = (method: keyof RequestMethod) => (
+  path?: string,
+) => RequestMapping(path, method);
 
 export const Post = createMappingDecorator(RequestMethod.POST);
 export const Get = createMappingDecorator(RequestMethod.GET);

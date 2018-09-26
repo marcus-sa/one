@@ -6,9 +6,7 @@ import { CatsConfigure } from './cats.configure';
 
 @Module({
   imports: [
-    ServerModule.forFeature([
-      CatsController,
-    ], {
+    ServerModule.forFeature([CatsController], {
       configure: CatsConfigure,
     }),
   ],

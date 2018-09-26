@@ -22,10 +22,7 @@ describe('RouterBuilder', () => {
 
   beforeEach(async () => {
     testing = await Test.createTestingModule({
-      providers: [
-        TestController,
-        RouterBuilder,
-      ],
+      providers: [TestController, RouterBuilder],
     }).compile();
 
     routerBuilder = testing.get(RouterBuilder);
@@ -62,18 +59,18 @@ describe('RouterBuilder', () => {
 
   describe('extractRouterPath', () => {
     it('should return expected path', () => {
-      expect(
-        routerBuilder.extractRouterPath(TestController),
-      ).toEqual('/global');
+      expect(routerBuilder.extractRouterPath(TestController)).toEqual(
+        '/global',
+      );
       expect(
         routerBuilder.extractRouterPath(TestController, '/module'),
       ).toEqual('/module/global');
     });
 
     it('should throw if there is a bad expected path', () => {
-      expect(() =>
-        routerBuilder.validateRoutePath(null)
-      ).toThrow(INVALID_MIDDLEWARE_CONFIGURATION);
+      expect(() => routerBuilder.validateRoutePath(null)).toThrow(
+        INVALID_MIDDLEWARE_CONFIGURATION,
+      );
     });
   });
 });

@@ -11,5 +11,5 @@ export function MultiInject<T>(token: InjectionToken<T>) {
     }
 
     multiInject(token.name)(...args);
-  }
+  };
 }

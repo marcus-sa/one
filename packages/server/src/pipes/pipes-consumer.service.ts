@@ -5,7 +5,6 @@ import { Transform } from '../interfaces';
 
 @Injectable()
 export class PipesConsumer {
-
   constructor(private readonly paramsTokenFactory: ParamsTokenFactory) {}
 
   public async apply(
@@ -31,5 +30,4 @@ export class PipesConsumer {
       return fn(val, { metatype, type, data });
     }, Promise.resolve(value));
   }
-
 }

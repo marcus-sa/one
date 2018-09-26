@@ -11,9 +11,11 @@ export interface DeferredPromise<T> extends Promise<T> {
 
 export class Utils {
   public static isNode() {
-    return !this.isNil(process) &&
+    return (
+      !this.isNil(process) &&
       this.isObject((<any>process).release) &&
-      (<any>process).release.name === 'node';
+      (<any>process).release.name === 'node'
+    );
   }
 
   public static processExit(code: number = 0) {
@@ -24,22 +26,33 @@ export class Utils {
 
   public static isElectron() {
     // Renderer process
-    if (!this.isNil(window) &&
+    if (
+      !this.isNil(window) &&
       this.isObject((<any>window).process) &&
       (<any>window).process.type === 'renderer'
-    ) return true;
+    )
+      return true;
 
     // Main process
-    if (!this.isNil(process) &&
+    if (
+      !this.isNil(process) &&
       this.isObject(process.versions) &&
       !this.isNil((<any>process.versions).electron)
-    ) return true;
+    )
+      return true;
 
     // Detect the user agent when the `nodeIntegration` option is set to true
-    return this.isObject(navigator) && this.isString(navigator.userAgent) && (<any>navigator.userAgent).includes('Electron');
+    return (
+      this.isObject(navigator) &&
+      this.isString(navigator.userAgent) &&
+      (<any>navigator.userAgent).includes('Electron')
+    );
   }
 
-  public static async loadPackage<T>(name: string, context: string): Promise<T> {
+  public static async loadPackage<T>(
+    name: string,
+    context: string,
+  ): Promise<T> {
     try {
       return await require(name);
     } catch (e) {
@@ -69,12 +82,11 @@ export class Utils {
 
   public static isNamedFunction(
     val: any,
-  ): val is Type<any> | InjectionToken<any> {
+  ): val is Type<any> | InjectionToken<any> | Function {
     return (
       val &&
       !this.isNil(val.name) &&
-      (this.isFunction(val) ||
-        this.isFunction(val.constructor))
+      (this.isFunction(val) || this.isFunction(val.constructor))
     );
   }
 

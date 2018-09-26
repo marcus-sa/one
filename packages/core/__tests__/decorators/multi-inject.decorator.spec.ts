@@ -1,5 +1,10 @@
 import 'reflect-metadata';
-import { Injectable, InjectionToken, MissingInjectionTokenMessage, MultiInject } from '@nest/core';
+import {
+  Injectable,
+  InjectionToken,
+  MissingInjectionTokenMessage,
+  MultiInject,
+} from '@nest/core';
 import { Test } from '@nest/testing';
 
 describe('@MultiInject()', () => {
@@ -25,9 +30,7 @@ describe('@MultiInject()', () => {
       readonly katana: Katana;
       readonly shuriken: Shuriken;
 
-      constructor(
-        @MultiInject(WEAPON) weapons: Weapon[],
-      ) {
+      constructor(@MultiInject(WEAPON) weapons: Weapon[]) {
         this.katana = weapons[0];
         this.shuriken = weapons[1];
       }
@@ -69,9 +72,7 @@ describe('@MultiInject()', () => {
       class Ninja implements Weapon {}
 
       class Test {
-        constructor(
-          @MultiInject(Ninja) weapons: Weapon[],
-        ) {}
+        constructor(@MultiInject(Ninja) weapons: Weapon[]) {}
       }
     }).toThrow(message);
   });

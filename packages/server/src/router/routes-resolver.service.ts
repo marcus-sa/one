@@ -19,16 +19,14 @@ export class RoutesResolver {
   ) {}
 
   public resolve(controllers: Type<any>[], options: ServerFeatureOptions) {
-    controllers.forEach(controller =>
-      this.registerRouter(controller, options),
-    );
+    controllers.forEach(controller => this.registerRouter(controller, options));
   }
 
-  private registerRouter(
-    controller: Type<any>,
-    options: ServerFeatureOptions,
-  ) {
-    const path = this.routerBuilder.extractRouterPath(controller, options.prefix);
+  private registerRouter(controller: Type<any>, options: ServerFeatureOptions) {
+    const path = this.routerBuilder.extractRouterPath(
+      controller,
+      options.prefix,
+    );
 
     console.log(CONTROLLER_MAPPING_MESSAGE(controller.name, path));
 

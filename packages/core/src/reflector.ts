@@ -25,10 +25,7 @@ export class ReflectorFactory<T> {
     return target;
   }
 
-  public get(
-    metadataKey: string | symbol,
-    target: Type<any> = this.target,
-  ) {
+  public get(metadataKey: string | symbol, target: Type<any> = this.target) {
     return Reflect.getMetadata(metadataKey, target) || [];
   }
 
@@ -36,15 +33,12 @@ export class ReflectorFactory<T> {
     metadataKey: string | symbol,
     metadataValue: any,
     target: Type<any> = this.target,
-    propertyKey?: string | symbol
+    propertyKey?: string | symbol,
   ) {
     Reflect.defineMetadata(metadataKey, metadataValue, target, propertyKey!);
   }
 
-  public has(
-    metadataKey: string | symbol,
-    target: Type<any> = this.target,
-  ) {
+  public has(metadataKey: string | symbol, target: Type<any> = this.target) {
     return Reflect.hasMetadata(metadataKey, target);
   }
 

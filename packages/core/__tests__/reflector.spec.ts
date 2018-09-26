@@ -20,9 +20,7 @@ describe('Reflector', () => {
   describe('set', () => {
     it('should set metadata', () => {
       reflector.set('NEST', 'nest');
-      expect(
-        Reflect.getMetadata('NEST', Nest),
-      ).toEqual('nest');
+      expect(Reflect.getMetadata('NEST', Nest)).toEqual('nest');
     });
   });
 

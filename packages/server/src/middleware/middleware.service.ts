@@ -1,4 +1,11 @@
-import { Inject, Injectable, Injector, NestContainer, Type, Utils } from '@nest/core';
+import {
+  Inject,
+  Injectable,
+  Injector,
+  NestContainer,
+  Type,
+  Utils,
+} from '@nest/core';
 
 import { MiddlewareContainer } from './middleware-container.service';
 import { MiddlewareResolver } from './middleware-resolver.service';
@@ -19,7 +26,6 @@ import {
 
 @Injectable()
 export class Middleware {
-
   @Inject(HTTP_SERVER)
   private readonly httpServer: HttpServer;
 
@@ -44,7 +50,7 @@ export class Middleware {
     this.loadConfiguration(controllers, injector, options);
 
     await Promise.all(
-      controllers.map(async (controller) => {
+      controllers.map(async controller => {
         const instance = injector.get(controller);
 
         // const instance = this.container.getModule(token);
@@ -74,13 +80,15 @@ export class Middleware {
       controllers: Type<any>[],
       middlewareConfig: MiddlewareConfiguration[],
     ) =>
-      middlewareConfig.map(async (config) => {
+      middlewareConfig.map(async config => {
         await this.registerMiddlewareConfig(config, controllers);
       });
 
     await Promise.all(
       [...configs.entries()].map(async ([controllers, controllerConfigs]) => {
-        await Promise.all(registerAllConfigs(controllers, [...controllerConfigs]));
+        await Promise.all(
+          registerAllConfigs(controllers, [...controllerConfigs]),
+        );
       }),
     );
   }
@@ -109,7 +117,7 @@ export class Middleware {
   ) {
     const middlewareCollection = [].concat(config.middleware);
 
-    await Promise.all()
+    await Promise.all();
   }
 
   private async bindHandler(
@@ -121,5 +129,4 @@ export class Middleware {
       throw new InvalidMiddlewareException(instance.constructor.name);
     }
   }
-
 }

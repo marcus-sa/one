@@ -1,6 +1,10 @@
 import { APP_INIT, DynamicModule, Module, MODULE_INIT, Type } from '@nest/core';
 
-import { HttpServer, HttpServerOptions, ServerFeatureOptions } from './interfaces';
+import {
+  HttpServer,
+  HttpServerOptions,
+  ServerFeatureOptions,
+} from './interfaces';
 import { HTTP_SERVER, HTTP_SERVER_OPTIONS } from './tokens';
 import { MiddlewareModule } from './middleware';
 import { ServerService } from './server.service';
@@ -8,13 +12,13 @@ import { RouterModule } from './router';
 
 @Module()
 export class ServerModule {
-  static forRoot(adapter: HttpServer, options: HttpServerOptions): DynamicModule {
+  static forRoot(
+    adapter: HttpServer,
+    options: HttpServerOptions,
+  ): DynamicModule {
     return {
       module: ServerModule,
-      imports: [
-        MiddlewareModule,
-        RouterModule,
-      ],
+      imports: [MiddlewareModule, RouterModule],
       providers: [
         ServerService,
         {
@@ -48,7 +52,8 @@ export class ServerModule {
         options.configure,
         {
           provide: MODULE_INIT,
-          useFactory: (server: ServerService) => server.resolve(controllers, options),
+          useFactory: (server: ServerService) =>
+            server.resolve(controllers, options),
           deps: [ServerService],
           multi: true,
         },

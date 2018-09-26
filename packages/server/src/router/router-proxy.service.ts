@@ -8,7 +8,7 @@ export class RouterProxy {
     targetCallback: RouterProxyCallback,
     exceptionsHandler: ExceptionsHandler,
   ) {
-    return async(...args: any[]) => {
+    return async (...args: any[]) => {
       try {
         await targetCallback(...args);
       } catch (e) {

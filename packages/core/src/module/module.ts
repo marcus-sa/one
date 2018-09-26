@@ -17,7 +17,8 @@ import {
   Token,
   ValueProvider,
   Dependency,
-  MultiDepsProvider, ExistingProvider,
+  MultiDepsProvider,
+  ExistingProvider,
 } from '../interfaces';
 import { MODULE_INIT, Injector, NEST_MODULE } from '../tokens';
 import {
@@ -167,10 +168,7 @@ export class NestModule {
       (await (<OnModuleInit>module).onModuleInit());
 
     await Utils.series(
-      this.container.getAllProviders<Promise<any>>(
-        MODULE_INIT,
-        this.target,
-      ),
+      this.container.getAllProviders<Promise<any>>(MODULE_INIT, this.target),
     );
 
     this.created.resolve();

@@ -3,7 +3,7 @@ import { Injectable, Module, ModuleWithProviders } from '@nest/core';
 import { Test } from '@nest/testing';
 
 describe('@Module()', () => {
-  it('should accept module import', async () => {
+  it('should accept ModuleMetadata', async () => {
     @Module()
     class TestModule {}
 
@@ -21,7 +21,7 @@ describe('@Module()', () => {
     expect(imports.next().value.target).toStrictEqual(TestModule);
   });
 
-  it('should accept module with providers', async () => {
+  it('should accept ModuleWithProviders', async () => {
     @Injectable()
     class AppService {}
 
@@ -36,7 +36,9 @@ describe('@Module()', () => {
     }
 
     const test = await Test.createTestingModule({
-      imports: [AppModule.forRoot()],
+      imports: [
+        AppModule.forRoot(),
+      ],
     }).compile();
 
     const appModule = test.container.getModule(AppModule);
@@ -44,14 +46,12 @@ describe('@Module()', () => {
 
     expect(appModule.target).toStrictEqual(AppModule);
     expect(test.container.isProviderBound(AppService)).toBeTruthy();
-    expect(test.container.getProvider(AppService, appModule.target)).toBeInstanceOf(AppService);
+    expect(
+      test.container.getProvider(AppService, appModule.target),
+    ).toBeInstanceOf(AppService);
     expect(appModule.providers.get(AppService)).toBeInstanceOf(AppService);
     expect(() => rootModule.providers.get(AppService)).toThrowError();
   });
-  it('should accept dynamic imports', () => {
-
-  });
-  it('should accept async dynamic imports', () => {
-
-  });
+  it('should accept dynamic imports', () => {});
+  it('should accept async dynamic imports', () => {});
 });

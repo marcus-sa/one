@@ -8,7 +8,7 @@ export function createLazyInjection(target: object, property: string) {
     Registry.assertProvider(provider);
 
     lazyInject(provider)(target, property);
-  }
+  };
 }
 
 export function Inject(provider: Dependency) {

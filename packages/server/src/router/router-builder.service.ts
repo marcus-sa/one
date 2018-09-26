@@ -11,17 +11,14 @@ import { RequestMethod } from '../enums';
 export class RouterBuilder {
   constructor(
     private readonly routerMethodFactory: RouterMethodFactory,
-    private readonly injector: Injector
+    private readonly injector: Injector,
   ) {}
 
   private validatePath(path: string) {
     return path.charAt(0) !== '/' ? '/' + path : path;
   }
 
-  public explore(
-    controller: Type<any>,
-    basePath: string,
-  ) {
+  public explore(controller: Type<any>, basePath: string) {
     const routePaths = this.scanForPaths(controller);
     this.applyPathsToRouterProxy(controller, routePaths, basePath);
   }
@@ -31,7 +28,7 @@ export class RouterBuilder {
     routePaths: RoutePathProperties[],
     basePath: string,
   ) {
-    routePaths.forEach(pathProperties  => {
+    routePaths.forEach(pathProperties => {
       const { path, requestMethod } = pathProperties;
       this.applyCallbackToRouter(controller, pathProperties, basePath);
       console.log(ROUTE_MAPPED_MESSAGE(path, requestMethod));
@@ -61,9 +58,7 @@ export class RouterBuilder {
     return this.validatePath(path);
   }
 
-  public scanForPaths(
-    metatype: Type<any>,
-  ): RoutePathProperties[] {
+  public scanForPaths(metatype: Type<any>): RoutePathProperties[] {
     const controller = this.injector.get(metatype);
     const paths = MetadataStorage.getRequestMapping(metatype);
 
@@ -88,24 +83,23 @@ export class RouterBuilder {
     };
   }
 
-  public exploreMethodMetadata(
-    metatype: Type<any>,
-    methodName: string,
-  ) {
+  public exploreMethodMetadata(metatype: Type<any>, methodName: string) {
     const controller = this.injector.get(metatype);
 
-    const {
+    const { path, requestMethod } = MetadataStorage.getRequestMapping(
+      metatype,
+      methodName,
+    );
+
+    return this.createRoutePathProps(
+      controller,
+      methodName,
       path,
       requestMethod,
-    } = MetadataStorage.getRequestMapping(metatype, methodName);
-
-    return this.createRoutePathProps(controller, methodName, path, requestMethod);
+    );
   }
 
-  public extractRouterPath(
-    target: Type<any>,
-    prefix?: string,
-  ) {
+  public extractRouterPath(target: Type<any>, prefix?: string) {
     let { path } = MetadataStorage.getController(target);
     if (prefix) path = prefix + this.validateRoutePath(path);
     return this.validateRoutePath(path);

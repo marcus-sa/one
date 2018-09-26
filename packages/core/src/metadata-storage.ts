@@ -17,8 +17,8 @@ export class BaseMetadataStorage {
     propertyKey?: string | symbol,
   ): T | undefined {
     const findByProperty = () => {
-      return [...metadata.values()].find(value =>
-        value.target === target && value.propertyKey === propertyKey,
+      return [...metadata.values()].find(
+        value => value.target === target && value.propertyKey === propertyKey,
       );
     };
 
@@ -33,8 +33,8 @@ export class BaseMetadataStorage {
     propertyKey?: string | symbol,
   ): T[] {
     const filterByProperty = () => {
-      return [...metadata.values()].filter(value =>
-        value.target === target && value.propertyKey === propertyKey,
+      return [...metadata.values()].filter(
+        value => value.target === target && value.propertyKey === propertyKey,
       );
     };
 

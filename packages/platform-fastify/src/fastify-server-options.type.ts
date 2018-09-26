@@ -8,9 +8,9 @@ import {
 } from 'fastify';
 
 export type FastifyServerOptions =
-  ServerOptions |
-  ServerOptionsAsSecure |
-  ServerOptionsAsHttp |
-  ServerOptionsAsSecureHttp |
-  ServerOptionsAsHttp2 |
-  ServerOptionsAsSecureHttp2;
+  | ServerOptions
+  | ServerOptionsAsSecure
+  | ServerOptionsAsHttp
+  | ServerOptionsAsSecureHttp
+  | ServerOptionsAsHttp2
+  | ServerOptionsAsSecureHttp2;

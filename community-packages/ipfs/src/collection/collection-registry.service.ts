@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  Type,
-  ValueProvider,
-} from '@nest/core';
+import { Injectable, Type, ValueProvider } from '@nest/core';
 
 import { getRepositoryToken } from '../get-repository-token';
 import { Repository } from '../repository';

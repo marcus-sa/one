@@ -1,4 +1,7 @@
-import { CircularDependencyException, InvalidProviderException } from './errors';
+import {
+  CircularDependencyException,
+  InvalidProviderException,
+} from './errors';
 import { InjectionToken } from './module';
 import { Reflector } from './reflector';
 import { Utils } from './util';
@@ -14,7 +17,8 @@ import {
   ExistingProvider,
   DynamicModule,
   ModuleImport,
-  Token, ModuleExport,
+  Token,
+  ModuleExport,
 } from './interfaces';
 
 export class Registry {
@@ -52,9 +56,7 @@ export class Registry {
   public static getProviderName(provider: Provider) {
     const token = this.getProviderToken(provider);
 
-    return Utils.isSymbol(token)
-      ? token.toString()
-      : token.name;
+    return Utils.isSymbol(token) ? token.toString() : token.name;
   }
 
   public static isInjectionToken(
@@ -69,14 +71,17 @@ export class Registry {
       : <Type<any>>provider;
   }
 
-  public static assertProvider(val: any, context?: string): Type<any> | InjectionToken<any> {
+  public static assertProvider(
+    val: any,
+    context?: string,
+  ): Type<any> | InjectionToken<any> {
     if (!val) throw new CircularDependencyException(context!);
 
     if (
       !(
         Utils.isObject(val) ||
-        !Utils.isNil(val.name) &&
-        (Utils.isFunction(val) || Utils.isFunction(val.constructor))
+        (!Utils.isNil(val.name) &&
+          (Utils.isFunction(val) || Utils.isFunction(val.constructor)))
       )
     ) {
       throw new InvalidProviderException(val);

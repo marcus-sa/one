@@ -7,7 +7,8 @@ import { Utils } from '../util';
 import {
   UnknownModuleException,
   InvalidModuleException,
-  UnknownProviderException, MissingInjectionTokenException,
+  UnknownProviderException,
+  MissingInjectionTokenException,
 } from '../errors';
 import {
   Dependency,
@@ -45,7 +46,10 @@ export class NestContainer {
     );
   }
 
-  public replace(toReplace: Dependency, options: any & { scope: any[] | null }) {
+  public replace(
+    toReplace: Dependency,
+    options: any & { scope: any[] | null },
+  ) {
     [...this.modules.values()].forEach(module => {
       module.replace(toReplace, options);
     });
@@ -137,7 +141,10 @@ export class NestContainer {
     this.globalModules.add(module);
   }
 
-  public async addModule(module: Partial<ModuleImport>, scope: Type<NestModule>[]) {
+  public async addModule(
+    module: Partial<ModuleImport>,
+    scope: Type<NestModule>[],
+  ) {
     if (!module) throw new InvalidModuleException(scope);
 
     const {
@@ -174,7 +181,6 @@ export class NestContainer {
     modules.forEach(module => this.addModule(module, scope));
   }
 
-
   public bindGlobalScope() {
     this.modules.forEach(module => this.bindGlobalsToImports(module));
   }
@@ -185,7 +191,10 @@ export class NestContainer {
     );
   }
 
-  private bindGlobalModuleToModule(module: NestModule, globalModule: NestModule) {
+  private bindGlobalModuleToModule(
+    module: NestModule,
+    globalModule: NestModule,
+  ) {
     if (module === globalModule) return;
     module.addImport(globalModule);
   }

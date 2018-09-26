@@ -21,26 +21,20 @@ export class NestFactory {
 
   public async destroy() {
     await ExceptionsZone.run(async () => {
-      await Utils.series(
-        this.container.getAllProviders(APP_DESTROY),
-      );
+      await Utils.series(this.container.getAllProviders(APP_DESTROY));
     });
   }
 
   private async init() {
-    await Utils.series(
-      this.container.getAllProviders(APP_INIT),
-    );
+    await Utils.series(this.container.getAllProviders(APP_INIT));
   }
 
   public select(module: Type<NestModule>) {
     return {
       get: <T>(provider: Type<T> | InjectionToken<T>) => {
-        return this.container.getProvider<T>(
-          provider,
-          module,
-          { strict: true },
-        );
+        return this.container.getProvider<T>(provider, module, {
+          strict: true,
+        });
       },
       getAll: <T>(token: InjectionToken<T>) => {
         if (!Registry.isInjectionToken(token)) {

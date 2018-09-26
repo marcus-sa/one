@@ -14,7 +14,6 @@ export interface CustomHeader {
 
 @Injectable()
 export class RouterResponseController {
-
   @Inject(HTTP_SERVER)
   private readonly httpServer: HttpServer;
 
@@ -50,5 +49,4 @@ export class RouterResponseController {
       this.httpServer.setHeader(response, name, value);
     });
   }
-
 }

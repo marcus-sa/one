@@ -1,10 +1,4 @@
-import {
-  DynamicModule,
-  Module,
-  MODULE_INIT,
-  APP_INIT,
-  Type,
-} from '@nest/core';
+import { DynamicModule, Module, MODULE_INIT, APP_INIT, Type } from '@nest/core';
 
 import { WindowsService } from './windows.service';
 

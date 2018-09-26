@@ -24,7 +24,7 @@ import { TestService } from './test.service';
       useFactory: (test: TestService) => test.start(),
       deps: [TestService],
       multi: true,
-    }
+    },
   ],
 })
 export class AppModule {}

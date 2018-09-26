@@ -9,10 +9,12 @@ export class TestService {
   private readonly userRepository: Repository<UserCollection>;
 
   public async start() {
-    const users = [{
-      username: 'virtuex',
-      password: 'hey there',
-    }];
+    const users = [
+      {
+        username: 'virtuex',
+        password: 'hey there',
+      },
+    ];
 
     await this.userRepository.save(...users);
   }

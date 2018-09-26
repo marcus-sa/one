@@ -1,5 +1,13 @@
 import 'reflect-metadata';
-import { Module, Injectable, InjectionToken, Registry, forwardRef, Inject, ProvideToken } from '@nest/core';
+import {
+  Module,
+  Injectable,
+  InjectionToken,
+  Registry,
+  forwardRef,
+  Inject,
+  ProvideToken,
+} from '@nest/core';
 
 describe('Registry', () => {
   beforeEach(() => Registry.clearLazyInjects());
@@ -26,7 +34,9 @@ describe('Registry', () => {
     const forwardRef = () => {};
 
     it('should have forwardRef', () => {
-      expect(Registry.hasForwardRef({ forwardRef })).toBeTruthy();
+      expect(Registry.hasForwardRef({
+        forwardRef,
+      })).toBeTruthy();
     });
 
     it('should not have forwardRef', () => {
@@ -57,7 +67,7 @@ describe('Registry', () => {
       spy.mockClear();
     });
 
-    it('should get token from injectable', () => {
+    it('should get token from Injectable', () => {
       @Injectable()
       class Nest {}
 
@@ -103,7 +113,8 @@ describe('Registry', () => {
       expect(spy).toHaveBeenCalledWith(token);
       expect(token.name.toString()).toEqual(name);
     });
-    it('should get name from injectable', () => {
+
+    it('should get name from Injectable', () => {
       class Nest {}
       const name = Registry.getProviderName(Nest);
 
@@ -117,19 +128,25 @@ describe('Registry', () => {
     @Module()
     class NestModule {}
 
-    it('should succeed with module decorated class', () => {
+    it('should succeed with @Module() decorated', () => {
       expect(Registry.isModule(NestModule)).toBeTruthy();
     });
 
-    it('should succeed with a dynamic module', () => {
-      expect(Registry.isModule({ module: NestModule })).toBeTruthy();
+    it('should succeed with DynamicModule', () => {
+      expect(Registry.isModule({
+        module: NestModule,
+      })).toBeTruthy();
     });
 
     it('should fail with ProvideToken', () => {
-      expect(Registry.isModule({ provide: 'nothing' })).toBeFalsy();
+      const NEST = new InjectionToken<void>('NEST');
+
+      expect(Registry.isModule({
+        provide: NEST,
+      })).toBeFalsy();
     });
 
-    it('should fail with injectable', () =>  {
+    it('should fail with Injectable', () => {
       @Injectable()
       class Nest {}
 
@@ -137,9 +154,9 @@ describe('Registry', () => {
     });
 
     it('should fail with InjectionToken', () => {
-      const nest = new InjectionToken<any>('NEST');
+      const NEST = new InjectionToken<void>('NEST');
 
-      expect(Registry.isModule(nest)).toBeFalsy();
+      expect(Registry.isModule(NEST)).toBeFalsy();
     });
   });
 });

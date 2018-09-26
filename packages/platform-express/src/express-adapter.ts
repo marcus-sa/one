@@ -25,7 +25,7 @@ export class ExpressAdapter implements HttpServer {
   async registerParserMiddleware() {
     const bodyParser = await Utils.loadPackage(
       'body-parser',
-      'ExpressAdapter#registerParserMiddleware'
+      'ExpressAdapter#registerParserMiddleware',
     );
 
     const jsonParser = bodyParser.json();
@@ -188,5 +188,4 @@ export class ExpressAdapter implements HttpServer {
       .get(this.instance, requestMethod)
       .bind(this.instance);
   }
-
 }

@@ -2,11 +2,13 @@ export interface PointOfViewOptions {
   engine?: {
     [name: string]: any;
   };
-  templates: string,
+  templates: string;
   includeViewExtension?: boolean;
   options: {
-    [name: string]: {
-      [name: string]: any;
-    } | any;
-  }
+    [name: string]:
+      | {
+          [name: string]: any;
+        }
+      | any;
+  };
 }
