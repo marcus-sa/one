@@ -1,32 +1,28 @@
 import 'reflect-metadata';
+import { RouterMethodFactory } from '@nest/server/router/router-method-factory.service';
 import { RouterProxy } from '@nest/server/router/router-proxy.service';
 import { BadRequestException } from '@nest/server/errors';
-import { RoutesResolver } from '@nest/server/router';
-import { HTTP_SERVER } from '@nest/server';
+import { RouterBuilder, RoutesResolver } from '@nest/server/router';
 import { Test, TestingModule } from '@nest/testing';
 
-import { FakeAdapter } from '../fake-adapter';
+import { HTTP_SERVER_PROVIDER } from '../fake-http-server';
 
 describe('RoutesResolver', () => {
   let routesResolver: RoutesResolver;
-  let testing: TestingModule;
+  let test: TestingModule;
 
   beforeEach(async () => {
-    testing = await Test.createTestingModule({
+    test = await Test.createTestingModule({
       providers: [
-        /*{
-          provide: HTTP_SERVER_OPTIONS,
-          useValue: {},
-        },*/
-        {
-          provide: HTTP_SERVER,
-          useClass: FakeAdapter,
-        },
+        HTTP_SERVER_PROVIDER,
+        RouterMethodFactory,
+        RouterBuilder,
         RouterProxy,
         RoutesResolver,
       ],
     }).compile();
-    routesResolver = testing.get(RoutesResolver);
+
+    routesResolver = test.get<RoutesResolver>(RoutesResolver);
   });
 
   describe('mapExternalExceptions', () => {

@@ -27,20 +27,23 @@ describe('Utils', () => {
 
     it('should create', () => {
       expect(deferred).toBeInstanceOf(Promise);
+
+      expect(deferred.then).toBeInstanceOf(Function);
+      expect(deferred.catch).toBeInstanceOf(Function);
+
       expect(deferred.resolve).toBeInstanceOf(Function);
       expect(deferred.reject).toBeInstanceOf(Function);
     });
 
-    it('should resolve', () => {
+    it('should resolve', async () => {
       const thenSpy = jest.spyOn(deferred, 'then');
 
-      deferred.then(() => {});
-      deferred.then(() => {});
+      deferred.then(() => true);
 
       deferred.resolve();
-      expect(thenSpy).toHaveBeenCalledTimes(2);
+      expect(thenSpy).toHaveBeenCalledTimes(1);
 
-      return deferred;
+      await expect(deferred).resolves.toBeTruthy();
     });
 
     it('should reject', async () => {

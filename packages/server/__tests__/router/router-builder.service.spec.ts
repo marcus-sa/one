@@ -3,10 +3,13 @@ import { INVALID_MIDDLEWARE_CONFIGURATION } from '@nest/server/errors/messages';
 import { Controller, RequestMapping, RequestMethod } from '@nest/server';
 import { RouterBuilder } from '@nest/server/router';
 import { Test, TestingModule } from '@nest/testing';
+import { RouterMethodFactory } from '@nest/server/router/router-method-factory.service';
+
+import { HTTP_SERVER_PROVIDER } from '../fake-http-server';
 
 describe('RouterBuilder', () => {
-  let testing: TestingModule;
   let routerBuilder: RouterBuilder;
+  let test: TestingModule;
 
   @Controller('global')
   class TestController {
@@ -21,11 +24,16 @@ describe('RouterBuilder', () => {
   }
 
   beforeEach(async () => {
-    testing = await Test.createTestingModule({
-      providers: [TestController, RouterBuilder],
+    test = await Test.createTestingModule({
+      providers: [
+        HTTP_SERVER_PROVIDER,
+        RouterMethodFactory,
+        TestController,
+        RouterBuilder,
+      ],
     }).compile();
 
-    routerBuilder = testing.get(RouterBuilder);
+    routerBuilder = test.get<RouterBuilder>(RouterBuilder);
   });
 
   describe('scanForPaths', () => {
