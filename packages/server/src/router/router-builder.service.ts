@@ -1,19 +1,56 @@
 import { Injectable, Injector, Type, Utils } from '@nest/core';
 
+import { RouterMethodFactory } from './router-method-factory.service';
 import { UnknownRequestMappingException } from '../errors';
 import { MetadataStorage } from '../metadata-storage';
 import { RoutePathProperties } from '../interfaces';
-import { RouterMethodFactory } from '../helpers';
+import { ROUTE_MAPPED_MESSAGE } from '../helpers';
 import { RequestMethod } from '../enums';
 
 @Injectable()
 export class RouterBuilder {
-  private readonly routerMethodFactory = new RouterMethodFactory();
-
-  constructor(private readonly injector: Injector) {}
+  constructor(
+    private readonly routerMethodFactory: RouterMethodFactory,
+    private readonly injector: Injector
+  ) {}
 
   private validatePath(path: string) {
     return path.charAt(0) !== '/' ? '/' + path : path;
+  }
+
+  public explore(
+    controller: Type<any>,
+    basePath: string,
+  ) {
+    const routePaths = this.scanForPaths(controller);
+    this.applyPathsToRouterProxy(controller, routePaths, basePath);
+  }
+
+  private applyPathsToRouterProxy(
+    controller: Type<any>,
+    routePaths: RoutePathProperties[],
+    basePath: string,
+  ) {
+    routePaths.forEach(pathProperties  => {
+      const { path, requestMethod } = pathProperties;
+      this.applyCallbackToRouter(controller, pathProperties, basePath);
+      console.log(ROUTE_MAPPED_MESSAGE(path, requestMethod));
+    });
+  }
+
+  private stripSlash(str: string) {
+    return str[str.length - 1] === '/' ? str.slice(0, str.length - 1) : str;
+  }
+
+  private applyCallbackToRouter(
+    controller: Type<any>,
+    { path, requestMethod, targetCallback, methodName }: RoutePathProperties,
+    basePath: string,
+  ) {
+    const routerMethod = this.routerMethodFactory.get(requestMethod);
+    const fullPath = this.stripSlash(basePath) + path;
+
+    routerMethod(this.stripSlash(fullPath) || '/', targetCallback);
   }
 
   public validateRoutePath(path: string) {

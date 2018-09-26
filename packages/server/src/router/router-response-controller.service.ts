@@ -45,7 +45,7 @@ export class RouterResponseController {
     }
   }
 
-  public setHeaders(response, headers: CustomHeader[]) {
+  public setHeaders(response: any, headers: CustomHeader[]) {
     headers.forEach(({ name, value }) => {
       this.httpServer.setHeader(response, name, value);
     });

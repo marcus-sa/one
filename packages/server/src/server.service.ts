@@ -33,6 +33,8 @@ export class ServerService {
       this.injector,
     );
 
+    this.routesResolver.resolve(controllers, options);
+
     /*controllers.forEach(ref => {
       const configuration = this.injector.get(options.configure);
       const controller = this.injector.get(ref);
@@ -44,9 +46,7 @@ export class ServerService {
     await this.middleware.register();
   }
 
-  public async registerRouter() {
-    const basePath = '';
-    this.routesResolver.resolve(basePath);
+  public async registerRouterHandlers() {
     this.routesResolver.registerNotFoundHandler();
     this.routesResolver.registerExceptionHandler();
   }
@@ -67,7 +67,7 @@ export class ServerService {
     try {
       this.registerHttpServer();
       await this.registerMiddleware();
-      await this.registerRouter();
+      await this.registerRouterHandlers();
       await this.listen();
     } catch (e) {
 
