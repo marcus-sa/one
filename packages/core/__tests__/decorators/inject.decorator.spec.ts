@@ -1,6 +1,7 @@
 import 'reflect-metadata';
-import { CircularDependencyMessage, forwardRef, Inject, Injectable } from '@nest/core';
-import { Testing } from '@nest/testing';
+import { CircularDependencyMessage, forwardRef, Inject, Injectable, Registry } from '@nest/core';
+import { Test } from '@nest/testing';
+import { Register } from 'ts-node';
 
 describe('@Inject()', () => {
   it('should create circular dependencies', async () => {
@@ -22,6 +23,8 @@ describe('@Inject()', () => {
   });
 
   it('should solve circular dependencies using forwardRef', async () => {
+    const spy = jest.spyOn(Registry.lazyInjects, 'add');
+
     @Injectable()
     class Test1 {
       @Inject(forwardRef(() => Test2))
@@ -34,15 +37,16 @@ describe('@Inject()', () => {
       public readonly test1!: Test1;
     }
 
-    const fixture = await Testing.create({
+    const test = await Test.createTestingModule({
       providers: [
         Test1,
         Test2,
       ],
     }).compile();
 
-    expect(fixture.get<Test2>(Test2).test1).toBeInstanceOf(Test1);
-    expect(fixture.get<Test1>(Test1).test2).toBeInstanceOf(Test2);
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(test.get<Test2>(Test2).test1).toBeInstanceOf(Test1);
+    expect(test.get<Test1>(Test1).test2).toBeInstanceOf(Test2);
   });
 
 });

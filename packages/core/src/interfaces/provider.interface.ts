@@ -11,11 +11,11 @@ export type Provider =
   | Dependency;
 
 export interface ClassProvider extends ProvideToken {
-  useClass: Type<Provider>;
+  useClass: Type<any>;
 }
 
 export interface ProvideToken {
-  provide: InjectionToken<any>;
+  provide: InjectionToken<any> | Type<any>;
 }
 
 export interface DepsProvider {

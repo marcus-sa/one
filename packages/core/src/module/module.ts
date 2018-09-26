@@ -148,6 +148,13 @@ export class NestModule {
     }
   }
 
+  public replace(toReplace: Dependency, options: any) {
+    this.addProvider({
+      provide: toReplace,
+      ...options,
+    });
+  }
+
   public async create() {
     if (this.providers.isBound(this.target)) return;
 

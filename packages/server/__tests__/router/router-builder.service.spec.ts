@@ -2,10 +2,10 @@ import 'reflect-metadata';
 import { INVALID_MIDDLEWARE_CONFIGURATION } from '@nest/server/errors/messages';
 import { Controller, RequestMapping, RequestMethod } from '@nest/server';
 import { RouterBuilder } from '@nest/server/router';
-import { Testing } from '@nest/testing';
+import { Test, TestingModule } from '@nest/testing';
 
 describe('RouterBuilder', () => {
-  let fixture: Testing.Fixture;
+  let testing: TestingModule;
   let routerBuilder: RouterBuilder;
 
   @Controller('global')
@@ -21,13 +21,14 @@ describe('RouterBuilder', () => {
   }
 
   beforeEach(async () => {
-    fixture = await Testing.create({
+    testing = await Test.createTestingModule({
       providers: [
         TestController,
         RouterBuilder,
       ],
     }).compile();
-    routerBuilder = fixture.get(RouterBuilder);
+
+    routerBuilder = testing.get(RouterBuilder);
   });
 
   describe('scanForPaths', () => {

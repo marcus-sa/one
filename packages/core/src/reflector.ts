@@ -8,10 +8,12 @@ import {
   SHARED_MODULE_METADATA,
 } from './constants';
 
-export class Reflector {
-  public static defineByKeys<T = object>(
-    target: T,
+export class ReflectorFactory<T> {
+  constructor(private readonly target?: T) {}
+
+  public defineByKeys<T = object>(
     metadata: { [name: string]: any },
+    target: T = this.target,
     exclude: string[] = [],
   ): T {
     Object.keys(metadata)
@@ -23,31 +25,40 @@ export class Reflector {
     return target;
   }
 
-  public static get(
-    target: Type<any>,
+  public get(
     metadataKey: string | symbol,
+    target: Type<any> = this.target,
   ) {
     return Reflect.getMetadata(metadataKey, target) || [];
   }
 
-  public static set(
-    target: Type<any>,
+  public set(
     metadataKey: string | symbol,
     metadataValue: any,
+    target: Type<any> = this.target,
     propertyKey?: string | symbol
   ) {
     Reflect.defineMetadata(metadataKey, metadataValue, target, propertyKey!);
   }
 
-  public static isGlobalModule(target: Type<NestModule>) {
+  public has(
+    metadataKey: string | symbol,
+    target: Type<any> = this.target,
+  ) {
+    return Reflect.hasMetadata(metadataKey, target);
+  }
+
+  public isGlobalModule(target: Type<NestModule> = this.target) {
     return Reflect.hasMetadata(SHARED_MODULE_METADATA, target);
   }
 
-  public static isProvider(target: Type<Provider | NestModule>) {
+  public isProvider(target: Type<Provider | NestModule> = this.target) {
     return Reflect.hasMetadata(PROVIDER_METADATA, target);
   }
 
-  public static resolveProviderScope(provider: Type<Provider>) {
+  public resolveProviderScope(provider: Type<Provider> = this.target) {
     return Reflect.getMetadata(SCOPE_METADATA, provider);
   }
 }
+
+export const Reflector = new ReflectorFactory<any>();

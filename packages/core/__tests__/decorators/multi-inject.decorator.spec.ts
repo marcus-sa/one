@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Injectable, InjectionToken, MissingInjectionTokenMessage, MultiInject } from '@nest/core';
-import { Testing } from '@nest/testing';
+import { Test } from '@nest/testing';
 
 describe('@MultiInject()', () => {
   it('should multi inject providers', async () => {
@@ -33,7 +33,7 @@ describe('@MultiInject()', () => {
       }
     }
 
-    const fixture = await Testing.create({
+    const test = await Test.createTestingModule({
       providers: [
         {
           provide: WEAPON,
@@ -49,8 +49,8 @@ describe('@MultiInject()', () => {
       ],
     }).compile();
 
-    const weapons = fixture.getAll<Weapon>(WEAPON);
-    const ninja = fixture.get<Ninja>(Ninja);
+    const weapons = test.getAll<Weapon>(WEAPON);
+    const ninja = test.get<Ninja>(Ninja);
 
     expect(weapons).toHaveLength(2);
 

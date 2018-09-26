@@ -3,16 +3,16 @@ import { RouterProxy } from '@nest/server/router/router-proxy.service';
 import { BadRequestException } from '@nest/server/errors';
 import { RoutesResolver } from '@nest/server/router';
 import { HTTP_SERVER } from '@nest/server';
-import { Testing } from '@nest/testing';
+import { Test, TestingModule } from '@nest/testing';
 
 import { FakeAdapter } from '../fake-adapter';
 
 describe('RoutesResolver', () => {
   let routesResolver: RoutesResolver;
-  let fixture: Testing.Fixture;
+  let testing: TestingModule;
 
   beforeEach(async () => {
-    fixture = await Testing.create({
+    testing = await Test.createTestingModule({
       providers: [
         /*{
           provide: HTTP_SERVER_OPTIONS,
@@ -26,7 +26,7 @@ describe('RoutesResolver', () => {
         RoutesResolver,
       ],
     }).compile();
-    routesResolver = fixture.get(RoutesResolver);
+    routesResolver = testing.get(RoutesResolver);
   });
 
   describe('mapExternalExceptions', () => {

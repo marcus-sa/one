@@ -55,7 +55,7 @@ export class Scanner {
       module = (<ForwardRef>module).forwardRef();
     }
 
-    const imports = Reflector.get(<Type<NestModule>>module, METADATA.IMPORTS);
+    const imports = Reflector.get(METADATA.IMPORTS, <Type<NestModule>>module);
     const modules = Registry.isDynamicModule(module)
       ? [...imports, ...(module.imports || [])]
       : imports;
@@ -134,7 +134,7 @@ export class Scanner {
     metadataKey: keyof DynamicModule,
   ): T[] {
     return [
-      ...Reflector.get(module, metadataKey),
+      ...Reflector.get(metadataKey, module),
       ...this.container.getDynamicMetadataByToken(token, metadataKey),
     ];
   }

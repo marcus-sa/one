@@ -10,7 +10,9 @@ import {
   UnknownProviderException, MissingInjectionTokenException,
 } from '../errors';
 import {
-  DynamicModule, ModuleExport,
+  Dependency,
+  DynamicModule,
+  ModuleExport,
   ModuleImport,
   Provider,
   Token,
@@ -41,6 +43,12 @@ export class NestContainer {
     return this.getModuleValues().some(({ providers }) =>
       providers.isBound(provider),
     );
+  }
+
+  public replace(toReplace: Dependency, options: any & { scope: any[] | null }) {
+    [...this.modules.values()].forEach(module => {
+      module.replace(toReplace, options);
+    });
   }
 
   public getProvider<T>(

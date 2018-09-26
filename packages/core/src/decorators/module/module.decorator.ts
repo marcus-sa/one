@@ -4,7 +4,7 @@ import { Reflector } from '../../reflector';
 
 export function Module(metadata: ModuleMetadata = {}): ClassDecorator {
   return (target: object) => {
-    Reflector.defineByKeys(target, metadata);
+    Reflector.defineByKeys(metadata, target, []);
 
     injectable()(<any>target);
   };

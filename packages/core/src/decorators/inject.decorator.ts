@@ -3,7 +3,7 @@ import { inject } from 'inversify';
 import { ForwardRef, Token, Dependency, TLazyInject } from '../interfaces';
 import { Registry } from '../registry';
 
-function createLazyInjection(target: object, property: string) {
+export function createLazyInjection(target: object, property: string) {
   return (lazyInject: TLazyInject, provider: Token) => {
     Registry.assertProvider(provider);
 

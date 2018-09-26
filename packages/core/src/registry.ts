@@ -20,6 +20,10 @@ import {
 export class Registry {
   public static readonly lazyInjects = new Set<ILazyInject>();
 
+  public static clearLazyInjects() {
+    this.lazyInjects.clear();
+  }
+
   public static getLazyInjects(target: Type<Provider>): ILazyInject[] {
     return [...this.lazyInjects.values()].filter(
       provider => provider.target === target,
