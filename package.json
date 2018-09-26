@@ -7,7 +7,7 @@
     "docs:build": "vuepress build docs",
     "lint": "ts-lint -p tsconfig.json -c tslint.json",
     "bootstrap": "lerna bootstrap",
-    "test": "lerna run test",
+    "test": "lerna run test --parallel --no-bail",
     "build": "lerna run build",
     "prepublish": "yarn test && yarn build",
     "clean": "rimraf packages/**/lib",

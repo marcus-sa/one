@@ -8,8 +8,7 @@
     "nest": "./lib/bin/cli.js"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "test": "jest"
+    "build": "tsc -p tsconfig.build.json"
   },
   "keywords": [],
   "author": "Marcus S. Abildskov",

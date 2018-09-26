@@ -15,6 +15,13 @@ export class MetadataStorage extends BaseMetadataStorage {
   static readonly httpCodes = new Set<HttpCodeMetadata>();
   static readonly headers = new Set<HeaderMetadata>();
 
+  static clear() {
+    this.requestMapping.clear();
+    this.controllers.clear();
+    this.httpCodes.clear();
+    this.headers.clear();
+  }
+
   static getHeaders(target: Target, propertyKey?: string | symbol) {
     return this.filterByTargetProperty(this.headers, target, propertyKey);
   }
