@@ -1,41 +1,40 @@
+import { InjectionToken } from '../module';
 import { Type } from './type.interface';
-import { ForwardRef } from './forward-ref.interface';
+import { Dependency } from './module';
 
 export type Provider =
-  | ValueProvider
-  | FactoryProvider
-  | ExistingProvider
+  | ProvideToken
+  | ValueProvider<any>
+  | FactoryProvider<any>
+  | ExistingProvider<any>
   | ClassProvider
-  | Type<any>
-  | ForwardRef
-  | symbol;
+  | Dependency;
 
-export interface ClassProvider {
-  provide?: symbol;
-  useClass: Type<any>;
+export interface ClassProvider extends ProvideToken {
+  useClass: Type<Provider>;
 }
 
 export interface ProvideToken {
-  provide: symbol;
+  provide: InjectionToken<any>;
 }
 
 export interface DepsProvider {
-  deps?: Array<Type<any> | symbol | ForwardRef>;
+  deps: Dependency[];
 }
 
 export interface MultiDepsProvider extends DepsProvider {
   multi?: boolean;
 }
 
-export interface ExistingProvider {
-  useExisting: Type<any> | symbol;
+export interface ExistingProvider<T> {
+  useExisting: Type<T> | InjectionToken<T>;
 }
 
-export interface ValueProvider extends ProvideToken {
-  useValue: any;
+export interface ValueProvider<T> extends ProvideToken {
+  useValue: T;
 }
 
-export interface FactoryProvider extends ProvideToken, MultiDepsProvider {
-  useFactory: (...args: any[]) => any | Promise<any>;
+export interface FactoryProvider<T> extends ProvideToken, MultiDepsProvider {
+  useFactory: (...args: any[]) => T | Promise<T>;
   scope?: string;
 }

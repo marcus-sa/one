@@ -1,21 +1,22 @@
-import { DynamicModule, Module } from '@one/core';
+import { DynamicModule, Module } from '@nest/core';
 
 import { MoreNestModule } from './more-nest';
+import { LessNestModule } from './less-nest';
 import { NestService } from './nest.service';
 
 @Module()
 export class NestModule {
-  // @TODO: Fix dynamic modules
   public static forRoot(): Promise<DynamicModule> {
     return new Promise(resolve => {
       setTimeout(() => {
+        console.log('NestModule#forRoot');
         resolve({
           module: NestModule,
-          imports: [MoreNestModule],
+          imports: [LessNestModule, MoreNestModule],
           providers: [NestService],
           exports: [MoreNestModule, NestService],
         });
-      }, 2000);
+      }, 500);
     });
   }
 }

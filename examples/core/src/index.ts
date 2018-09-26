@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { bootstrap } from '@one/core';
+import { bootstrap } from '@nest/core';
 
 import { AppModule } from './app.module';
 
