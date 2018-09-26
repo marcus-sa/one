@@ -49,10 +49,15 @@ describe('@MultiInject()', () => {
     }).compile();
 
     const weapons = fixture.getAll<Weapon>(WEAPON);
+    const ninja = fixture.get<Ninja>(Ninja);
 
     expect(weapons).toHaveLength(2);
+
     expect(weapons[0]).toBeInstanceOf(Katana);
     expect(weapons[1]).toBeInstanceOf(Shuriken);
+
+    expect(ninja.katana).toBeInstanceOf(Katana);
+    expect(ninja.shuriken).toBeInstanceOf(Shuriken);
   });
 
   it('should throw error when not using an injection token', () => {
