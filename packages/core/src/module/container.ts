@@ -28,20 +28,21 @@ export class NestContainer {
   private readonly moduleCompiler = new ModuleCompiler();
   private readonly globalModules = new Set<NestModule>();
   private readonly modules = new Map<string, NestModule>();
+  public readonly moduleOrder = new Set<NestModule>();
   public readonly providerTokens: Token[] = [];
   private readonly dynamicModulesMetadata = new Map<
     string,
     Partial<DynamicModule>
   >();
 
-  private getModules(module?: Type<NestModule>) {
+  private getModulesFrom(module?: Type<NestModule>) {
     return !Utils.isNil(module)
       ? [this.getModule(module)]
       : this.getModuleValues();
   }
 
   public isProviderBound(provider: Token, module?: Type<NestModule>) {
-    return this.getModuleValues().some(({ providers }) =>
+    return this.getModulesFrom(module).some(({ providers }) =>
       providers.isBound(provider),
     );
   }
@@ -64,12 +65,14 @@ export class NestContainer {
 
     if (strict) {
       const module = this.getModule(scope);
-      return module.providers.get(token);
-    }
-
-    for (const { providers } of this.modules.values()) {
-      if (providers.isBound(token)) {
-        return providers.get<T>(token);
+      if (module.providers.isBound(token)) {
+        return module.providers.get(token);
+      }
+    } else {
+      for (const { providers } of this.modules.values()) {
+        if (providers.isBound(token)) {
+          return providers.get<T>(token);
+        }
       }
     }
 
@@ -85,14 +88,9 @@ export class NestContainer {
     }
 
     const token = Registry.getProviderToken(provider);
-    const modules = this.getModuleValues();
 
     return Utils.flatten<T | Promise<Type<Provider>>>(
-      Utils.filterWhen<NestModule>(
-        modules,
-        !!target,
-        module => module.target === target,
-      ).map(
+      this.getModulesFrom(target).map(
         ({ providers }) =>
           providers.isBound(token) ? providers.getAll(token) : [],
       ),
@@ -143,7 +141,7 @@ export class NestContainer {
 
   public async addModule(
     module: Partial<ModuleImport>,
-    scope: Type<NestModule>[],
+    scope: Type<NestModule>[] = [],
   ) {
     if (!module) throw new InvalidModuleException(scope);
 

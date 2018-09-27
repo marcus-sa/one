@@ -1,11 +1,11 @@
 import 'reflect-metadata';
+import { Test } from '@nest/testing';
 import {
   Injectable,
   InjectionToken,
   MissingInjectionTokenMessage,
   MultiInject,
 } from '@nest/core';
-import { Test } from '@nest/testing';
 
 describe('@MultiInject()', () => {
   it('should multi inject providers', async () => {
@@ -64,7 +64,7 @@ describe('@MultiInject()', () => {
     expect(ninja.shuriken).toBeInstanceOf(Shuriken);
   });
 
-  it('should throw error when not using an injection token', () => {
+  it('should throw error when not using an <InjectionToken>', () => {
     const message = MissingInjectionTokenMessage('@MultiInject()');
 
     expect(() => {

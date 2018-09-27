@@ -44,7 +44,7 @@ export class Registry {
   }
 
   public static hasForwardRef(provider: any) {
-    return provider && (<ForwardRef>provider).forwardRef;
+    return !!(provider && (<ForwardRef>provider).forwardRef);
   }
 
   public static getForwardRef(provider: ModuleImport) {

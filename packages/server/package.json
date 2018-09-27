@@ -19,6 +19,7 @@
     "@nest/platform-fastify": "*"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "jest-extended",
     "moduleNameMapper": {
       "@nest/core/(.*)": "<rootDir>/../core/src/$1",
       "@nest/server/(.*)": "<rootDir>/src/$1",

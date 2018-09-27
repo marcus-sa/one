@@ -85,7 +85,7 @@ export class Utils {
   ): val is Type<any> | InjectionToken<any> | Function {
     return (
       val &&
-      !this.isNil(val.name) &&
+      !!val.name &&
       (this.isFunction(val) || this.isFunction(val.constructor))
     );
   }

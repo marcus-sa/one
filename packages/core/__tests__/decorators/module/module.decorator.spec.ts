@@ -36,9 +36,7 @@ describe('@Module()', () => {
     }
 
     const test = await Test.createTestingModule({
-      imports: [
-        AppModule.forRoot(),
-      ],
+      imports: [AppModule.forRoot()],
     }).compile();
 
     const appModule = test.container.getModule(AppModule);

@@ -18,6 +18,7 @@
     "rxjs": "^6.2.2"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "jest-extended",
     "moduleNameMapper": {
       "@nest/core/(.*)": "<rootDir>/src/$1",
       "@nest/(.*)": "<rootDir>/../$1/src"

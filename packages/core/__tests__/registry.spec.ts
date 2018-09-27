@@ -24,9 +24,15 @@ describe('Registry', () => {
 
       const lazyInjects = Registry.getLazyInjects(Nest);
       expect(lazyInjects).toHaveLength(1);
+      expect(lazyInjects[0]).toContainAllKeys([
+        'target',
+        'lazyInject',
+        'forwardRef',
+      ]);
       expect(lazyInjects[0]).toHaveProperty('target', Nest);
-      expect(lazyInjects[0]).toHaveProperty('lazyInject');
-      expect(lazyInjects[0]).toHaveProperty('forwardRef');
+      expect(lazyInjects[0].lazyInject).toBeFunction();
+      expect(lazyInjects[0].forwardRef).toContainKey('forwardRef');
+      expect(lazyInjects[0].forwardRef.forwardRef).toBeFunction();
     });
   });
 
@@ -34,13 +40,15 @@ describe('Registry', () => {
     const forwardRef = () => {};
 
     it('should have forwardRef', () => {
-      expect(Registry.hasForwardRef({
-        forwardRef,
-      })).toBeTruthy();
+      expect(
+        Registry.hasForwardRef({
+          forwardRef,
+        }),
+      ).toBeTrue();
     });
 
     it('should not have forwardRef', () => {
-      expect(Registry.hasForwardRef(forwardRef)).toBeFalsy();
+      expect(Registry.hasForwardRef(forwardRef)).toBeFalse();
     });
   });
 
@@ -129,34 +137,38 @@ describe('Registry', () => {
     class NestModule {}
 
     it('should succeed with @Module() decorated', () => {
-      expect(Registry.isModule(NestModule)).toBeTruthy();
+      expect(Registry.isModule(NestModule)).toBeTrue();
     });
 
     it('should succeed with DynamicModule', () => {
-      expect(Registry.isModule({
-        module: NestModule,
-      })).toBeTruthy();
+      expect(
+        Registry.isModule({
+          module: NestModule,
+        }),
+      ).toBeTrue();
     });
 
     it('should fail with ProvideToken', () => {
       const NEST = new InjectionToken<void>('NEST');
 
-      expect(Registry.isModule({
-        provide: NEST,
-      })).toBeFalsy();
+      expect(
+        Registry.isModule({
+          provide: NEST,
+        }),
+      ).toBeFalse();
     });
 
     it('should fail with Injectable', () => {
       @Injectable()
       class Nest {}
 
-      expect(Registry.isModule(Nest)).toBeFalsy();
+      expect(Registry.isModule(Nest)).toBeFalse();
     });
 
     it('should fail with InjectionToken', () => {
       const NEST = new InjectionToken<void>('NEST');
 
-      expect(Registry.isModule(NEST)).toBeFalsy();
+      expect(Registry.isModule(NEST)).toBeFalse();
     });
   });
 });

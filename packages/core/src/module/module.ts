@@ -228,7 +228,7 @@ export class NestModule {
       .toProvider(() => <any>provider.useFactory(...deps));
   }
 
-  private bindProvider(scope: string, provider: Type<Provider>) {
+  private bindProvider(provider: Type<Provider>, scope?: string) {
     const binding = this.providers.bind(provider).toSelf();
 
     switch (scope) {
@@ -266,7 +266,7 @@ export class NestModule {
         const token = Registry.getForwardRef(forwardRef);
         lazyInject(this.lazyInject, <Token>token);
       });
-      this.bindProvider(scope, <Type<Provider>>provider);
+      this.bindProvider(<Type<Provider>>provider, scope);
     } else if (type === PROVIDER_TYPES.FACTORY) {
       await this.bindFactoryProvider(token, <FactoryProvider<any>>provider);
     } else if (type === PROVIDER_TYPES.VALUE) {

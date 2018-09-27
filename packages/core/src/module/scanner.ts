@@ -34,6 +34,7 @@ export class Scanner {
 
       await Promise.all([...imports].map(({ created }) => created));
       await module.create();
+      this.container.moduleOrder.add(module);
     };
 
     const rootModule = this.container

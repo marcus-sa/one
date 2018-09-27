@@ -3,17 +3,12 @@
   "scripts": {
     "precommit": "pretty-quick --staged",
     "commit": "git-cz",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
     "lint": "ts-lint -p tsconfig.json -c tslint.json",
     "bootstrap": "lerna bootstrap",
-    "test": "lerna run test --parallel --no-bail",
+    "test": "jest",
     "build": "lerna run build",
     "prepublish": "yarn test && yarn build",
     "clean": "rimraf packages/**/lib",
-    "examples:core": "node example.cli.js --example core",
-    "examples:circular": "node example.cli.js --example circular",
-    "examples:electron": "node example.cli.js --example core --watch core,electron",
     "pretty-quick": "pretty-quick"
   },
   "devDependencies": {
@@ -25,15 +20,12 @@
     "git-cz": "^1.7.1",
     "husky": "^0.14.3",
     "jest": "23.1.0",
+    "jest-extended": "^0.10.0",
     "lerna": "^2.9.0",
     "nodemon": "^1.18.4",
     "prettier": "^1.14.2",
     "pretty-quick": "^1.6.0",
     "rimraf": "^2.6.2",
-    "rollup": "^0.66.2",
-    "rollup-plugin-commonjs": "^9.1.8",
-    "rollup-plugin-node-resolve": "^3.4.0",
-    "rollup-plugin-typescript2": "^0.17.0",
     "ts-jest": "22.4.6",
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.5.0",
@@ -41,5 +33,29 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "jest": {
+    "setupTestFrameworkScriptFile": "jest-extended",
+    "moduleNameMapper": {
+      "@nest/server/(.*)": "<rootDir>/packages/server/src/$1",
+      "@nest/core/(.*)": "<rootDir>/packages/core/src/$1",
+      "@nest/(.*)": "<rootDir>/packages/$1/src"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "json"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "<rootDir>/packages/*/__tests__/**/*.(spec|test).+(ts|tsx)"
+    ]
+  }
 }
