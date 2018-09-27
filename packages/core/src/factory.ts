@@ -31,7 +31,7 @@ export class NestFactory {
 
   public select(module: Type<NestModule>) {
     return {
-      get: <T>(provider: Type<T> | InjectionToken<T>) => {
+      get: <T>(provider: Type<any> | InjectionToken<T>) => {
         return this.container.getProvider<T>(provider, module, {
           strict: true,
         });
@@ -43,15 +43,16 @@ export class NestFactory {
           );
         }
 
-        return this.container.getAllProviders(token, module);
+        return this.container.getAllProviders<T>(token, module);
       },
-      has: (provider: Type<T> | InjectionToken<T>) =>
-        this.container.isProviderBound(provider, module),
+      has: (provider: Type<any> | InjectionToken<any>) => {
+        return this.container.isProviderBound(provider, module);
+      },
     };
   }
 
-  public has<T>(provider: Type<T> | InjectionToken<T>) {
-    return this.container.isProviderBound<T>(provider);
+  public has(provider: Type<any> | InjectionToken<any>) {
+    return this.container.isProviderBound(provider);
   }
 
   public getAll<T>(token: InjectionToken<T>) {
@@ -62,7 +63,7 @@ export class NestFactory {
     return this.container.getAllProviders<T>(token);
   }
 
-  public get<T>(provider: Type<T> | InjectionToken<T>) {
+  public get<T>(provider: Type<any> | InjectionToken<T>) {
     return this.container.getProvider<T>(provider);
   }
 }

@@ -5,11 +5,11 @@ import { InjectionToken } from '../module';
 import { Registry } from '../registry';
 
 export function MultiInject<T>(token: InjectionToken<T>) {
-  return (...args: any[]) => {
+  return (target: object, propertyKey: string, index?: number) => {
     if (!Registry.isInjectionToken(token)) {
       throw new MissingInjectionTokenException('@MultiInject()');
     }
 
-    multiInject(token.name)(...args);
+    multiInject(token.name)(target, propertyKey, index);
   };
 }

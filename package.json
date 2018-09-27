@@ -6,8 +6,6 @@
     "lint": "ts-lint -p tsconfig.json -c tslint.json",
     "bootstrap": "lerna bootstrap",
     "test": "jest",
-    "build": "lerna run build",
-    "prepublish": "yarn test && yarn build",
     "clean": "rimraf packages/**/lib",
     "pretty-quick": "pretty-quick"
   },

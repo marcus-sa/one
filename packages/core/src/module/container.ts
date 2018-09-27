@@ -41,9 +41,13 @@ export class NestContainer {
       : this.getModuleValues();
   }
 
-  public isProviderBound(provider: Token, module?: Type<NestModule>) {
+  public isProviderBound(
+    provider: Type<any> | InjectionToken<any>,
+    module?: Type<NestModule>,
+  ) {
+    const token = Registry.getProviderToken(provider);
     return this.getModulesFrom(module).some(({ providers }) =>
-      providers.isBound(provider),
+      providers.isBound(token),
     );
   }
 
@@ -58,15 +62,15 @@ export class NestContainer {
 
   public getProvider<T>(
     provider: Type<T> | InjectionToken<T>,
-    scope: Type<NestModule>,
+    scope?: Type<NestModule>,
     { strict }: StrictSelect = {},
   ): T {
     const token = Registry.getProviderToken(provider);
 
     if (strict) {
-      const module = this.getModule(scope);
-      if (module.providers.isBound(token)) {
-        return module.providers.get(token);
+      const module = this.getModule(scope!);
+      if (module!.providers.isBound(token)) {
+        return module!.providers.get(token);
       }
     } else {
       for (const { providers } of this.modules.values()) {
@@ -76,7 +80,7 @@ export class NestContainer {
       }
     }
 
-    throw new UnknownProviderException(<any>provider, scope);
+    throw new UnknownProviderException(<any>provider, scope!);
   }
 
   public getAllProviders<T>(
