@@ -1,8 +1,7 @@
-import 'reflect-metadata';
-import { SCOPES, SCOPE } from '../../constants';
+import { SCOPES, SCOPE_METADATA } from '../../constants';
 
 export function RequestScope(): ClassDecorator {
   return (target: object) => {
-    Reflect.defineMetadata(SCOPE, SCOPES.REQUEST, target);
+    Reflect.defineMetadata(SCOPE_METADATA, SCOPES.REQUEST, target);
   };
 }

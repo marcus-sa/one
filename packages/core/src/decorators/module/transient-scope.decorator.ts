@@ -1,8 +1,7 @@
-import 'reflect-metadata';
-import { SCOPES, SCOPE } from '../../constants';
+import { SCOPES, SCOPE_METADATA } from '../../constants';
 
 export function TransientScope(): ClassDecorator {
-  return target => {
-    Reflect.defineMetadata(SCOPE, SCOPES.TRANSIENT, target);
+  return (target: object) => {
+    Reflect.defineMetadata(SCOPE_METADATA, SCOPES.TRANSIENT, target);
   };
 }

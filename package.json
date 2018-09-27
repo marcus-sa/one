@@ -3,52 +3,47 @@
   "scripts": {
     "precommit": "pretty-quick --staged",
     "commit": "git-cz",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
     "lint": "ts-lint -p tsconfig.json -c tslint.json",
     "bootstrap": "lerna bootstrap",
     "test": "jest",
-    "prepublish": "yarn test && lerna run prepare",
     "clean": "rimraf packages/**/lib",
-    "examples:core": "node example.cli.js --example core",
-    "examples:circular": "node example.cli.js --example circular",
-    "examples:electron": "node example.cli.js --example core --watch core,electron",
     "pretty-quick": "pretty-quick"
   },
   "devDependencies": {
     "@types/jest": "^23.3.1",
+    "@types/lodash.get": "^4.4.4",
+    "@types/lodash.set": "^4.3.4",
     "@types/node": "^8.0.28",
+    "@types/object-hash": "^1.2.0",
     "git-cz": "^1.7.1",
     "husky": "^0.14.3",
     "jest": "23.1.0",
+    "jest-extended": "^0.10.0",
     "lerna": "^2.9.0",
-    "nodemon": "^1.18.3",
+    "nodemon": "^1.18.4",
     "prettier": "^1.14.2",
     "pretty-quick": "^1.6.0",
-    "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "ts-jest": "22.4.6",
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.5.0",
-    "typescript": "^3.0.1",
-    "yargs": "^12.0.1"
+    "typescript": "^3.0.1"
   },
   "workspaces": [
     "packages/*"
   ],
   "jest": {
+    "setupTestFrameworkScriptFile": "jest-extended",
     "moduleNameMapper": {
-      "@nuclei/(.*)": "<rootDir>/packages/$1/src"
+      "@nest/server/(.*)": "<rootDir>/packages/server/src/$1",
+      "@nest/core/(.*)": "<rootDir>/packages/core/src/$1",
+      "@nest/(.*)": "<rootDir>/packages/$1/src"
     },
     "moduleFileExtensions": [
       "js",
-      "jsx",
       "ts",
-      "tsx",
-      "json",
-      "node"
+      "json"
     ],
-    "collectCoverage": true,
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
@@ -58,7 +53,7 @@
       }
     },
     "testMatch": [
-      "<rootDir>/packages/*/__tests__/**/*.(spec|test).+(ts|tsx|js)"
+      "<rootDir>/packages/*/__tests__/**/*.(spec|test).+(ts|tsx)"
     ]
   }
 }

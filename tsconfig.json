@@ -1,13 +1,12 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./packages",
     "paths": {
-      "@one/*": ["./packages/*/src"]
+      "@nest/server/*": ["./server/src/*"],
+      "@nest/core/*": ["./core/src/*"],
+      "@nest/*": ["./*/src"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "examples"
-  ]
+  "exclude": ["node_modules", "examples"]
 }

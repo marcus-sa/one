@@ -1,17 +1,16 @@
 {
-  "private": true,
-  "name": "@one/testing",
+  "name": "@nest/testing",
   "version": "1.0.0",
-  "description": "Testing utilities for Nuclei",
+  "description": "",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "prepare": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json"
   },
   "keywords": [],
   "author": "Marcus S. Abildskov",
   "license": "MIT",
   "dependencies": {
-    "@one/core": "1.0.0"
+    "@nest/core": "*"
   }
 }

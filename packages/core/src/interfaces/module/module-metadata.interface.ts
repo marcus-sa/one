@@ -1,12 +1,19 @@
 import { DynamicModule } from './dynamic-module.interface';
+import { ForwardRef } from '../forward-ref.interface';
 import { Provider } from '../provider.interface';
+import { InjectionToken } from '../../module';
 import { Type } from '../type.interface';
 
-export type ModuleImport = Type<any> | DynamicModule;
-export type ModuleExport = Provider | Type<any> | DynamicModule | symbol;
+export type ModuleExport = Provider | DynamicModule;
+export type Dependency = Type<any> | InjectionToken<any> | ForwardRef;
+export type ModuleImport =
+  | Provider
+  | Promise<DynamicModule>
+  | DynamicModule
+  | Dependency;
 
 export interface ModuleMetadata {
-  imports?: Array<ModuleImport | Promise<DynamicModule>>;
-  exports?: Array<ModuleExport | Promise<DynamicModule>>;
+  imports?: ModuleImport[];
+  exports?: ModuleExport[];
   providers?: Provider[];
 }

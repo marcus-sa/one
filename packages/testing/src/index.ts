@@ -1,1 +1,2 @@
-export * from './testbed';
+export * from './test';
+export * from './testing-module';

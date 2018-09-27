@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Module } from '@one/core';
+import { APP_INIT, Module, MODULE_INIT } from '@nest/core';
 
 import { NestModule } from './nest';
 import { AppService } from './app.service';
@@ -8,17 +8,16 @@ import { MoreNestService } from './nest/more-nest';
   imports: [NestModule.forRoot()],
   providers: [
     AppService,
-    // @TODO: Doesn't resolve in correct order
     {
-      provide: APP_INITIALIZER,
-      useFactory: (moreNest: MoreNestService) => moreNest.hello(),
-      deps: [MoreNestService],
+      provide: APP_INIT,
+      useFactory: (app: AppService) => app.start(),
+      deps: [AppService],
       multi: true,
     },
     {
-      provide: APP_INITIALIZER,
-      useFactory: (app: AppService) => app.start(),
-      deps: [AppService],
+      provide: MODULE_INIT,
+      useFactory: (moreNest: MoreNestService) => moreNest.hello(),
+      deps: [MoreNestService],
       multi: true,
     },
   ],
