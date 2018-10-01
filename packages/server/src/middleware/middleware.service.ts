@@ -9,7 +9,7 @@ import {
 
 import { MiddlewareContainer } from './middleware-container.service';
 import { MiddlewareResolver } from './middleware-resolver.service';
-import { MiddlewareBuilder } from './middleware-builder.service';
+import { MiddlewareBuilder } from './middleware-builder';
 import { RoutesMapper } from './routes-mapper.service';
 import { InvalidMiddlewareException } from '../errors';
 import { RequestMethod } from '../enums';
@@ -43,14 +43,13 @@ export class Middleware {
 
   // @TODO: Resolve middleware per module initialization
   public async resolveMiddleware(
-    controllers: Type<any>[],
     options: ServerFeatureOptions,
     injector: Injector,
   ) {
-    this.loadConfiguration(controllers, injector, options);
+    this.loadConfiguration(options, injector);
 
     await Promise.all(
-      controllers.map(async controller => {
+      options.controllers.map(async controller => {
         const instance = injector.get(controller);
 
         // const instance = this.container.getModule(token);
@@ -59,7 +58,6 @@ export class Middleware {
   }
 
   public loadConfiguration(
-    controllers: Type<any>[],
     options: ServerFeatureOptions,
     injector: Injector,
   ) {
@@ -71,7 +69,7 @@ export class Middleware {
     configure(middlewareBuilder);
 
     const config = middlewareBuilder.build();
-    this.middlewareContainer.addConfig(config, controllers);
+    this.middlewareContainer.addConfig(config, options.controllers);
   }
 
   public async register() {

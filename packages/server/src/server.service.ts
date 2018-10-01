@@ -31,16 +31,14 @@ export class ServerService {
   // Resolve once feature module has been initialized
   // which means every controller and configuration middleware will be available
   public async resolve(
-    controllers: Type<any>[],
     options: ServerFeatureOptions,
   ) {
     await this.middleware.resolveMiddleware(
-      controllers,
       options,
       this.injector,
     );
 
-    this.routesResolver.resolve(controllers, options);
+    this.routesResolver.resolve(options);
 
     /*controllers.forEach(ref => {
       const configuration = this.injector.get(options.configure);

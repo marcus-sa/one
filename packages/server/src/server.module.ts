@@ -1,14 +1,16 @@
 import { APP_INIT, DynamicModule, Module, MODULE_INIT, Type } from '@nest/core';
 
+import { HTTP_SERVER, HTTP_SERVER_OPTIONS } from './tokens';
+import { ServerService } from './server.service';
 import {
   HttpServer,
   HttpServerOptions,
   ServerFeatureOptions,
 } from './interfaces';
-import { HTTP_SERVER, HTTP_SERVER_OPTIONS } from './tokens';
+
 import { MiddlewareModule } from './middleware';
-import { ServerService } from './server.service';
 import { RouterModule } from './router';
+import { HelpersModule } from './helpers';
 
 @Module()
 export class ServerModule {
@@ -18,7 +20,11 @@ export class ServerModule {
   ): DynamicModule {
     return {
       module: ServerModule,
-      imports: [MiddlewareModule, RouterModule],
+      imports: [
+        MiddlewareModule,
+        HelpersModule,
+        RouterModule,
+      ],
       providers: [
         ServerService,
         {
@@ -40,20 +46,17 @@ export class ServerModule {
   }
 
   static forFeature(
-    controllers: Type<any>[],
-    options: ServerFeatureOptions = {},
+    metadata: ServerFeatureOptions,
   ): DynamicModule {
     return {
       module: ServerModule,
       imports: [ServerService],
       providers: [
-        ...controllers,
-        // Support dependency injection?
-        options.configure,
+        ...metadata.controllers,
+        metadata.configure,
         {
           provide: MODULE_INIT,
-          useFactory: (server: ServerService) =>
-            server.resolve(controllers, options),
+          useFactory: (server: ServerService) => server.resolve(metadata),
           deps: [ServerService],
           multi: true,
         },

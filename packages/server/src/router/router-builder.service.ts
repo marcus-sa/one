@@ -1,15 +1,16 @@
 import { Injectable, Injector, Type, Utils } from '@nest/core';
 
+import { ExternalContextCreator, ROUTE_MAPPED_MESSAGE } from '../helpers';
 import { RouterMethodFactory } from './router-method-factory.service';
 import { UnknownRequestMappingException } from '../errors';
 import { MetadataStorage } from '../metadata-storage';
 import { RoutePathProperties } from '../interfaces';
-import { ROUTE_MAPPED_MESSAGE } from '../helpers';
 import { RequestMethod } from '../enums';
 
 @Injectable()
 export class RouterBuilder {
   constructor(
+    private readonly executionContextCreator: ExternalContextCreator,
     private readonly routerMethodFactory: RouterMethodFactory,
     private readonly injector: Injector,
   ) {}
@@ -100,7 +101,7 @@ export class RouterBuilder {
   }
 
   public extractRouterPath(target: Type<any>, prefix?: string) {
-    let { path } = MetadataStorage.getController(target);
+    let path = MetadataStorage.getControllerPath(target);
     if (prefix) path = prefix + this.validateRoutePath(path);
     return this.validateRoutePath(path);
   }

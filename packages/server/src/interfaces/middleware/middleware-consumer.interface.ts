@@ -1,6 +1,8 @@
 import { Type } from '@nest/core';
 
-import { MiddlewareConfigProxy } from './middleware-config-proxy.interface';
+import { MiddlewareConfigProxy } from '../../middleware';
+
+// import { MiddlewareConfigProxy } from './middleware-config-proxy.interface';
 
 export interface MiddlewareConsumer {
   /**

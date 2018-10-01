@@ -198,7 +198,7 @@ export class NestModule {
     return provider;
   }
 
-  private async getDependencies(dependencies: ModuleImport[]) {
+  private async getDependencies(dependencies: ModuleImport[] = []) {
     return await Promise.all(
       dependencies.map(dependency => {
         const ref = Registry.getForwardRef(dependency);
