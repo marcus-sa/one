@@ -1,13 +1,10 @@
-import { Injectable } from '@nest/core';
+import { Injectable, Reflector } from '@nest/core';
 
-import { MetadataStorage } from '../metadata-storage';
+import { PATH_METADATA } from '../tokens';
 
 export function Controller(path: string): ClassDecorator {
   return (target: object) => {
-    MetadataStorage.controllers.add({
-      target,
-      path,
-    });
+    Reflector.set(PATH_METADATA, path, target);
 
     Injectable()(target);
   };

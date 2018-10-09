@@ -60,6 +60,10 @@ export class Utils {
     }
   }
 
+  public static isEmpty(array: any[]){
+    return !(array && array.length > 0);
+  }
+
   public static async getDeferred<T>(value: any): Promise<T> {
     return this.isPromise(value) ? await value : value;
   }
