@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "ts-node -r tsconfig-paths/register src/index.ts"
+  }
+}
