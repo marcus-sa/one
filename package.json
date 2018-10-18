@@ -18,7 +18,7 @@
     "git-cz": "^1.7.1",
     "husky": "^0.14.3",
     "jest": "23.1.0",
-    "jest-extended": "^0.10.0",
+    "jest-extended": "^0.11.0",
     "lerna": "^2.9.0",
     "nodemon": "^1.18.4",
     "prettier": "^1.14.2",
