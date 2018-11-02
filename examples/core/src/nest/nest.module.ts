@@ -1,20 +1,20 @@
-import { DynamicModule, Module } from '@nest/core';
+import { DynamicModule, Module } from '@one/core';
 
-import { MoreNestModule } from './more-nest';
-import { LessNestModule } from './less-nest';
+import { MoreOneModule } from './more-nest';
+import { LessOneModule } from './less-nest';
 import { NestService } from './nest.service';
 
 @Module()
-export class NestModule {
+export class OneModule {
   public static forRoot(): Promise<DynamicModule> {
     return new Promise(resolve => {
       setTimeout(() => {
-        console.log('NestModule#forRoot');
+        console.log('OneModule#forRoot');
         resolve({
-          module: NestModule,
-          imports: [LessNestModule, MoreNestModule],
+          module: OneModule,
+          imports: [LessOneModule, MoreOneModule],
           providers: [NestService],
-          exports: [MoreNestModule, NestService],
+          exports: [MoreOneModule, NestService],
         });
       }, 500);
     });

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Injectable, Module, ModuleCompiler, Registry } from '@nest/core';
+import { Injectable, Module, ModuleCompiler, Registry } from '@one/core';
 
 describe('ModuleCompiler', () => {
   let compiler: ModuleCompiler;
@@ -15,7 +15,7 @@ describe('ModuleCompiler', () => {
   });
 
   describe('compile', () => {
-    it('should compile <Type<NestModule>>', async () => {
+    it('should compile <Type<OneModule>>', async () => {
       const moduleFactory = await compiler.compile(TestModule);
 
       expect(moduleFactory).toContainAllEntries([
@@ -83,7 +83,7 @@ describe('ModuleCompiler', () => {
       expect(moduleFactory).toContainAllEntries([['target', Nest]]);
     });
 
-    it('should return <ModuleFactory> when <Type<NestModule>> is provided', async () => {
+    it('should return <ModuleFactory> when <Type<OneModule>> is provided', async () => {
       const moduleFactory = await (<any>compiler).extractMetadata(TestModule);
 
       expect(isDynamicModuleSpy).toHaveReturnedWith(false);

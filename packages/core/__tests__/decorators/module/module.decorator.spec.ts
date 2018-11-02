@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { Injectable, Module, ModuleWithProviders } from '@nest/core';
-import { Test } from '@nest/testing';
+import { Injectable, Module, ModuleWithProviders } from '@one/core';
+import { Test } from '@one/testing';
 
 describe('@Module()', () => {
   it('should accept ModuleMetadata', async () => {

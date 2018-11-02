@@ -1,11 +1,11 @@
 import 'reflect-metadata';
-import { Test } from '@nest/testing';
+import { Test } from '@one/testing';
 import {
   Injectable,
   InjectionToken,
   MissingInjectionTokenMessage,
   MultiInject,
-} from '@nest/core';
+} from '@one/core';
 
 describe('@MultiInject()', () => {
   it('should multi inject providers', async () => {

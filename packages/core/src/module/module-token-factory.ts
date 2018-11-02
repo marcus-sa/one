@@ -2,12 +2,12 @@ import hash from 'object-hash';
 
 import { SHARED_MODULE_METADATA } from '../constants';
 import { Type, DynamicModule } from '../interfaces';
-import { NestModule } from './module';
+import { OneModule } from './module';
 
 export class ModuleTokenFactory {
   public create(
-    target: Type<NestModule>,
-    scope: Type<NestModule>[],
+    target: Type<OneModule>,
+    scope: Type<OneModule>[],
     dynamicModuleMetadata?: Partial<DynamicModule>,
   ): string {
     const reflectedScope = this.reflectScope(target);
@@ -28,11 +28,11 @@ export class ModuleTokenFactory {
     return dynamicModuleMetadata ? JSON.stringify(dynamicModuleMetadata) : '';
   }
 
-  private getModuleName(target: Type<NestModule>) {
+  private getModuleName(target: Type<OneModule>) {
     return target.name;
   }
 
-  public getScopeStack(scope: Type<NestModule>[]): string[] {
+  public getScopeStack(scope: Type<OneModule>[]): string[] {
     const reversedScope = scope.reverse();
     const firstGlobalIndex = reversedScope.findIndex(
       s => this.reflectScope(s) === 'global',
@@ -46,7 +46,7 @@ export class ModuleTokenFactory {
     return stack.map(module => module.name);
   }
 
-  private reflectScope(target: Type<NestModule>) {
+  private reflectScope(target: Type<OneModule>) {
     const scope = Reflect.getMetadata(SHARED_MODULE_METADATA, target);
     return scope ? scope : 'global';
   }

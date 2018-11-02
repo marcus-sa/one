@@ -1,5 +1,5 @@
 {
-  "name": "@nest/cli",
+  "name": "@one/cli",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -14,7 +14,7 @@
   "author": "Marcus S. Abildskov",
   "license": "MIT",
   "dependencies": {
-    "@nest/core": "*",
+    "@one/core": "*",
     "commander": "*"
   },
   "devDependencies": {

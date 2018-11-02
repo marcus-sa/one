@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 import { Type, Provider } from './interfaces';
-import { NestModule } from './module';
+import { OneModule } from './module';
 import {
   SCOPE_METADATA,
   PROVIDER_METADATA,
@@ -11,11 +11,11 @@ import {
 export class ReflectorFactory<T> {
   constructor(private readonly target?: T) {}
 
-  public defineByKeys<T = object>(
-    metadata: { [name: string]: any },
-    target: T = this.target,
+  public defineByKeys<S = object>(
+    metadata: any,
+    target: S = this.target,
     exclude: string[] = [],
-  ): T {
+  ): S | T {
     Object.keys(metadata)
       .filter(p => !exclude.includes(p))
       .forEach(property => {
@@ -25,7 +25,7 @@ export class ReflectorFactory<T> {
     return target;
   }
 
-  public get(metadataKey: string | symbol, target: Type<any> = this.target) {
+  public get(metadataKey: string | symbol, target: any = this.target) {
     return Reflect.getMetadata(metadataKey, target) || [];
   }
 
@@ -42,11 +42,11 @@ export class ReflectorFactory<T> {
     return Reflect.hasMetadata(metadataKey, target);
   }
 
-  public isGlobalModule(target: Type<NestModule> = this.target) {
+  public isGlobalModule(target: Type<OneModule> = this.target) {
     return Reflect.hasMetadata(SHARED_MODULE_METADATA, target);
   }
 
-  public isProvider(target: Type<Provider | NestModule> = this.target) {
+  public isProvider(target: Type<Provider | OneModule> = this.target) {
     return Reflect.hasMetadata(PROVIDER_METADATA, target);
   }
 

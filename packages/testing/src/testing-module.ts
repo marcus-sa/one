@@ -1,4 +1,4 @@
-import { Dependency, NestFactory, Provider, Token, Type } from '@nest/core';
+import { Dependency, OneFactory, Provider, Token, Type } from '@nest/core';
 
 import { OverrideBy, OverrideByFactoryOptions } from './interfaces';
 
@@ -6,7 +6,7 @@ export interface Overload extends OverrideBy {
   isComponent: boolean;
 }
 
-export class TestingModule extends NestFactory {
+export class TestingModule extends OneFactory {
   private readonly overloadsMap = new Map<Dependency, Overload>();
 
   private createOverrideByBuilder(

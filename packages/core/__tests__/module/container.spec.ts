@@ -2,12 +2,12 @@ import 'reflect-metadata';
 import {
   Injectable,
   Module,
-  NestContainer,
+  OneContainer,
   UnknownProviderException,
-} from '@nest/core';
+} from '@one/core';
 
-describe('NestContainer', () => {
-  let container: NestContainer;
+describe('OneContainer', () => {
+  let container: OneContainer;
 
   @Module()
   class TestModule {}
@@ -19,7 +19,7 @@ describe('NestContainer', () => {
   class Nest {}
 
   beforeEach(() => {
-    container = new NestContainer();
+    container = new OneContainer();
   });
 
   describe('getModules', () => {

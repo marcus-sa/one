@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { MissingRequiredDependencyException } from './errors';
-import { InjectionToken, NestModule } from './module';
+import { InjectionToken, OneModule } from './module';
 import { Type } from './interfaces';
 
 export interface DeferredPromise<T> extends Promise<T> {
@@ -146,7 +146,7 @@ export class Utils {
     return (<Array<[S, T]>>[...entries]).map<T>(([_, value]) => value);
   }
 
-  public static concat<T = Type<NestModule>>(...props: any[]): T[] {
+  public static concat<T = Type<OneModule>>(...props: any[]): T[] {
     return [].concat(...props);
   }
 

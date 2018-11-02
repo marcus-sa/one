@@ -3,9 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
-      "@nest/server/*": ["./server/src/*"],
-      "@nest/core/*": ["./core/src/*"],
-      "@nest/*": ["./*/src"]
+      "@one/core/*": ["./core/src/*"],
+      "@one/*": ["./*/src"]
     }
   },
   "exclude": ["node_modules", "examples"]

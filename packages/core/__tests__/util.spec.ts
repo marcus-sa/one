@@ -1,5 +1,5 @@
-import { DeferredPromise, Utils } from '@nest/core';
-import { MissingRequiredDependencyMessage } from '@nest/core/errors/messages';
+import { DeferredPromise, Utils } from '@one/core';
+import { MissingRequiredDependencyMessage } from '@one/core/errors/messages';
 
 describe('Utils', () => {
   let isFunctionSpy: jest.SpyInstance;

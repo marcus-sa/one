@@ -1,9 +1,9 @@
 import { CircularDependencyException } from '../errors';
-import { NestContainer } from './container';
+import { OneContainer } from './container';
 import { Reflector } from '../reflector';
 import { METADATA } from '../constants';
 import { Registry } from '../registry';
-import { NestModule } from './module';
+import { OneModule } from './module';
 import { Utils } from '../util';
 import {
   ModuleExport,
@@ -16,9 +16,9 @@ import {
 } from '../interfaces';
 
 export class Scanner {
-  constructor(private readonly container: NestContainer) {}
+  constructor(private readonly container: OneContainer) {}
 
-  public async scan(module: Type<NestModule>) {
+  public async scan(module: Type<OneModule>) {
     await this.scanForModules(module);
     await this.scanModulesForDependencies();
     this.container.bindGlobalScope();
@@ -26,7 +26,7 @@ export class Scanner {
   }
 
   private async createModules() {
-    const traverse = async (module: NestModule) => {
+    const traverse = async (module: OneModule) => {
       const imports = module.imports.values();
       for (const innerModule of imports) {
         await traverse(innerModule);
@@ -46,7 +46,7 @@ export class Scanner {
 
   private async scanForModules(
     module: ModuleImport,
-    scope: Type<NestModule>[] = [],
+    scope: Type<OneModule>[] = [],
     ctxRegistry: ModuleImport[] = [],
   ) {
     await this.storeModule(module, scope);
@@ -56,7 +56,7 @@ export class Scanner {
       module = (<ForwardRef>module).forwardRef();
     }
 
-    const imports = Reflector.get(METADATA.IMPORTS, <Type<NestModule>>module);
+    const imports = Reflector.get(METADATA.IMPORTS, <Type<OneModule>>module);
     const modules = Registry.isDynamicModule(module)
       ? [...imports, ...(module.imports || [])]
       : imports;
@@ -71,7 +71,7 @@ export class Scanner {
 
   private async storeModule(
     module: Partial<ModuleImport>,
-    scope: Type<NestModule>[],
+    scope: Type<OneModule>[],
   ) {
     if (Registry.hasForwardRef(module)) {
       return await this.container.addModule(
@@ -98,7 +98,7 @@ export class Scanner {
     }
 
     await this.container.addImport(
-      <Type<NestModule> | DynamicModule>related,
+      <Type<OneModule> | DynamicModule>related,
       token,
     );
   }
@@ -113,7 +113,7 @@ export class Scanner {
     }
   }
 
-  private async reflectProviders(module: Type<NestModule>, token: string) {
+  private async reflectProviders(module: Type<OneModule>, token: string) {
     const providers = this.getDynamicMetadata<Provider>(
       module,
       token,
@@ -130,7 +130,7 @@ export class Scanner {
   }
 
   private getDynamicMetadata<T = Token>(
-    module: Type<NestModule>,
+    module: Type<OneModule>,
     token: string,
     metadataKey: keyof DynamicModule,
   ): T[] {
@@ -140,7 +140,7 @@ export class Scanner {
     ];
   }
 
-  private reflectExports(module: Type<NestModule>, token: string) {
+  private reflectExports(module: Type<OneModule>, token: string) {
     const exports = this.getDynamicMetadata<ModuleExport>(
       module,
       token,
@@ -157,7 +157,7 @@ export class Scanner {
   }
 
   private async reflectImports(
-    module: Type<NestModule>,
+    module: Type<OneModule>,
     token: string,
     context: string,
   ) {

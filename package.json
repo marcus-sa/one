@@ -35,9 +35,8 @@
   "jest": {
     "setupTestFrameworkScriptFile": "jest-extended",
     "moduleNameMapper": {
-      "@nest/server/(.*)": "<rootDir>/packages/server/src/$1",
-      "@nest/core/(.*)": "<rootDir>/packages/core/src/$1",
-      "@nest/(.*)": "<rootDir>/packages/$1/src"
+      "@one/core/(.*)": "<rootDir>/packages/core/src/$1",
+      "@one/(.*)": "<rootDir>/packages/$1/src"
     },
     "moduleFileExtensions": [
       "js",

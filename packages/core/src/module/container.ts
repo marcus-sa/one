@@ -2,7 +2,7 @@ import { InjectionToken } from './injection-token';
 import { ModuleCompiler } from './compiler';
 import { Reflector } from '../reflector';
 import { Registry } from '../registry';
-import { NestModule } from './module';
+import { OneModule } from './module';
 import { Utils } from '../util';
 import {
   UnknownModuleException,
@@ -24,18 +24,18 @@ export interface StrictSelect {
   strict?: boolean;
 }
 
-export class NestContainer {
+export class OneContainer {
   private readonly moduleCompiler = new ModuleCompiler();
-  private readonly globalModules = new Set<NestModule>();
-  private readonly modules = new Map<string, NestModule>();
-  public readonly moduleOrder = new Set<NestModule>();
+  private readonly globalModules = new Set<OneModule>();
+  private readonly modules = new Map<string, OneModule>();
+  public readonly moduleOrder = new Set<OneModule>();
   public readonly providerTokens: Token[] = [];
   private readonly dynamicModulesMetadata = new Map<
     string,
     Partial<DynamicModule>
   >();
 
-  private getModulesFrom(module?: Type<NestModule>) {
+  private getModulesFrom(module?: Type<OneModule>) {
     return !Utils.isNil(module)
       ? [this.getModule(module)]
       : this.getModuleValues();
@@ -43,7 +43,7 @@ export class NestContainer {
 
   public isProviderBound(
     provider: Type<any> | InjectionToken<any>,
-    module?: Type<NestModule>,
+    module?: Type<OneModule>,
   ) {
     const token = Registry.getProviderToken(provider);
     return this.getModulesFrom(module).some(({ providers }) =>
@@ -62,7 +62,7 @@ export class NestContainer {
 
   public getProvider<T>(
     provider: Type<T> | InjectionToken<T>,
-    scope?: Type<NestModule>,
+    scope?: Type<OneModule>,
     { strict }: StrictSelect = {},
   ): T {
     const token = Registry.getProviderToken(provider);
@@ -85,7 +85,7 @@ export class NestContainer {
 
   public getAllProviders<T>(
     provider: InjectionToken<T>,
-    target?: Type<NestModule>,
+    target?: Type<OneModule>,
   ) {
     if (!Registry.isInjectionToken(provider)) {
       throw new MissingInjectionTokenException('Container.getAllProviders()');
@@ -102,14 +102,14 @@ export class NestContainer {
   }
 
   public getModuleValues() {
-    return Utils.getValues<NestModule>(this.modules.entries());
+    return Utils.getValues<OneModule>(this.modules.entries());
   }
 
   public hasModule(module: Type<any>) {
     return this.getModuleValues().some(({ target }) => target === module);
   }
 
-  public getModule(module: Type<any>): NestModule | undefined {
+  public getModule(module: Type<any>): OneModule | undefined {
     return this.getModuleValues().find(({ target }) => target === module);
   }
 
@@ -118,7 +118,7 @@ export class NestContainer {
       throw new UnknownModuleException([]);
     }
 
-    return <NestModule>this.modules.get(token);
+    return <OneModule>this.modules.get(token);
   }
 
   public getReversedModules() {
@@ -139,13 +139,13 @@ export class NestContainer {
     module.addExported(component);
   }
 
-  public addGlobalModule(module: NestModule) {
+  public addGlobalModule(module: OneModule) {
     this.globalModules.add(module);
   }
 
   public async addModule(
     module: Partial<ModuleImport>,
-    scope: Type<NestModule>[] = [],
+    scope: Type<OneModule>[] = [],
   ) {
     if (!module) throw new InvalidModuleException(scope);
 
@@ -156,19 +156,19 @@ export class NestContainer {
     } = await this.moduleCompiler.compile(module, scope);
     if (this.modules.has(token)) return;
 
-    const nestModule = new NestModule(target, scope, this);
-    nestModule.addGlobalProviders();
-    this.modules.set(token, nestModule);
+    const oneModule = new OneModule(target, scope, this);
+    oneModule.addGlobalProviders();
+    this.modules.set(token, oneModule);
 
     const modules = Utils.concat(scope, target);
     this.addDynamicMetadata(token, dynamicMetadata!, modules);
-    Reflector.isGlobalModule(target) && this.addGlobalModule(nestModule);
+    Reflector.isGlobalModule(target) && this.addGlobalModule(oneModule);
   }
 
   private addDynamicMetadata(
     token: string,
     dynamicModuleMetadata: Partial<DynamicModule>,
-    scope: Type<NestModule>[],
+    scope: Type<OneModule>[],
   ) {
     if (!dynamicModuleMetadata) return;
 
@@ -178,7 +178,7 @@ export class NestContainer {
 
   private addDynamicModules(
     modules: ModuleImport[] = [],
-    scope: Type<NestModule>[],
+    scope: Type<OneModule>[],
   ) {
     modules.forEach(module => this.addModule(module, scope));
   }
@@ -187,15 +187,15 @@ export class NestContainer {
     this.modules.forEach(module => this.bindGlobalsToImports(module));
   }
 
-  private bindGlobalsToImports(module: NestModule) {
+  private bindGlobalsToImports(module: OneModule) {
     this.globalModules.forEach(globalModule =>
       this.bindGlobalModuleToModule(module, globalModule),
     );
   }
 
   private bindGlobalModuleToModule(
-    module: NestModule,
-    globalModule: NestModule,
+    module: OneModule,
+    globalModule: OneModule,
   ) {
     if (module === globalModule) return;
     module.addImport(globalModule);

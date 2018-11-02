@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Injectable, PROVIDER_METADATA, Reflector } from '@nest/core';
+import { Injectable, PROVIDER_METADATA, Reflector } from '@one/core';
 
 describe('@Injectable()', () => {
   it('should define metadata on class as injectable', () => {

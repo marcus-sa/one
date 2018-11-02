@@ -1,4 +1,4 @@
-import { bootstrap } from '@nest/core';
+import { bootstrap } from '@one/core';
 
 import { AppModule } from './app.module';
 

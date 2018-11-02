@@ -14,14 +14,13 @@ import { THIRD_SERVICE } from './tokens';
       provide: THIRD_SERVICE,
       useValue: 'test',
     },
-    {
+    /*{
       provide: 'INVALID_TOKEN',
       useValue: 'lol',
-    },
+    },*/
     {
       provide: APP_INIT,
       useFactory: (first: FirstService) => console.log(first),
-      // forwardRef(() => FirstService)
       deps: [FirstService],
       multi: true,
     },

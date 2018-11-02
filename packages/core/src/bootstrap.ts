@@ -1,8 +1,8 @@
 import { Type } from './interfaces';
 
-import { NestFactory } from './factory';
+import { OneFactory } from './factory';
 
 export async function bootstrap(module: Type<any>) {
-  const factory = new NestFactory(module);
+  const factory = new OneFactory(module);
   await factory.start();
 }

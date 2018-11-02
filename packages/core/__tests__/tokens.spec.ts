@@ -7,8 +7,8 @@ import {
   MODULE_REF,
   ModuleMetadata,
   Utils,
-} from '@nest/core';
-import { Test } from '@nest/testing';
+} from '@one/core';
+import { Test } from '@one/testing';
 
 describe('Default <InjectionToken[]>', () => {
   let seriesSpy: jest.SpyInstance;

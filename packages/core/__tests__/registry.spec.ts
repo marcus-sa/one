@@ -7,7 +7,7 @@ import {
   forwardRef,
   Inject,
   ProvideToken,
-} from '@nest/core';
+} from '@one/core';
 
 describe('Registry', () => {
   beforeEach(() => Registry.clearLazyInjects());
@@ -134,16 +134,16 @@ describe('Registry', () => {
 
   describe('isModule', () => {
     @Module()
-    class NestModule {}
+    class OneModule {}
 
     it('should succeed with @Module() decorated', () => {
-      expect(Registry.isModule(NestModule)).toBeTrue();
+      expect(Registry.isModule(OneModule)).toBeTrue();
     });
 
     it('should succeed with DynamicModule', () => {
       expect(
         Registry.isModule({
-          module: NestModule,
+          module: OneModule,
         }),
       ).toBeTrue();
     });

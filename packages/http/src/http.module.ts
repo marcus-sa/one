@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 // @ts-ignore
-import { Module, ModuleWithProviders } from '@nest/core';
+import { Module, ModuleWithProviders } from '@one/core';
 
 import { AXIOS_INSTANCE_TOKEN } from './tokens';
 import { HttpService } from './http.service';

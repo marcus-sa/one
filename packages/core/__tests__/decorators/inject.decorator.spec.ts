@@ -1,13 +1,12 @@
 import 'reflect-metadata';
+import { Test } from '@one/testing';
 import {
   CircularDependencyMessage,
   forwardRef,
   Inject,
   Injectable,
   Registry,
-} from '@nest/core';
-import { Test } from '@nest/testing';
-import { Register } from 'ts-node';
+} from '@one/core';
 
 describe('@Inject()', () => {
   it('should create circular dependencies', async () => {

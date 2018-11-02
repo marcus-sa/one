@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@nest/core';
+import { Injectable, Injector } from '@one/core';
 
 import { NestService } from './nest';
 

@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-// @ts-ignore
-import { Injectable, Inject } from '@nest/core';
+import { Injectable, Inject } from '@one/core';
 import { defer, Observable } from 'rxjs';
 
 import { AXIOS_INSTANCE_TOKEN } from './tokens';
