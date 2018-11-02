@@ -1,10 +1,14 @@
 {
   "name": "@one/http",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
-  "main": "lib/index.js",
+  "main": "index.js",
+  "typings": "./lib/index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.build.json"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [],
   "author": "Marcus S. Abildskov",
