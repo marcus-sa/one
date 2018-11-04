@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@nest/core": "*",
-    "class-transformer": "^0.1.9",
+    "class-transformer": "^0.2.0",
     "class-transformer-validator": "^0.6.0",
     "class-validator": "^0.9.1",
     "ipfs": "^0.31.7",
