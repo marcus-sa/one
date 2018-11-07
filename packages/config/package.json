@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^5.0.4",
-    "@types/glob": "^5.0.35"
+    "@types/glob": "^7.0.0"
   },
   "gitHead": "9c1512e1a8a4d3becb74caa42908c56163002982"
 }
