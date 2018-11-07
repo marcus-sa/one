@@ -90,8 +90,12 @@ export class Registry {
     return val;
   }
 
-  public static getProviderToken(provider: ModuleImport | ModuleExport): Token {
-    return this.getInjectionToken((<ProvideToken>provider).provide || provider);
+  public static getProviderToken(
+    provider: Token | ModuleImport | ModuleExport,
+  ): Token {
+    return typeof provider !== 'symbol'
+      ? this.getInjectionToken((<ProvideToken>provider).provide || provider)
+      : provider;
   }
 
   public static isDynamicModule(module: any): module is DynamicModule {

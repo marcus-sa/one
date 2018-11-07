@@ -1,4 +1,4 @@
-import { Module, APP_INIT } from '@one/core';
+import { Module, APP_INIT, OnModuleInit } from '@one/core';
 
 import { FirstService } from './first.service';
 import { SecondService } from './second.service';
@@ -14,16 +14,18 @@ import { THIRD_SERVICE } from './tokens';
       provide: THIRD_SERVICE,
       useValue: 'test',
     },
-    /*{
-      provide: 'INVALID_TOKEN',
-      useValue: 'lol',
-    },*/
     {
       provide: APP_INIT,
-      useFactory: (first: FirstService) => console.log(first),
-      deps: [FirstService],
+      useFactory: (second: SecondService) => console.log(second),
+      deps: [SecondService],
       multi: true,
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private readonly first: FirstService) {}
+
+  onModuleInit() {
+    console.log(this.first);
+  }
+}

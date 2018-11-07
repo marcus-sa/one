@@ -1,9 +1,11 @@
 {
   "lerna": "2.2.0",
-  "packages": [
-    "examples/*",
-    "packages/*"
-  ],
+  "commands": {
+    "publish": {
+      "ignoreChanges": ["packages/*/__tests__/**"]
+    }
+  },
+  "packages": ["examples/*", "packages/*"],
   "npmClient": "yarn",
   "useWorkspaces": true,
   "version": "1.0.0"

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { ReflectorFactory } from '@nest/core';
+import { ReflectorFactory } from '@one/core';
 
 describe('Reflector', () => {
   class Nest {}

@@ -1,4 +1,4 @@
-import { Dependency } from '@nest/core';
+import { Dependency } from '@one/core';
 
 export interface OverrideByFactoryOptions {
   factory: (...args) => any;

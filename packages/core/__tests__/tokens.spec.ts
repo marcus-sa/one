@@ -4,7 +4,6 @@ import {
   InjectionToken,
   Module,
   MODULE_INIT,
-  MODULE_REF,
   ModuleMetadata,
   Utils,
 } from '@one/core';
@@ -18,11 +17,13 @@ describe('Default <InjectionToken[]>', () => {
     factory: string,
   ): ModuleMetadata {
     return {
-      providers: [{
-        provide,
-        useFactory: () => factory,
-        multi: true,
-      }]
+      providers: [
+        {
+          provide,
+          useFactory: () => factory,
+          multi: true,
+        },
+      ],
     };
   }
 
@@ -82,7 +83,5 @@ describe('Default <InjectionToken[]>', () => {
     });
   });
 
-  describe('MODULE_REF', () => {
-
-  });
+  describe('MODULE_REF', () => {});
 });

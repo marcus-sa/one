@@ -1,0 +1,43 @@
+{
+  "name": "@one/store",
+  "version": "1.0.4",
+  "description": "",
+  "main": "lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "jest"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [],
+  "author": "Marcus S. Abildskov",
+  "license": "MIT",
+  "dependencies": {
+    "@one/core": "*"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "jest-extended",
+    "moduleNameMapper": {
+      "@one/store/(.*)": "<rootDir>/src/$1",
+      "@one/(.*)": "<rootDir>/../$1/src"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "json"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "<rootDir>/__tests__/**/*.(spec|test).+(ts|tsx)"
+    ]
+  }
+}

@@ -11,7 +11,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "downlevelIteration": true,
-    "lib": ["esnext"]
+    "lib": ["dom", "esnext"]
   },
   "exclude": ["node_modules"]
 }

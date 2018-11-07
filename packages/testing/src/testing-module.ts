@@ -1,4 +1,13 @@
-import { Dependency, OneFactory, Provider, Token, Type } from '@nest/core';
+import {
+  ClassProvider,
+  Dependency,
+  FactoryProvider,
+  OneFactory,
+  Provider,
+  Token,
+  Type,
+  ValueProvider,
+} from '@one/core';
 
 import { OverrideBy, OverrideByFactoryOptions } from './interfaces';
 

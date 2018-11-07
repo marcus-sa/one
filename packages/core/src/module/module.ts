@@ -1,6 +1,7 @@
 import { Container } from 'inversify';
 import getDecorators from 'inversify-inject-decorators';
 
+import { MODULE_INIT, Injector, ONE_MODULE } from '../tokens';
 import { PROVIDER_TYPES, SCOPES } from '../constants';
 import { OneContainer } from './container';
 import { Reflector } from '../reflector';
@@ -20,7 +21,6 @@ import {
   MultiDepsProvider,
   ExistingProvider,
 } from '../interfaces';
-import { MODULE_INIT, Injector, ONE_MODULE } from '../tokens';
 import {
   UnknownProviderException,
   MultiProviderException,
@@ -151,7 +151,7 @@ export class OneModule {
 
   public replace(toReplace: Dependency, options: any) {
     this.addProvider({
-      provide: toReplace,
+      provide: <any>toReplace,
       ...options,
     });
   }
@@ -159,13 +159,12 @@ export class OneModule {
   public async create() {
     if (this.providers.isBound(this.target)) return;
 
-    this.providers.bind(this.target).toSelf();
-    const module = this.providers.get<Type<OneModule>>(this.target);
-
     await this.bindProviders();
 
-    (<OnModuleInit>module).onModuleInit &&
-      (await (<OnModuleInit>module).onModuleInit());
+    this.providers.bind(this.target).toSelf();
+    const module = this.providers.get<OnModuleInit>(this.target);
+
+    module.onModuleInit && (await module.onModuleInit());
 
     await Utils.series(
       this.container.getAllProviders<Promise<any>>(MODULE_INIT, this.target),

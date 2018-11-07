@@ -37,7 +37,7 @@ export class OneContainer {
 
   private getModulesFrom(module?: Type<OneModule>) {
     return !Utils.isNil(module)
-      ? [this.getModule(module)]
+      ? [<OneModule>this.getModule(module)]
       : this.getModuleValues();
   }
 
@@ -61,7 +61,7 @@ export class OneContainer {
   }
 
   public getProvider<T>(
-    provider: Type<T> | InjectionToken<T>,
+    provider: Token | Type<T> | InjectionToken<T>,
     scope?: Type<OneModule>,
     { strict }: StrictSelect = {},
   ): T {
@@ -153,7 +153,7 @@ export class OneContainer {
       target,
       dynamicMetadata,
       token,
-    } = await this.moduleCompiler.compile(module, scope);
+    } = await this.moduleCompiler.compile(<any>module, scope);
     if (this.modules.has(token)) return;
 
     const oneModule = new OneModule(target, scope, this);
@@ -193,22 +193,19 @@ export class OneContainer {
     );
   }
 
-  private bindGlobalModuleToModule(
-    module: OneModule,
-    globalModule: OneModule,
-  ) {
+  private bindGlobalModuleToModule(module: OneModule, globalModule: OneModule) {
     if (module === globalModule) return;
     module.addImport(globalModule);
   }
 
-  public async addImport(relatedModule: ModuleImport, token: string) {
+  public async addImport(relatedModule: Partial<ModuleImport>, token: string) {
     if (!this.modules.has(token)) return;
 
     const module = this.getModuleByToken(token);
     const scope = Utils.concat(module.scope, module.target);
 
     const { token: relatedModuleToken } = await this.moduleCompiler.compile(
-      relatedModule,
+      <any>relatedModule,
       scope,
     );
 

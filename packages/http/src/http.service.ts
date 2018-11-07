@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+// @ts-ignore
 import { Injectable, Inject } from '@one/core';
 import { defer, Observable } from 'rxjs';
 
