@@ -1,4 +1,4 @@
-import { Injectable, Utils } from '@nest/core';
+import { Injectable, Utils } from '@one/core';
 import get = require('lodash.get');
 import set = require('lodash.set');
 import * as fs from 'fs-extra';

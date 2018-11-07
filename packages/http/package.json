@@ -16,5 +16,6 @@
   "dependencies": {
     "@one/core": "^1.1.0",
     "axios": "*"
-  }
+  },
+  "gitHead": "9c1512e1a8a4d3becb74caa42908c56163002982"
 }

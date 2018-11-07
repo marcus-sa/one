@@ -1,4 +1,4 @@
-import { Module, ModuleMetadata } from '@nest/core';
+import { Module, ModuleMetadata } from '@one/core';
 
 import { TestingModule } from './testing-module';
 

@@ -19,7 +19,7 @@ export class TestingModule extends OneFactory {
   private readonly overloadsMap = new Map<Dependency, Overload>();
 
   private createOverrideByBuilder(
-    add: (provider: Provider) => TestingModule,
+    add: (provider: any) => TestingModule,
   ): OverrideBy {
     return {
       useValue: (value: any) => add({ useValue: value }),

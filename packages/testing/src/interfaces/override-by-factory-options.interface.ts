@@ -1,6 +1,6 @@
 import { Dependency } from '@one/core';
 
 export interface OverrideByFactoryOptions {
-  factory: (...args) => any;
+  factory: (...args: any[]) => any;
   inject?: Dependency[];
 }

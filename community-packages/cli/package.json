@@ -10,6 +10,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [],
   "author": "Marcus S. Abildskov",
   "license": "MIT",
@@ -19,5 +22,6 @@
   },
   "devDependencies": {
     "@types/commander": "*"
-  }
+  },
+  "gitHead": "9c1512e1a8a4d3becb74caa42908c56163002982"
 }

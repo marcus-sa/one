@@ -1,4 +1,4 @@
-import { Module, MODULE_INIT, Global } from '@nest/core';
+import { Module, MODULE_INIT, Global } from '@one/core';
 
 import { ConfigService } from './config.service';
 
