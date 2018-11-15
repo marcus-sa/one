@@ -13,7 +13,7 @@
     "@types/jest": "^23.3.1",
     "@types/lodash.get": "^4.4.4",
     "@types/lodash.set": "^4.3.4",
-    "@types/node": "^8.0.28",
+    "@types/node": "^9.0.0",
     "@types/object-hash": "^1.2.0",
     "git-cz": "^1.7.1",
     "husky": "^0.14.3",
