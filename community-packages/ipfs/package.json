@@ -16,7 +16,7 @@
     "class-transformer-validator": "^0.6.0",
     "class-validator": "^0.9.1",
     "ipfs": "^0.31.7",
-    "ipfs-repo": "^0.23.1",
+    "ipfs-repo": "^0.26.0",
     "param-case": "^2.1.1"
   },
   "devDependencies": {
