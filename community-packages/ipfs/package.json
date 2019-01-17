@@ -15,7 +15,7 @@
     "class-transformer": "^0.1.9",
     "class-transformer-validator": "^0.6.0",
     "class-validator": "^0.9.1",
-    "ipfs": "^0.31.7",
+    "ipfs": "^0.34.0",
     "ipfs-repo": "^0.23.1",
     "param-case": "^2.1.1"
   },
